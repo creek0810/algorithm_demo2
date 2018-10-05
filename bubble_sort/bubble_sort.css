@@ -1,0 +1,16 @@
+.rec{
+    border-radius: 5px;
+    width: 45px;
+    background: orange;
+    text-align: center;
+    position: relative;
+    left: 0px;
+}
+#graph{
+    position: absolute;
+    height:200px;
+    width: 300px;
+    display: inline-flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
