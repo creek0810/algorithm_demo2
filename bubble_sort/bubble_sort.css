@@ -1,10 +1,24 @@
+
 .rec{
     border-radius: 5px;
     width: 45px;
-    background: orange;
+    background: #00d8ff;
     text-align: center;
     position: relative;
-    left: 0px;
+}
+.rec_cmp{
+  border-radius: 5px;
+  width: 45px;
+  background: orange;
+  text-align: center;
+  position: relative;
+}
+.rec_finish{
+  border-radius: 5px;
+  width: 45px;
+  background: #919191;
+  text-align: center;
+  position: relative;
 }
 #graph{
     position: absolute;
