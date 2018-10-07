@@ -1,30 +1,33 @@
 
 .rec{
     border-radius: 5px;
-    width: 45px;
+    width: 40px;
     background: #00d8ff;
     text-align: center;
     position: relative;
 }
 .rec_cmp{
-  border-radius: 5px;
-  width: 45px;
-  background: orange;
-  text-align: center;
-  position: relative;
+    border-radius: 5px;
+    width: 40px;
+    background: orange;
+    text-align: center;
+    position: relative;
 }
 .rec_finish{
-  border-radius: 5px;
-  width: 45px;
-  background: #919191;
-  text-align: center;
-  position: relative;
+    border-radius: 5px;
+    width: 40px;
+    background: #919191;
+    text-align: center;
+    position: relative;
 }
 #graph{
     position: absolute;
+    left: 50%;
+    margin-left: -175px;
     height:200px;
-    width: 300px;
+    width: 350px;
     display: inline-flex;
     align-items: flex-end;
     justify-content: space-between;
+    font-size: 18px;
 }
