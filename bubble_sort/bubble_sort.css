@@ -2,7 +2,7 @@
 .rec{
     border-radius: 5px;
     width: 40px;
-    background: #00d8ff;
+    background: royalblue;
     text-align: center;
     position: relative;
 }
@@ -22,7 +22,7 @@
 }
 #graph{
     position: absolute;
-    left: 50%;
+    left: 20%;
     margin-left: -175px;
     height:200px;
     width: 350px;
@@ -30,4 +30,17 @@
     align-items: flex-end;
     justify-content: space-between;
     font-size: 18px;
+    color: white;
 }
+#code{
+    position: absolute;
+    left: 45%;
+    font-size: 18px;
+}
+#var{
+    position: absolute;
+    left: 75%;
+    font-size: 18px;
+
+}
+

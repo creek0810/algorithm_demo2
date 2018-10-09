@@ -40,34 +40,41 @@ function move(target,dis) {
 }
 function cmp(k) {
     return new Promise(function (resolve, reject) {
+        // change color of code cmp
+        $("#cmp").css({"color":"white","background":"black"});
         // change color to comparing mode
         $(data[k]["id"]).toggleClass("rec",false);
-        $(data[k-1]["id"]).toggleClass("rec",false);
+        $(data[k+1]["id"]).toggleClass("rec",false);
         $(data[k]["id"]).toggleClass("rec_cmp",true);
-        $(data[k-1]["id"]).toggleClass("rec_cmp",true);
-        if(data[k]["value"]<data[k-1]["value"]){
+        $(data[k+1]["id"]).toggleClass("rec_cmp",true);
+
+        if(data[k+1]["value"]<data[k]["value"]){
             // swap
             setTimeout(function(){
-              move(k-1,51);
-              move(k,-51);
+              $("#cmp").css({"color":"black","background":"white"});
+              $("#swap").css({"color":"white","background":"black"});
+              move(k,51);
+              move(k+1,-51);
             },500);
             setTimeout(function(){
+                $("#swap").css({"color":"black","background":"white"});
                 var tmp=data[k];
-                data[k]=data[k-1];
-                data[k-1]=tmp;
+                data[k]=data[k+1];
+                data[k+1]=tmp;
                 $(data[k]["id"]).toggleClass("rec_cmp",false);
-                $(data[k-1]["id"]).toggleClass("rec_cmp",false);
+                $(data[k+1]["id"]).toggleClass("rec_cmp",false);
                 $(data[k]["id"]).toggleClass("rec",true);
-                $(data[k-1]["id"]).toggleClass("rec",true);
+                $(data[k+1]["id"]).toggleClass("rec",true);
                 resolve();
             },1000)
         }else{
             // don't need to swap
             setTimeout(function(){
+                $("#cmp").css({"color":"black","background":"white"});
                 $(data[k]["id"]).toggleClass("rec_cmp",false);
-                $(data[k-1]["id"]).toggleClass("rec_cmp",false);
+                $(data[k+1]["id"]).toggleClass("rec_cmp",false);
                 $(data[k]["id"]).toggleClass("rec",true);
-                $(data[k-1]["id"]).toggleClass("rec",true);
+                $(data[k+1]["id"]).toggleClass("rec",true);
                 resolve();
             },1000)
         }
@@ -102,11 +109,14 @@ $(document).ready(function(){
         // bubble sort
         for(i=0;i<data.length;i++){
             await wait(500);
-            for(k=1;k<data.length-i;k++){
-                await cmp(k);
+            $("#var_i").text("i: " + i);
+            for(j=0;j<data.length-1-i;j++){
+                $("#var_j").text("j: " + j);
+                await cmp(j);
             }
             $(data[data.length-i-1]["id"]).toggleClass("rec",false);
             $(data[data.length-i-1]["id"]).toggleClass("rec_finish",true);
+
         }
         flag=false;
     })
