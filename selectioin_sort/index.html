@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
+  <title>Selection Sort</title>
   <!-- jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- bootstrap -->
@@ -35,7 +35,8 @@
           <ul class="dropdown-menu">
             <li><a href="#">Sort<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="./index.html">Bubble Sort</a></li>
+                <li><a href="../bubble_sort/index.html">Bubble Sort</a></li>
+                <li><a href="./index.html">Selection Sort</a></li>
               </ul>
             </li>
             <li><a href="#">Data Structure</a></li>
@@ -61,18 +62,22 @@
         </div>
         <div id="code">
            <h2>Psudo code</h2>
-            function bubble_sort (array, length) {<br>
-            　　var i, j;<br>
-            　　for(i from 0 to length-1){<br>
-            　　　　for(j from 0 to length-1-i){<br>
+            function selection_sort (array, length) {<br>
+            　　var i, j, min;<br>
+            　　for(i from 0 to length-2){<br>
+            　　　　min = i;<br>
+            　　　　for(j from i+1 to length-1){<br>
             　　　　<span id="cmp">
-               　　if (array[j] > array[j+1])<br>
+               　　if (array[min] > array[j])<br>
                    </span>
-                   <span id="swap">
-            　　　　　　　　swap(array[j], array[j+1])<br>
+                   <span id="change">
+            　　　　　　　　min = j<br>
                    </span>
             　　　　}<br>
-            　　}<br>
+            　　　　<span id="swap">
+                    swap(array[min],array[j]);
+            　　　　</span><br>
+                　　}<br>
             }<br>
         </div>
         <div id="var">

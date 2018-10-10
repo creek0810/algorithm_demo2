@@ -1,6 +1,3 @@
-// TODO: [x]clean the code
-// TODO: [X] adjust timeline
-// TODO:
 // the data of current state
 var data = [{"id": "#data0","value": 5,"loc": 0},
             {"id": "#data1","value": 2,"loc": 0},
@@ -15,36 +12,41 @@ var Data = jQuery.extend(true, [], data);
 var flag=true;
 // move animate
 function move(target,dis) {
-  var pos = data[target]["loc"];
-  var des = pos+dis;
-  data[target]["loc"]=des;
-  var id = setInterval(frame, 2);
-  function frame() {
-    if (pos == des) {
-      clearInterval(id);
-    } else {
-      if(pos>des){
-          pos--;
-      }else{
-          pos++;
+  return new Promise(function(resolve,reject){
+      var pos = data[target]["loc"];
+      var des = pos+dis;
+      data[target]["loc"]=des;
+      var id = setInterval(frame, 2);
+      function frame() {
+          if (pos == des) {
+          clearInterval(id);
+      } else {
+          if(pos>des){
+              pos--;
+          }else{
+              pos++;
+          }
+          $(data[target]["id"]).css("left",pos+"px");
       }
-      $(data[target]["id"]).css("left",pos+"px");
     }
-  }
+    setTimeout(function(){
+        return resolve();
+    },dis*2+700);
+  })
 }
 function swap(a,b) {
-    return new Promise(function (resolve, reject) {
+    return new Promise(async function (resolve, reject) {
         if(a==b){
             return resolve();
         }else{
             move(a,(b-a)*51);
-            move(b,(b-a)*51*-1);
-            setTimeout(function(){
+            await move(b,(b-a)*51*-1);
+            //setTimeout(function()
                 var tmp=data[a];
                 data[a]=data[b];
                 data[b]=tmp;
                 return resolve();
-            },2000);
+        //    },1500);
         }
     })
 };
@@ -79,7 +81,6 @@ $(document).ready(function(){
         // selection sort
         for(i=0;i<data.length-1;i++){
             await wait(500);
-            console.log("start");
             $("#var_i").text("i: " + i);
             var min=i;
             $("#var_min").text("min: " + min);
@@ -89,17 +90,22 @@ $(document).ready(function(){
                 $("#var_j").text("j: " + j);
                 $(data[j]["id"]).toggleClass("rec_cmp",true);
                 $(data[j]["id"]).toggleClass("rec",false);
+                $('#cmp').css({"background":"black","color":"white"});
                 await wait(500);
 
                 if(data[min]["value"]>data[j]["value"]){
+                    $('#cmp').css({"background":"white","color":"black"});
+                    $('#change').css({"background":"black","color":"white"});
                     $(data[j]["id"]).toggleClass("rec_min",true);
                     $(data[min]["id"]).toggleClass("rec",true);
                     $(data[j]["id"]).toggleClass("rec_cmp",false);
                     $(data[min]["id"]).toggleClass("rec_min",false);
                     await(100);
                     min=j;
-                    $("var_min").text("min: "+j);
+                    $("#var_min").text("min: "+min);
+                    $('#change').css({"background":"white","color":"black"});
                 }else{
+                    $('#cmp').css({"background":"white","color":"black"});
                     $(data[j]["id"]).toggleClass("rec",true);
                     $(data[j]["id"]).toggleClass("rec_cmp",false);
                 }
@@ -107,10 +113,14 @@ $(document).ready(function(){
             }
 
             console.log(min+" "+i);
+            $('#swap').css({"background":"black","color":"white"});
             await swap(min,i);
+            $('#swap').css({"background":"white","color":"black"});
             $(data[i]["id"]).toggleClass("rec_min",false);
             $(data[i]["id"]).toggleClass("rec_finish",true);
         }
+        $(data[data.length-1]["id"]).toggleClass("rec",false);
+        $(data[data.length-1]["id"]).toggleClass("rec_finish",true);
         flag=false;
         $("#start").attr("disabled",false);
     })
