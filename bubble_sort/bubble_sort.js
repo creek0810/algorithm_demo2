@@ -1,6 +1,6 @@
 // TODO: [x]clean the code
 // TODO: [X] adjust timeline
-
+// TODO:
 // the data of current state
 var data = [{"id": "#data0","value": 5,"loc": 0},
             {"id": "#data1","value": 2,"loc": 0},
@@ -10,13 +10,7 @@ var data = [{"id": "#data0","value": 5,"loc": 0},
             {"id": "#data5","value": 1,"loc": 0},
             {"id": "#data6","value": 4,"loc": 0}];
 // const data
-var Data = [{"id": "#data0","value": 5,"loc": 0},
-            {"id": "#data1","value": 2,"loc": 0},
-            {"id": "#data2","value": 7,"loc": 0},
-            {"id": "#data3","value": 3,"loc": 0},
-            {"id": "#data4","value": 9,"loc": 0},
-            {"id": "#data5","value": 1,"loc": 0},
-            {"id": "#data6","value": 4,"loc": 0}];
+var Data = jQuery.extend(true, [], data);
 // to store if it is the first time that the program run
 var flag=true;
 // move animate
@@ -96,6 +90,8 @@ $(document).ready(function(){
         $(target).height(data[i]["value"]*17);
     }
     $("#start").click(async function(){
+        // to diasable the start button
+        $("#start").attr("disabled",true);
         // check if graph need to reset
         if(flag==false){
             for(var i=0;i<Data.length;i++){
@@ -104,11 +100,12 @@ $(document).ready(function(){
                 $(data[data.length-i-1]["id"]).toggleClass("rec_finish",false);
                 $(data[data.length-i-1]["id"]).toggleClass("rec",true);
             }
-            data=Data;
+            data=jQuery.extend(true, [], Data);
         }
         // bubble sort
         for(i=0;i<data.length;i++){
             await wait(500);
+            console.log("start");
             $("#var_i").text("i: " + i);
             for(j=0;j<data.length-1-i;j++){
                 $("#var_j").text("j: " + j);
@@ -119,5 +116,6 @@ $(document).ready(function(){
 
         }
         flag=false;
+        $("#start").attr("disabled",false);
     })
 });
