@@ -94,13 +94,13 @@ $(document).ready(function(){
                 await wait(500);
 
                 if(data[min]["value"]>data[j]["value"]){
-                    $('#cmp').css({"background":"white","color":"black"});
                     $('#change').css({"background":"black","color":"white"});
+                    $('#cmp').css({"background":"white","color":"black"});
                     $(data[j]["id"]).toggleClass("rec_min",true);
                     $(data[min]["id"]).toggleClass("rec",true);
                     $(data[j]["id"]).toggleClass("rec_cmp",false);
                     $(data[min]["id"]).toggleClass("rec_min",false);
-                    await(100);
+                    await wait(500);
                     min=j;
                     $("#var_min").text("min: "+min);
                     $('#change').css({"background":"white","color":"black"});
