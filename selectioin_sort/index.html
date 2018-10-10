@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <!-- jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- smart menu-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/jquery.smartmenus.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap/jquery.smartmenus.bootstrap.min.js"></script>
+  <!-- css and js -->
+  <link rel="stylesheet" href="selection_sort.css">
+  <script src="selection_sort.js"></script>
+
+</head>
+<body>
+  <!-- nav bar -->
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../index.html">Algorithm Demo</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="../index.html">Home</a></li>
+        <li class="active"><a href="#">Algorithm <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Sort<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="./index.html">Bubble Sort</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Data Structure</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Document</a></li>
+      </ul>
+    </div>
+  <!-- main -->
+  </div>
+    <div class="container-fluid" style="margin-top:80px">
+        <div>
+            <button id="start" class="btn btn-primary">Start</button>
+        </div>
+        <div id="graph">
+            <div class="rec" id="data0"></div>
+            <div class="rec" id="data1"></div>
+            <div class="rec" id="data2"></div>
+            <div class="rec" id="data3"></div>
+            <div class="rec" id="data4"></div>
+            <div class="rec" id="data5"></div>
+            <div class="rec" id="data6"></div>
+        </div>
+        <div id="code">
+           <h2>Psudo code</h2>
+            function bubble_sort (array, length) {<br>
+            　　var i, j;<br>
+            　　for(i from 0 to length-1){<br>
+            　　　　for(j from 0 to length-1-i){<br>
+            　　　　<span id="cmp">
+               　　if (array[j] > array[j+1])<br>
+                   </span>
+                   <span id="swap">
+            　　　　　　　　swap(array[j], array[j+1])<br>
+                   </span>
+            　　　　}<br>
+            　　}<br>
+            }<br>
+        </div>
+        <div id="var">
+            <h2>Variable</h2>
+            <div id="var_i">i:</div>
+            <div id="var_j">j:</div>
+            <div id="var_min">min:</div>
+        </div>
+    </div>
+</body>
+</html>
