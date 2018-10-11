@@ -1,0 +1,53 @@
+
+.rec{
+    border-radius: 5px;
+    width: 40px;
+    background: royalblue;
+    text-align: center;
+    position: relative;
+}
+.rec_cmp{
+    border-radius: 5px;
+    width: 40px;
+    background: orange;
+    text-align: center;
+    position: relative;
+}
+.rec_finish{
+    border-radius: 5px;
+    width: 40px;
+    background: #919191;
+    text-align: center;
+    position: relative;
+}
+.rec_current{
+    border-radius: 5px;
+    width: 40px;
+    background: #7fd925;
+    text-align: center;
+    position: relative;
+}
+#graph{
+    position: absolute;
+    left: 20%;
+    margin-left: -175px;
+    height:200px;
+    width: 350px;
+    display: inline-flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    font-size: 18px;
+    color: white;
+}
+#code{
+    position: absolute;
+    left: 45%;
+    font-size: 18px;
+}
+#var{
+    position: absolute;
+    left: 75%;
+    font-size: 18px;
+
+}
+

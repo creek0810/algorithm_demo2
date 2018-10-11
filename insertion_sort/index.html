@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Bubble Sort</title>
+  <title>Insertion Sort</title>
   <!-- jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- bootstrap -->
@@ -12,8 +12,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/jquery.smartmenus.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap/jquery.smartmenus.bootstrap.min.js"></script>
   <!-- css and js -->
-  <link rel="stylesheet" href="bubble_sort.css">
-  <script src="bubble_sort.js"></script>
+  <link rel="stylesheet" href="insertion_sort.css">
+  <script src="insertion_sort.js"></script>
 
 </head>
 <body>
@@ -35,9 +35,9 @@
           <ul class="dropdown-menu">
             <li><a href="#">Sort<span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="./index.html">Bubble Sort</a></li>
+                <li><a href="../bubble_sort/index.html">Bubble Sort</a></li>
                 <li><a href="../selectioin_sort/index.html">Selection Sort</a></li>
-                <li><a href="../insertion_sort/index.html">Insertion Sort</a></li>
+                <li><a href="./index.html">Insertion Sort</a></li>
               </ul>
             </li>
             <li><a href="#">Data Structure</a></li>
@@ -63,24 +63,30 @@
         </div>
         <div id="code">
            <h2>Psudo code</h2>
-            function bubble_sort (array, length) {<br>
-            　　var i, j;<br>
-            　　for(i from 0 to length-1){<br>
-            　　　　for(j from 0 to length-1-i){<br>
-            　　　　<span id="cmp">
-               　　if (array[j] > array[j+1])<br>
+            function insertion_sort (array, length) {<br>
+            　　var i, j, current;<br>
+            　　for(i from 1 to length-1){<br>
+            　　　　current = array[i];<br>
+            　　　　j = i - 1;<br>
+            　　　　whlie (j >= 0 && array[j] > current){<br>
+                   <span id="change">
+            　　　　　　array[j+1]=array[j]
                    </span>
-                   <span id="swap">
-            　　　　　　　　swap(array[j], array[j+1])<br>
+                   <br>
+                   <span id="sub">
+                　　　　　　j--;
                    </span>
+                   <br>
             　　　　}<br>
-            　　}<br>
+            　　　　array[j+1]=current <br>
+                　　}<br>
             }<br>
         </div>
         <div id="var">
             <h2>Variable</h2>
             <div id="var_i">i:</div>
             <div id="var_j">j:</div>
+            <div id="var_current">current:</div>
         </div>
     </div>
 </body>
