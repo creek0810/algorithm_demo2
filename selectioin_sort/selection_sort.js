@@ -58,6 +58,7 @@ function wait(k) {
     })
 };
 $(document).ready(function(){
+
     // init graph
     for(var i=0;i<data.length;i++){
         var target = data[i]["id"];
@@ -123,5 +124,16 @@ $(document).ready(function(){
         $(data[data.length-1]["id"]).toggleClass("rec_finish",true);
         flag=false;
         $("#start").attr("disabled",false);
+    })
+    $("#info").click(function(){
+        $("#code_trace").removeClass("information-enabled");
+        $("#info").addClass("information-enabled");
+        $(".code_trace").css("opacity", 0);
+
+    })
+    $("#code_trace").click(function(){
+        $(".code_trace").css("opacity", 1);
+        $("#info").removeClass("information-enabled");
+        $("#code_trace").addClass("information-enabled");
     })
 });

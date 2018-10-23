@@ -1,4 +1,6 @@
-
+body{
+    background: #F4F4F4;
+}
 .rec{
     border-radius: 5px;
     width: 40px;

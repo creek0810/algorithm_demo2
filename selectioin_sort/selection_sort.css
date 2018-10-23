@@ -1,4 +1,31 @@
+body{
+    background: #F4F4F4;
+}
+div.information{
+    height: 70%;
+    width: 50%;
+    background: white;
+    position: absolute;
+    left: 45%;
+}
 
+input.information{
+    background: white;
+    border-color: white;
+}
+input.information-enabled{
+    background: white;
+    border-color: white;
+    border-bottom: 2px solid #42edf8;
+}
+.code_trace{
+    position: absolute;
+    top: 20%;
+    opacity: 0;
+    display: inline-flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
 .rec{
     border-radius: 5px;
     width: 40px;
@@ -28,26 +55,27 @@
     position: relative;
 }
 #graph{
+    background: white;
     position: absolute;
     left: 20%;
     margin-left: -175px;
     height:200px;
-    width: 350px;
+    width: 400px;
     display: inline-flex;
     align-items: flex-end;
-    justify-content: space-between;
+    justify-content: space-around;
     font-size: 18px;
     color: white;
 }
 #code{
-    position: absolute;
-    left: 45%;
+    width: 300px;
+    position: relative;
+    right:100px;
     font-size: 18px;
 }
 #var{
-    position: absolute;
-    left: 75%;
-    font-size: 18px;
+    position: relative;
 
+    font-size: 18px;
 }
 

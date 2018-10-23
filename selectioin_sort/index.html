@@ -61,32 +61,30 @@
             <div class="rec" id="data5"></div>
             <div class="rec" id="data6"></div>
         </div>
-        <div id="code">
-           <h2>Psudo code</h2>
-            function selection_sort (array, length) {<br>
-            　　var i, j, min;<br>
-            　　for(i from 0 to length-2){<br>
-            　　　　min = i;<br>
-            　　　　for(j from i+1 to length-1){<br>
-            　　　　<span id="cmp">
-               　　if (array[min] > array[j])<br>
-                   </span>
-                   <span id="change">
-            　　　　　　　　min = j
-                   </span>
-                   <br>
-            　　　　}<br>
-            　　　　<span id="swap">
-                    swap(array[min],array[j]);
-            　　　　</span><br>
-                　　}<br>
-            }<br>
-        </div>
-        <div id="var">
-            <h2>Variable</h2>
-            <div id="var_i">i:</div>
-            <div id="var_j">j:</div>
-            <div id="var_min">min:</div>
+        <div class="information">
+            <input type="button" class="information" id="info" value="info">
+            <input type="button" class="information" id="code_trace" value="code trace">
+            <div class="code_trace">
+                <div id="code">
+
+                    <h2>Psudo code</h2>
+                    void selection_sort(vector&lt;int&gt; &arr){<br>
+                    <pre>    </pre>for (int i = 0; i < arr.size() - 1; i++) {<br>
+                    <pre>        </pre>int min = i;<br>
+                    <pre>        </pre>for (int j = i + 1; j < arr.size(); j++)<br>
+                    <pre>        </pre><span id="cmp">if (arr[j] < arr[min])<br></span>
+                    <pre>        </pre><span id="change">min = j;<br></span>
+                    <pre>        </pre><span id="change">swap(arr[i], arr[min]);<br></span>
+                    <pre>        </pre>}<br>
+                    <pre>        </pre>}<br>
+                </div>
+                <div id="var">
+                    <h2>Variable</h2>
+                    <div id="var_i">i:</div>
+                    <div id="var_j">j:</div>
+                    <div id="var_min">min:</div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
