@@ -9,79 +9,92 @@ var data = [{"id": "#data0","value": 5,"loc": 0},
             {"id": "#data4","value": 9,"loc": 0},
             {"id": "#data5","value": 1,"loc": 0},
             {"id": "#data6","value": 4,"loc": 0}];
-// const data
-var Data = jQuery.extend(true, [], data);
-// to store if it is the first time that the program run
-var flag=true;
-// move animate
-function move(target,dis) {
-  var pos = data[target]["loc"];
-  var des = pos+dis;
-  data[target]["loc"]=des;
-  var id = setInterval(frame, 2);
-  function frame() {
-    if (pos == des) {
-      clearInterval(id);
-    } else {
-      if(pos>des){
-          pos--;
-      }else{
-          pos++;
-      }
-      $(data[target]["id"]).css("left",pos+"px");
-    }
-  }
-}
-function cmp(k) {
-    return new Promise(function (resolve, reject) {
-        // change color of code cmp
-        $("#cmp").css({"color":"white","background":"black"});
-        // change color to comparing mode
-        $(data[k]["id"]).toggleClass("rec",false);
-        $(data[k+1]["id"]).toggleClass("rec",false);
-        $(data[k]["id"]).toggleClass("rec_cmp",true);
-        $(data[k+1]["id"]).toggleClass("rec_cmp",true);
-
-        if(data[k+1]["value"]<data[k]["value"]){
-            // swap
-            setTimeout(function(){
-              $("#cmp").css({"color":"black","background":"white"});
-              $("#swap").css({"color":"white","background":"black"});
-              move(k,51);
-              move(k+1,-51);
-            },500);
-            setTimeout(function(){
-                $("#swap").css({"color":"black","background":"white"});
-                var tmp=data[k];
-                data[k]=data[k+1];
-                data[k+1]=tmp;
-                $(data[k]["id"]).toggleClass("rec_cmp",false);
-                $(data[k+1]["id"]).toggleClass("rec_cmp",false);
-                $(data[k]["id"]).toggleClass("rec",true);
-                $(data[k+1]["id"]).toggleClass("rec",true);
-                resolve();
-            },1000)
-        }else{
-            // don't need to swap
-            setTimeout(function(){
-                $("#cmp").css({"color":"black","background":"white"});
-                $(data[k]["id"]).toggleClass("rec_cmp",false);
-                $(data[k+1]["id"]).toggleClass("rec_cmp",false);
-                $(data[k]["id"]).toggleClass("rec",true);
-                $(data[k+1]["id"]).toggleClass("rec",true);
-                resolve();
-            },1000)
+function sort(){
+    var sort_timeline = anime.timeline({
+        autoplay: false,
+        update: function(anim){
+            $("#progress_bar").val(anim.progress);
         }
-    })
-};
-function wait(k) {
-    return new Promise(function (resolve, reject) {
-        setTimeout(function(){
-        resolve();
-        },k);
-    })
-};
-$(document).ready(function(){
+    });
+    // build anime timeline
+    for (var i = 0; i < data.length; i++){
+        for(var j = 0; j < data.length - i - 1; j++){
+            sort_timeline.add({
+                targets: '#var_i',
+                value: i,
+                duration: 1,
+                round: 1
+            }).add({
+                targets: '#var_j',
+                value: j,
+                duration: 1,
+                round: 1
+            }).add({
+                targets: [data[j]["id"], data[j+1]["id"]],
+                backgroundColor: '#ffa600',
+                offset: "-=0",
+                begin: function(){
+                    $(".cmp").addClass("code_running");
+                    $(".swap").removeClass("code_running");
+
+                }
+            })
+
+            if(data[j]["value"] > data[j+1]["value"]){
+                sort_timeline.add({
+                    targets: data[j]["id"],
+                    translateX: data[j]["loc"] + 51,
+                    duration: 300,
+                    offset: "-=0",
+                    easing: 'linear',
+                    begin: function(){
+                        $(".swap").addClass("code_running");
+                        $(".cmp").removeClass("code_running");
+                    }
+                }).add({
+                    targets: data[j+1]["id"],
+                    translateX: data[j+1]["loc"] - 51,
+                    duration: 300,
+                    offset: "-=300",
+                    easing: 'linear'
+                })
+                data[j+1]["loc"] -= 51;
+                data[j]["loc"] += 51;
+                tmp = data[j];
+                data[j] = data[j+1];
+                data[j+1] = tmp;
+            }
+            sort_timeline.add({
+                targets: [data[j]["id"], data[j+1]["id"]],
+                backgroundColor: '#4169e1',
+                offset: "-=0",
+                autoplay: false
+            })
+
+        }
+        sort_timeline.add({
+            targets: data[data.length-1-i]["id"],
+            backgroundColor: '#919191',
+            autoplay: false
+        })
+    }
+    return sort_timeline;
+}
+
+function info_change(mode){
+    // mode 0 = info
+    // mode 1 = trace
+    mode = parseInt(mode);
+    var option = ["info", "trace"];
+    // add class and show information
+    $("#"+option[mode]).addClass("button-enabled");
+    $("."+option[mode]).css("opacity", 1);
+    // delete class
+    $("#"+option[(mode+1)%2]).removeClass("button-enabled");
+    $("."+option[(mode+1)%2]).css("opacity", 0);
+    console.log(mode);
+}
+function init(){
     // init graph
     for(var i=0;i<data.length;i++){
         var target = data[i]["id"];
@@ -89,33 +102,20 @@ $(document).ready(function(){
         $(target).css("line-height",(data[i]["value"]*34-15)+"px");
         $(target).height(data[i]["value"]*17);
     }
-    $("#start").click(async function(){
-        // to diasable the start button
-        $("#start").attr("disabled",true);
-        // check if graph need to reset
-        if(flag==false){
-            for(var i=0;i<Data.length;i++){
-                var target = Data[i]["id"];
-                $(target).css("left",0+"px");
-                $(data[data.length-i-1]["id"]).toggleClass("rec_finish",false);
-                $(data[data.length-i-1]["id"]).toggleClass("rec",true);
-            }
-            data=jQuery.extend(true, [], Data);
-        }
-        // bubble sort
-        for(i=0;i<data.length;i++){
-            await wait(500);
-            console.log("start");
-            $("#var_i").text("i: " + i);
-            for(j=0;j<data.length-1-i;j++){
-                $("#var_j").text("j: " + j);
-                await cmp(j);
-            }
-            $(data[data.length-i-1]["id"]).toggleClass("rec",false);
-            $(data[data.length-i-1]["id"]).toggleClass("rec_finish",true);
-
-        }
-        flag=false;
-        $("#start").attr("disabled",false);
+    result = sort();
+    $("#start").click(result.play);
+    $("#pause").click(result.pause);
+    $("#restart").click(result.restart);
+    $("#progress_bar").on("input change", function(){
+        result.seek(result.duration * ($("#progress_bar").val()/100));
     })
-});
+    // mode 0 = info
+    // mode 1 = trace
+    $("#info").click(function(){
+        info_change(0);
+    });
+    $("#trace").click(function(){
+        info_change(1);
+    });
+}
+$(document).ready(init,false);

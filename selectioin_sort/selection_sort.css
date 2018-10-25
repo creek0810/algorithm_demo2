@@ -11,7 +11,7 @@ div.information{
 
 input.information{
     background: white;
-    border-color: white;
+    border-style: none;
 }
 input.information-enabled{
     background: white;
@@ -60,7 +60,7 @@ input.information-enabled{
     left: 20%;
     margin-left: -175px;
     height:200px;
-    width: 400px;
+    width: 350px;
     display: inline-flex;
     align-items: flex-end;
     justify-content: space-around;
@@ -75,7 +75,6 @@ input.information-enabled{
 }
 #var{
     position: relative;
-
     font-size: 18px;
 }
 
