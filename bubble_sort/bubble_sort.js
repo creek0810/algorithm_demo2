@@ -39,7 +39,7 @@ function sort(){
 
                 }
             })
-
+            
             if(data[j]["value"] > data[j+1]["value"]){
                 sort_timeline.add({
                     targets: data[j]["id"],
@@ -60,7 +60,7 @@ function sort(){
                 })
                 data[j+1]["loc"] -= 51;
                 data[j]["loc"] += 51;
-                tmp = data[j];
+                var tmp = data[j];
                 data[j] = data[j+1];
                 data[j+1] = tmp;
             }
@@ -68,14 +68,12 @@ function sort(){
                 targets: [data[j]["id"], data[j+1]["id"]],
                 backgroundColor: '#4169e1',
                 offset: "-=0",
-                autoplay: false
             })
 
         }
         sort_timeline.add({
             targets: data[data.length-1-i]["id"],
             backgroundColor: '#919191',
-            autoplay: false
         })
     }
     return sort_timeline;

@@ -50,20 +50,19 @@ tab4{
 .button{
     border-style: solid;
     border-color: white;
+    background-color: white;
 }
 .button-enabled{
     border-bottom: 2px solid #42edf8;
 }
-.info{
+.info, .trace{
     opacity:0;
-}
-.trace{
-    opacity: 0;
 }
 .code_running{
     background: black;
     color: white;
 }
-#var_i,#var_j{
+#var_i, #var_j{
     border-style: none;
+    background-color: white;
 }
