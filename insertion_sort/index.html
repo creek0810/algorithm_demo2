@@ -13,8 +13,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap/jquery.smartmenus.bootstrap.min.js"></script>
   <!-- css and js -->
   <link rel="stylesheet" href="insertion_sort.css">
-  <script src="insertion_sort.js"></script>
-
+  <link rel="stylesheet" href="../main.css">
+  <script src="insertion_sort2.js"></script>
+  <script src="../anime.min.js"></script>
 </head>
 <body>
   <!-- nav bar -->
@@ -48,11 +49,11 @@
     </div>
   <!-- main -->
   </div>
-    <div class="container-fluid" style="margin-top:80px">
-        <div>
-            <button id="start" class="btn btn-primary">Start</button>
-        </div>
-        <div id="graph">
+  <div class="container-fluid" style="margin-top:80px">
+    <div class="row justify-content-center">   
+      <div class="col-md-6">
+        <div class="dashboard_anime">
+          <div class="graph">
             <div class="rec" id="data0"></div>
             <div class="rec" id="data1"></div>
             <div class="rec" id="data2"></div>
@@ -60,34 +61,57 @@
             <div class="rec" id="data4"></div>
             <div class="rec" id="data5"></div>
             <div class="rec" id="data6"></div>
+          </div>
         </div>
-        <div id="code">
-           <h2>Psudo code</h2>
-            function insertion_sort (array, length) {<br>
-            　　var i, j, current;<br>
-            　　for(i from 1 to length-1){<br>
-            　　　　current = array[i];<br>
-            　　　　j = i - 1;<br>
-            　　　　whlie (j >= 0 && array[j] > current){<br>
-                   <span id="change">
-            　　　　　　array[j+1]=array[j]
-                   </span>
-                   <br>
-                   <span id="sub">
-                　　　　　　j--;
-                   </span>
-                   <br>
-            　　　　}<br>
-            　　　　array[j+1]=current <br>
-                　　}<br>
-            }<br>
+        <div class="anime_btn">
+            <button id="start" class="btn">Start</button> 
+            <button id="pause" class="btn">Pause</button> 
+            <button id="restart" class="btn">Restart</button> 
+            <input id="progress_bar" name="Progress bar"type="range" min="0" max="100" value="0">
         </div>
-        <div id="var">
-            <h2>Variable</h2>
-            <div id="var_i">i:</div>
-            <div id="var_j">j:</div>
-            <div id="var_current">current:</div>
+      </div>
+      <div class="col-md-6 col-xs-12">
+        <div>
+          <div class="dashboard_name"> <span class="name">Name: Insertion sort</span></div>
+          <div class="dashboard_info">
+            <div class="content">
+              <div class="info">
+                <p>Time complexity: O(x<sup>2</sup>)</p>
+                <p>Space complexity: &Theta;(1)</p>
+                <p>Data structure: Array</p>
+                <p>Detail: Stable sort</p>
+              </div>
+              <div class="trace">
+                <div id="code">
+                  <h3>Code</h3>
+                  void insertion_sort(vector<int>&array){
+                  <tab1>for(int i = 1; i < array.size(); i++){</tab1>                          int current = array[i];
+                  <tab2>int current = array[i]</tab2>
+                  <tab2>int j = i - 1;</tab2>
+                  <tab2>while(j >= 0 && arrayh[j] > current){</tab2>
+                  <tab3>array[j+1] = array[j]</tab3>
+                  <tab3>j--;</tab3>
+                  <tab3>}</tab3>
+                  <tab2>array[j+1] = current;</tab2>
+                  <tab1>}</tab1>
+                  }
+                </div>
+                <div id="var">
+                  <h3>Variable</h3>
+                    i: <input type="text" id="var_i" value="0" class="var" disabled><br>
+                    j: <input type="text" id="var_j" value="0" class="var"disabled><br>
+                    current: <input type="text" id="var_current" value="0" class="var"disabled><br>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info_btn">
+            <input id="trace" type="button" value="trace" class="info_button">
+            <input id="info" type="button" value="info" class="info_button">
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>

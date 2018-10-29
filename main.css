@@ -1,2 +1,166 @@
+tab1{
+    display: block;
+    text-indent: 2em;
+}
+tab2{
+    display: block;
+    text-indent: 4em;
+}
+tab3{
+    display: block;
+    text-indent: 6em;
+}
+tab4{
+    display: block;
+    text-indent: 8em;
+}
+body{
+    background: #3D424E;
+}
+.rec{
+    border-radius: 5px;
+    width: 40px;
+    background: #4169e1;
+    text-align: center;
+    position: relative;
+}
+.dashboard_anime{
+    border: solid;
+    border-width: 4px;
+    border-color: white;
+    border-top-color: royalblue;
+    border-radius: 10px 10px 0px 0px;
+    background-color: white;
+    height: 450px;
+}
+.dashboard_name{
+    border-radius: 10px;
+    font-size: 18px;
+    line-height: 50px;
+    height: 50px;
+    border: solid;
+    border-width: 4px;
+    border-color: white;
+    border-top-color: royalblue;
+    background-color: white;
+}
+.dashboard_info{
+    border-radius: 10px 10px 0px 0px;
+    position: relative;
+    top: 10px;
+    border: solid;
+    border-color: royalblue;
+    border-width: 4px;
+    border-top-color: white;
+    background-color: royalblue;
+    height: 450px;
+}
+.anime_btn{
+    display: flex;
+    position: relative;
+    height: 70px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: royalblue;
+    background-color: royalblue;
+    bottom: 10px;
+    align-items: center;
+    justify-content: space-between;
+}
+#progress_bar{
+    width: 55%;
+}
+.trace{
+    display: none;
+    justify-content: flex-start;
+}
+.info_btn{
+    display: flex;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: white;
+    background-color: white;
+    position: relative;
+    height: 70px;
+    align-items: center;
+    justify-content: flex-end;
+}
+.content{
+    height: 392px;
+}
+.info{
+    height: 392px;
+    display: none;
+    font-size: 18px;
+    color: white;
+}
+#code, #var{
+    font-size: 18px;
+    color: white;
+}
+#var{
+    font-size: 18px;
+    margin-left: 50px;
+}
+.var{
+    background-color: royalblue;
+    color: white;
+    border-style: none;
+    width: 20px;
+}
+.code_running{
+    background: white;
+    color: royalblue;
+}
+
+
+.info_button{
+
+}
+
+
+div.information{
+    height: 70%;
+    width: 50%;
+    background: white;
+    position: absolute;
+    left: 45%;
+}
+
+input.information{
+    background: white;
+    border-style: none;
+}
+input.information-enabled{
+    background: white;
+    border-color: white;
+    border-bottom: 2px solid #42edf8;
+}
+
+
+
+
+.graph{
+    position: relative;
+    left: 50%;
+    margin-left: -175px;
+    height:200px;
+    width: 350px;
+    display: inline-flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    font-size: 18px;
+    color: white;
+}
+
+
+
+
+span.name{
+    position: relative;
+    left: 20px;
+}
+
+
 
 

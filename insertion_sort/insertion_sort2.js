@@ -1,12 +1,12 @@
 
 // the data of current state
-var data = [{"id": "#data0","value": 5,"loc": 0},
-            {"id": "#data1","value": 2,"loc": 0},
-            {"id": "#data2","value": 7,"loc": 0},
-            {"id": "#data3","value": 3,"loc": 0},
-            {"id": "#data4","value": 9,"loc": 0},
-            {"id": "#data5","value": 1,"loc": 0},
-            {"id": "#data6","value": 4,"loc": 0}];
+var data = [{"id": "#data0","value": 5,"loc_x": 0,"loc_y": 0},
+            {"id": "#data1","value": 2,"loc_x": 0,"loc_y": 0},
+            {"id": "#data2","value": 7,"loc_x": 0,"loc_y": 0},
+            {"id": "#data3","value": 3,"loc_x": 0,"loc_y": 0},
+            {"id": "#data4","value": 9,"loc_x": 0,"loc_y": 0},
+            {"id": "#data5","value": 1,"loc_x": 0,"loc_y": 0},
+            {"id": "#data6","value": 4,"loc_x": 0,"loc_y": 0}];
 function sort(){
     var sort_timeline = anime.timeline({
         autoplay: false,
