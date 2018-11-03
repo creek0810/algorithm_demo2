@@ -85,13 +85,13 @@
                 <div id="code">
                   <h3>Code</h3>
                   void insertion_sort(vector<int>&array){
-                  <tab1>for(int i = 1; i < array.size(); i++){</tab1>                          int current = array[i];
-                  <tab2>int current = array[i]</tab2>
+                  <tab1>for(int i = 1; i < array.size(); i++){</tab1>                          
+                  <tab2>int current = array[i];</tab2>
                   <tab2>int j = i - 1;</tab2>
-                  <tab2>while(j >= 0 && arrayh[j] > current){</tab2>
-                  <tab3>array[j+1] = array[j]</tab3>
+                  <tab2><span class="cmp">while(j >= 0 && array[j] > current){</span></tab2>
+                  <tab3><span class="swap">array[j+1] = array[j];</span></tab3>
                   <tab3>j--;</tab3>
-                  <tab3>}</tab3>
+                  <tab2>}</tab2>
                   <tab2>array[j+1] = current;</tab2>
                   <tab1>}</tab1>
                   }

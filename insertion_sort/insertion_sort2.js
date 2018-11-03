@@ -1,12 +1,12 @@
 
 // the data of current state
-var data = [{"id": "#data0","value": 5,"loc_x": 0,"loc_y": 0},
-            {"id": "#data1","value": 2,"loc_x": 0,"loc_y": 0},
-            {"id": "#data2","value": 7,"loc_x": 0,"loc_y": 0},
-            {"id": "#data3","value": 3,"loc_x": 0,"loc_y": 0},
-            {"id": "#data4","value": 9,"loc_x": 0,"loc_y": 0},
-            {"id": "#data5","value": 1,"loc_x": 0,"loc_y": 0},
-            {"id": "#data6","value": 4,"loc_x": 0,"loc_y": 0}];
+var data = [{"id": "#data0","value": 5,"loc": 0},
+            {"id": "#data1","value": 2,"loc": 0},
+            {"id": "#data2","value": 7,"loc": 0},
+            {"id": "#data3","value": 3,"loc": 0},
+            {"id": "#data4","value": 9,"loc": 0},
+            {"id": "#data5","value": 1,"loc": 0},
+            {"id": "#data6","value": 4,"loc": 0}];
 function sort(){
     var sort_timeline = anime.timeline({
         autoplay: false,
@@ -15,130 +15,49 @@ function sort(){
         }
     });
     // build anime timeline
-    for (var i = 0; i < data.length - 1; i++){
-        var min = i;
+    for (var i = 0; i < data.length; i++){
+        var current = data[i];
+        var j = i - 1;
         sort_timeline.add({
-            targets: data[min]["id"],
-            backgroundColor: '#7fd925',
+            targets: current["id"],
             offset: "-=0",
-            begin: function(){
-                $(".change").removeClass("code_running");
-                $(".swap").removeClass("code_running");
-                $(".cmp").removeClass("code_running");
-                $(".init").addClass("code_running");
-                console.log("hi");
-            }
-        }).add({
-            targets: '#var_i',
-            value: i,
-            duration: 1,
-            round: 1
-        }).add({
-            targets: '#var_min',
-            value: min,
-            duration: 1,
-            round: 1,
+            backgroundColor: '#7fd925',
+            translateY: 200,
         })
-        for(var j = i + 1; j < data.length; j++){      
+        while(j >= 0 && data[j]["value"] > current["value"]){
             sort_timeline.add({
-                targets: '#var_i',
-                value: i,
-                duration: 1,
-                round: 1
-            }).add({
-                targets: '#var_j',
-                value: j,
-                duration: 1,
-                round: 1
-            }).add({
-                targets: '#var_min',
-                value: min,
-                duration: 1,
-                round: 1
-            }).add({
                 targets: data[j]["id"],
                 backgroundColor: '#ffa500',
+            }).add({
+                targets: current["id"],
                 offset: "-=0",
+                duration: 300,
+                translateX: current["loc"] - 51,
+                translateY: 200,
                 begin: function(){
-                    $(".change").removeClass("code_running");
-                    $(".swap").removeClass("code_running");
-                    $(".init").removeClass("code_running");
-                    $(".cmp").addClass("code_running");
+                    $(".swap").addClass("code_running");
                 }
             }).add({
-                targets: '#var_j',
-                value: j,
-                duration: 1,
-                round: 1
+                targets: data[j]["id"],
+                offset: "-=300",
+                duration: 300,
+                backgroundColor: "#919191",
+                translateX: data[j]["loc"] + 51,
             })
-            if(data[j]["value"] < data[min]["value"]){
-                sort_timeline.add({
-                    targets: data[min]["id"],
-                    backgroundColor: '#4169e1',
-                    offset: "-=0",
-                    begin: function(){
-                        $(".cmp").removeClass("code_running");
-                        $(".swap").removeClass("code_running");
-                        $(".change").addClass("code_running");
-                    }
-                }).add({
-                    targets: data[j]["id"],
-                    backgroundColor: '#7fd925',
-                    offset: "-=1000",
-                }).add({
-                    targets: '#var_min',
-                    value: j,
-                    duration: 1,
-                    round: 1
-                })
-                min = j;
-            }else{
-                sort_timeline.add({
-                    targets: data[j]["id"],
-                    backgroundColor: '#4169e1',
-                    offset: "-=0",
-                })
-            }
+            data[j]["loc"] += 51;
+            current["loc"] -= 51;
+            data[j+1] = data[j];
+            j--;
         }
-        var cur_offset = "-=" + ((min-i)*300).toString();
+        data[j+1] = current;
         sort_timeline.add({
-            targets: data[min]["id"],
-            translateX: function(){
-                return data[min]["loc"] - (51 * (min - i))
-            },
-            duration: (min - i) * 300 ,
+            targets: current["id"],
             offset: "-=0",
-            easing: 'linear',
-            begin: function(){
-                $(".cmp").removeClass("code_running");
-                $(".change").removeClass("code_running");
-                $(".swap").addClass("code_running");
-            }
-        }).add({
-            targets: data[i]["id"],
-            translateX: function(){
-                return data[i]["loc"] + (51 * (min - i)) ;
-            },
-            duration: (min - i) * 300 ,
-            offset: cur_offset,
-            easing: 'linear'     
-        }).add({
-            targets: data[min]["id"],
-            delay: 500,
-            backgroundColor: '#919191',
-            offset: "-=0"
+            backgroundColor: "#919191",
+            translateX: current["loc"],
+            translateY: 0
         })
-        data[i]["loc"] += 51 * (min - i);
-        data[min]["loc"] -= 51 * (min - i);
-        // swap
-        var tmp = data[min];
-        data[min] = data[i];
-        data[i] = tmp;
     }
-    sort_timeline.add({
-        targets: data[data.length-1]["id"],
-        backgroundColor: "#919191"
-    })
     return sort_timeline;
 }
 

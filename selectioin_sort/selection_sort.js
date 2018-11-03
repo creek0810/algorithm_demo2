@@ -26,7 +26,6 @@ function sort(){
                 $(".swap").removeClass("code_running");
                 $(".cmp").removeClass("code_running");
                 $(".init").addClass("code_running");
-                console.log("hi");
             }
         }).add({
             targets: '#var_i',
