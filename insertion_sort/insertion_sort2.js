@@ -23,18 +23,51 @@ function sort(){
             offset: "-=0",
             backgroundColor: '#7fd925',
             translateY: 200,
+            begin: function(){
+                $(".cmp").removeClass("code_running");
+                $(".swap").removeClass("code_running");
+                $(".init_cur").addClass("code_running");
+            }
+        }).add({
+            targets: '#var_j',
+            value: j,
+            duration: 1,
+            round: 1,
+            begin: function(){
+                $(".init_j").addClass("code_running");
+                $(".init_cur").removeClass("code_running");
+            }
+        }).add({
+            delay: 500,
+            targets: '#var_current',
+            value: current["value"],
+            duration: 1,
+            round: 1
         })
-        while(j >= 0 && data[j]["value"] > current["value"]){
+        while(true){
             sort_timeline.add({
-                targets: data[j]["id"],
-                backgroundColor: '#ffa500',
-            }).add({
+                targets: current["id"],
+                offset: "-=0",
+                duration: 300,
+                translateX: current["loc"],
+                translateY: 200,
+                begin: function(){
+                    $(".cmp").addClass("code_running");
+                    $(".swap").removeClass("code_running");
+                    $(".init_j").removeClass("code_running");
+                }
+            })
+            if(j<0 || data[j]["value"] < current["value"]){
+                break;
+            }
+            sort_timeline.add({
                 targets: current["id"],
                 offset: "-=0",
                 duration: 300,
                 translateX: current["loc"] - 51,
                 translateY: 200,
                 begin: function(){
+                    $(".cmp").removeClass("code_running");
                     $(".swap").addClass("code_running");
                 }
             }).add({
@@ -47,6 +80,12 @@ function sort(){
             data[j]["loc"] += 51;
             current["loc"] -= 51;
             data[j+1] = data[j];
+            sort_timeline.add({
+                targets: '#var_j',
+                value: j-1,
+                duration: 1,
+                round: 1,
+            })
             j--;
         }
         data[j+1] = current;

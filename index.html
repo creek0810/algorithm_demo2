@@ -6,44 +6,40 @@
   <!-- jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
   <!-- smart menu-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/jquery.smartmenus.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap/jquery.smartmenus.bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.js"></script>
   <!-- css -->
   <link rel="stylesheet" href="main.css">
-
 </head>
 <body>
-  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="./index.html">Algorithm Demo</a>
-    </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="./index.html">Home</a></li>
-        <li><a href="#">Algorithm <span class="caret"></span></a>
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <a class="navbar-brand" href="./index.html">Algorithm Demo</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="nav navbar-nav mr-auto">
+        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#">Algorithm</a>
           <ul class="dropdown-menu">
-            <li><a href="#">Sort<span class="caret"></span></a>
+            <li class="dropdown active"><a class="dropdown-item dropdown-toggle" href="#">Sort</a>
               <ul class="dropdown-menu">
-                <li><a href="./bubble_sort/index.html">Bubble Sort</a></li>
-                <li><a href="./selectioin_sort/index.html">Selection Sort</a></li>
-                <li><a href="./insertion_sort/index.html">Insertion Sort</a></li>
+                <li><a class="dropdown-item" href="./bubble_sort/index.html">Bubble sort</a></li>
+                <li><a class="dropdown-item" href="./selectioin_sort/index.html">Selection sort</a></li>
+                <li><a class="dropdown-item" href="./insertion_sort/index.html">Insertion sort</a></li>
               </ul>
             </li>
-            <li><a href="#">Data Structure</a></li>
           </ul>
         </li>
-        <li><a href="#">Document</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Data structure</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Document</a></li>
       </ul>
-    </div><!--/.nav-collapse -->
-  </div>
+    </div>
+  </nav>
 </body>
 </html>
