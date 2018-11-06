@@ -36,7 +36,6 @@ function sort(){
                 begin: function(){
                     $(".cmp").addClass("code_running");
                     $(".swap").removeClass("code_running");
-
                 }
             })
             
@@ -69,7 +68,6 @@ function sort(){
                 backgroundColor: '#4169e1',
                 offset: "-=0",
             })
-
         }
         sort_timeline.add({
             targets: data[data.length-1-i]["id"],
@@ -79,19 +77,25 @@ function sort(){
     return sort_timeline;
 }
 
-function info_change(mode){
-    // mode 0 = info
+function info_change(mode){ // mode 0 = info
     // mode 1 = trace
     mode = parseInt(mode);
     var option = ["info", "trace"];
+    // delete remain
+    $(".remain").css("display", "none");
     // add class and show information
     $("#"+option[mode]).addClass("button-enabled");
-    $("."+option[mode]).css("opacity", 1);
-    // delete class
+    if(mode == 0){
+        $("."+option[mode]).css("display", "block");
+    }else{
+        $("."+option[mode]).css("display", "flex");
+    }
+    // delete class and hide information
     $("#"+option[(mode+1)%2]).removeClass("button-enabled");
-    $("."+option[(mode+1)%2]).css("opacity", 0);
+    $("."+option[(mode+1)%2]).css("display", "none");
     console.log(mode);
 }
+
 function init(){
     // init graph
     for(var i=0;i<data.length;i++){
@@ -111,6 +115,7 @@ function init(){
     // mode 1 = trace
     $("#info").click(function(){
         info_change(0);
+        console.log("start!");
     });
     $("#trace").click(function(){
         info_change(1);

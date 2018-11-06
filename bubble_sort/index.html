@@ -15,7 +15,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/jquery.smartmenus.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.js"></script>
   <!-- css and js -->
-  <link rel="stylesheet" href="bubble_sort.css">
+  <link rel="stylesheet" href="../main.css">
   <script src="../anime.min.js"></script>
   <script src="bubble_sort.js"></script>
 </head>
@@ -45,15 +45,11 @@
     </div>
   </nav>
   <!-- main -->
-  </div>
-    <div class="container-fluid" style="margin-top:80px">
-        <div>
-            <button id="start" class="btn btn-primary">Start</button>
-            <button id="pause" class="btn btn-primary">Pause</button>
-            <button id="restart" class="btn btn-primary">Restart</button>
-            <input id="progress_bar" name="Progress bar"type="range" min="0" max="100" value="0">
-        </div>
-        <div id="graph">
+  <div class="container-fluid" style="margin-top:81px">
+    <div class="row">   
+      <div class="col-md-5 offset-md-1">
+        <div class="dashboard_anime">
+          <div class="graph">
             <div class="rec" id="data0"></div>
             <div class="rec" id="data1"></div>
             <div class="rec" id="data2"></div>
@@ -61,34 +57,53 @@
             <div class="rec" id="data4"></div>
             <div class="rec" id="data5"></div>
             <div class="rec" id="data6"></div>
+          </div>
         </div>
-        <div class="information">
-           <div class="menu">
-             <input id="trace" type="button" value="trace" class="button">
-             <input id="info" type="button" value="info" class="button">
-           </div>
-           <div class="info">
-
-           </div>
-           <div class="trace">
+        <div class="anime_btn">
+            <button id="start" class="btn">Start</button> 
+            <button id="pause" class="btn">Pause</button> 
+            <button id="restart" class="btn">Restart</button> 
+            <input id="progress_bar" name="Progress bar"type="range" min="0" max="100" value="0">
+        </div>
+      </div>
+      <div class="col-md-5 col-xs-12"> 
+        <div>
+          <div class="dashboard_name"> <span class="name">Name: Bubble sort</span></div>
+          <div class="dashboard_info">
+            <div class="content">
+              <div class="info">
+                <p>Time complexity: O(x<sup>2</sup>)</p>
+                <p>Space complexity: &Theta;(1)</p>
+                <p>Data structure: Array</p>
+                <p>Detail: Stable sort</p>
+              </div>
+              <div class="trace">
                 <div id="code">
-                   <h2>Psudo code</h2>
-                    void bubble_sort (vector&lt;int&gt;&amp;array){<br>
-                    <tab1> for(int i = 0; i &lt; array.size(); i++){</tab1>
-                    <tab2> for(int j = 0; j &lt; array.size() - i - 1; j++){<tab2>
-                    <tab3><span class="cmp"> if (array[j] &gt; array[j+1])</span></tab3>
-                    <tab4><span class="swap">swap(array[j], array[j+1])</span></tab4>
-                    <tab2> }</tab2>
-                    <tab1> }</tab1>
-                    }<br>
+                  <h3>Code</h3>
+                  void bubble_sort(vector<int>&array){
+                  <tab1>for(int i = 1; i &lt; array.size(); i++){</tab1>                          
+                  <tab2>for(int j = 0; j &lt; array.size() - i - 1; j++)</tab2>
+                  <tab3><span class="cmp">if(array[j] > array[j+1])</span></tab3>
+                  <tab4><span class="swap">swap(array[j], array[j+1])</span></tab4>
+                  <tab2>}</tab2>
+                  <tab1>}</tab1>
+                  }
                 </div>
                 <div id="var">
-                    <h2>Variable</h2>
-                    i: <input type="text" id="var_i" value="0" disabled><br>
-                    j: <input type="text" id="var_j" value="0" disabled>
-               </div>
+                  <h3>Variable</h3>
+                    i: <input type="text" id="var_i" value="0" class="var" disabled><br>
+                    j: <input type="text" id="var_j" value="0" class="var"disabled><br>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="info_btn">
+            <input id="trace" type="button" value="trace" class="info_button">
+            <input id="info" type="button" value="info" class="info_button">
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </body>
 </html>

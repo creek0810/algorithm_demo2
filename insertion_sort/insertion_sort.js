@@ -1,86 +1,131 @@
+
 // the data of current state
-var data = [{"id": "#data0","value": 5,"loc_x": 0,"loc_y": 0},
-            {"id": "#data1","value": 2,"loc_x": 0,"loc_y": 0},
-            {"id": "#data2","value": 7,"loc_x": 0,"loc_y": 0},
-            {"id": "#data3","value": 3,"loc_x": 0,"loc_y": 0},
-            {"id": "#data4","value": 9,"loc_x": 0,"loc_y": 0},
-            {"id": "#data5","value": 1,"loc_x": 0,"loc_y": 0},
-            {"id": "#data6","value": 4,"loc_x": 0,"loc_y": 0}];
-// const data
-var Data = jQuery.extend(true, [], data);
-// to store if it is the first time that the program run
-var flag=true;
-// move animate
-function move_x(target,dis) {
-  return new Promise(function(resolve,reject){
-      var pos = target["loc_x"];
-      var des = pos+dis;
-      target["loc_x"]=des;
-      var id = setInterval(frame, 2);
-      function frame() {
-          if (pos == des) {
-          clearInterval(id);
-      } else {
-          if(pos>des){
-              pos--;
-          }else{
-              pos++;
-          }
-          $(target["id"]).css("left",pos+"px");
-      }
-    }
-    setTimeout(function(){
-        return resolve();
-    },dis*2+700);
-  })
-}
-function move_y(target,dis) {
-  return new Promise(function(resolve,reject){
-      var pos = target["loc_y"];
-      var des = pos+dis;
-      target["loc_y"]=des;
-      var id = setInterval(frame, 2);
-      function frame() {
-          if (pos == des) {
-          clearInterval(id);
-      } else {
-          if(pos>des){
-              pos-=5;
-          }else{
-              pos+=5;
-          }
-          $(target["id"]).css("top",pos+"px");
-      }
-    }
-    setTimeout(function(){
-        return resolve();
-    },500);
-  })
-}
-function swap(a,b) {
-    return new Promise(async function (resolve, reject) {
-        if(a==b){
-            return resolve();
-        }else{
-            move(a,(b-a)*51);
-            await move(b,(b-a)*51*-1);
-            //setTimeout(function()
-                var tmp=data[a];
-                data[a]=data[b];
-                data[b]=tmp;
-                return resolve();
-        //    },1500);
+var data = [{"id": "#data0","value": 5,"loc": 0},
+            {"id": "#data1","value": 2,"loc": 0},
+            {"id": "#data2","value": 7,"loc": 0},
+            {"id": "#data3","value": 3,"loc": 0},
+            {"id": "#data4","value": 9,"loc": 0},
+            {"id": "#data5","value": 1,"loc": 0},
+            {"id": "#data6","value": 4,"loc": 0}];
+
+function sort(){
+    var sort_timeline = anime.timeline({
+        autoplay: false,
+        update: function(anim){
+            $("#progress_bar").val(anim.progress);
         }
-    })
-};
-function wait(k) {
-    return new Promise(function (resolve, reject) {
-        setTimeout(function(){
-        resolve();
-        },k);
-    })
-};
-$(document).ready(function(){
+    });
+    // build anime timeline
+    for (var i = 0; i < data.length; i++){
+        var current = data[i];
+        var j = i - 1;
+        sort_timeline.add({
+            targets: current["id"],
+            offset: "-=0",
+            backgroundColor: '#7fd925',
+            translateY: 200,
+            begin: function(){
+                $(".end").removeClass("code_running");
+                $(".init_cur").addClass("code_running");
+            }
+        }).add({
+            targets: '#var_current',
+            value: current["value"],
+            offset: "-=1000",
+            duration: 1,
+            round: 1
+        }).add({
+            targets: '#var_j',
+            value: j,
+            duration: 1,
+            round: 1,
+            offset: "-=500",
+            begin: function(){
+                $(".init_j").addClass("code_running");
+                $(".init_cur").removeClass("code_running");
+            }
+        })
+        while(true){
+            sort_timeline.add({
+                targets: current["id"],
+                offset: "-=0",
+                duration: 300,
+                translateX: current["loc"],
+                translateY: 200,
+                begin: function(){
+                    $(".cmp").addClass("code_running");
+                    $(".swap").removeClass("code_running");
+                    $(".init_j").removeClass("code_running");
+                }
+            })
+            if(j<0 || data[j]["value"] < current["value"]){
+                break;
+            }
+            sort_timeline.add({
+                targets: current["id"],
+                offset: "-=0",
+                duration: 300,
+                translateX: current["loc"] - 51,
+                translateY: 200,
+                begin: function(){
+                    $(".cmp").removeClass("code_running");
+                    $(".swap").addClass("code_running");
+                }
+            }).add({
+                targets: data[j]["id"],
+                offset: "-=300",
+                duration: 300,
+                backgroundColor: "#919191",
+                translateX: data[j]["loc"] + 51,
+            })
+            data[j]["loc"] += 51;
+            current["loc"] -= 51;
+            data[j+1] = data[j];
+            sort_timeline.add({
+                targets: '#var_j',
+                value: j-1,
+                duration: 1,
+                round: 1,
+            })
+            j--;
+        }
+        data[j+1] = current;
+        sort_timeline.add({
+            targets: current["id"],
+            offset: "-=0",
+            backgroundColor: "#919191",
+            translateX: current["loc"],
+            translateY: 0,
+            begin: function(){
+                $(".swap").removeClass("code_running");
+                $(".cmp").removeClass("code_running");
+                $(".end").addClass("code_running");
+            }
+        })
+    }
+    return sort_timeline;
+}
+
+function info_change(mode){ // mode 0 = info
+    // mode 1 = trace
+    mode = parseInt(mode);
+    var option = ["info", "trace"];
+    // delete remain
+    $(".remain").css("display", "none");
+    // add class and show information
+    $("#"+option[mode]).addClass("button-enabled");
+    if(mode == 0){
+        $("."+option[mode]).css("display", "block");
+    }else{
+        $("."+option[mode]).css("display", "flex");
+    }
+    // delete class and hide information
+    $("#"+option[(mode+1)%2]).removeClass("button-enabled");
+    $("."+option[(mode+1)%2]).css("display", "none");
+    console.log(mode);
+}
+
+function init(){
     // init graph
     for(var i=0;i<data.length;i++){
         var target = data[i]["id"];
@@ -88,63 +133,20 @@ $(document).ready(function(){
         $(target).css("line-height",(data[i]["value"]*34-15)+"px");
         $(target).height(data[i]["value"]*17);
     }
-    $("#start").click(async function(){
-        // to diasable the start button
-        $("#start").attr("disabled",true);
-        // check if graph need to reset
-        if(flag==false){
-            for(var i=0;i<Data.length;i++){
-                var target = Data[i]["id"];
-                $(target).css("left",0+"px");
-                $(data[data.length-i-1]["id"]).toggleClass("rec_finish",false);
-                $(data[data.length-i-1]["id"]).toggleClass("rec",true);
-            }
-            data=jQuery.extend(true, [], Data);
-            await wait(500);
-        }
-        // insertion sort
-        $(data[0]["id"]).toggleClass("rec",false);
-        $(data[0]["id"]).toggleClass("rec_finish",true);
-        for(var i=1;i<data.length;i++){
-            await wait(200);
-            var j=i-1,current=data[i];
-            $("#var_i").text("i: "+i);
-            $("#var_j").text("j: "+j);
-            $("#var_current").text("current: "+current["value"]);
-            $(current["id"]).toggleClass("rec_current",true);
-            $(current["id"]).toggleClass("rec",false);
-            await move_y(current,250);
-            $(data[j]["id"]).toggleClass("rec_finish",false);
-            $(data[j]["id"]).toggleClass("rec_cmp",true);
-            await wait(300);
-            $(data[j]["id"]).toggleClass("rec_cmp",true);
-            while(j>=0 && data[j]["value"]>current["value"]){
-                await wait(300);
-                move_x(current,-51);
-                await move_x(data[j],51);
-                data[j+1]=data[j];
-                $(data[j]["id"]).toggleClass("rec_cmp",false);
-                $(data[j]["id"]).toggleClass("rec_finish",true);
-                j--;
-                $("#var_j").text("j: "+j);
-                if(j>=0){
-                    await wait(100);
-                    $(data[j]["id"]).toggleClass("rec_cmp",true);
-                    $(data[j]["id"]).toggleClass("rec_finish",false);
-                }
-
-            }
-            if(j>=0){
-                $(data[j]["id"]).toggleClass("rec_cmp",false);
-                $(data[j]["id"]).toggleClass("rec_finish",true);
-            }
-            data[j+1]=current;
-            move_y(current,-250);
-            $(current["id"]).toggleClass("rec_current",false);
-            $(current["id"]).toggleClass("rec_finish",true);
-        }
-        console.log(data);
-        flag=false;
-        $("#start").attr("disabled",false);
+    result = sort();
+    $("#start").click(result.play);
+    $("#pause").click(result.pause);
+    $("#restart").click(result.restart);
+    $("#progress_bar").on("input change", function(){
+        result.seek(result.duration * ($("#progress_bar").val()/100));
     })
-});
+    // mode 0 = info
+    // mode 1 = trace
+    $("#info").click(function(){
+        info_change(0);
+    });
+    $("#trace").click(function(){
+        info_change(1);
+    });
+}
+$(document).ready(init,false);
