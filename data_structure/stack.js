@@ -1,10 +1,45 @@
 var stack_top = 0;
 var easter_egg_try = 0
 function stack_push(){
+    var fallen_time = 0;
     var data = $("#num").val();
-    var node = "<div class=\"rec\">" + data.toString() + "</div>";
-    $(".data").prepend(node);
-    stack_top++;
+    var anime_node = "<div class=\"anime_rec\">" + data.toString() + "</div>";
+    $("body").prepend(anime_node);
+    var timeline = anime.timeline();
+    timeline.add({
+        targets: '#pic',
+        duration: 2000,
+        easing: 'linear',
+        translateX: -1450,
+    }).add({
+        targets: '.anime_rec',
+        duration: 2000,
+        offset: "-=2000",
+        easing: 'linear',
+        translateX: -1461,
+    }).add({
+        targets: '.anime_rec',
+        duration: 1500,
+        offset: 2000,
+        translateX: -1461,
+        translateY: 379 - (32)*stack_top,
+        easing: 'linear',
+        complete: function(){
+            $(".anime_rec").remove();
+            var node = "<div class=\"rec\">" + data.toString() + "</div>";
+            $(".data").prepend(node);
+            stack_top++;
+        }
+    }).add({
+        targets: '#pic',
+        duration: 600,
+        easing: 'linear',
+        translateX: -2000,
+    }).add({
+        targets: '#pic',
+        duration: 1,
+        translateX: 0,
+    });
 }
 function stack_top(){
 
@@ -49,5 +84,6 @@ function init(){
     $("#trace").click(function(){
         info_change(1);
     });
+    
 }
 $(document).ready(init,false);
