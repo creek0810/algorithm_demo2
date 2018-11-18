@@ -67,14 +67,12 @@ body{
     z-index: 5;
 }
 #pic{
-    -webkit-transform: rotateY(180deg);
     width: 150px;
     position: absolute;
     left: 1700px;
     top: 20px;
 }
 iframe{
-
     -webkit-transform: rotateY(180deg);
 }
 
