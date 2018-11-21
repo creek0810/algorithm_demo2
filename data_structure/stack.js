@@ -58,7 +58,74 @@ function stack_pop(){
         alert("the stack is empty!!");
         easter_egg_try++;
     }else{
-        $(".rec:last").remove();
+        // add anime_rec
+        var anime_node = "<div class=\"anime_rec_pop\">" + $(".rec:first").text() + "</div>";
+        $("body").prepend(anime_node);
+        var myClient = $('.rec:first')[0].getBoundingClientRect();
+        $(".anime_rec_pop").css("left",myClient.left);
+        $(".anime_rec_pop").css("top",myClient.top);
+        $(".rec:first").remove();
+        // add rope
+        var rope_node = "<div class=\"rope\">" + "</div>";
+        $("body").prepend(rope_node);
+        $(".rope").css("left",LEFT + 30);
+        $(".rope").css("top",125);
+        var rec_final_y = 130 - $('.anime_rec_pop')[0].getBoundingClientRect().top;
+        var timeline = anime.timeline();
+        timeline.add({
+            targets: '#pic',
+            duration: 2000,
+            easing: 'linear',
+            translateX: function(){
+                return LEFT - 1800 ;
+            },
+            complete: function(){
+                $(".rope").css("opacity",1);
+            }
+        }).add({
+            delay: 500,
+            targets: '.rope',
+            duration: 2000,
+            height: function(){
+               var rope_top = $('.rope')[0].getBoundingClientRect().top;
+               console.log(myClient.top - rope_top);
+               return myClient.top - rope_top;
+            },
+            easing: 'linear'
+        }).add({
+            targets: '.rope',
+            duration: 2000,
+            height: 1,
+            easing: 'linear'
+        }).add({
+            targets: '.anime_rec_pop',
+            easing: 'linear',
+            duration: 2000,
+            offset: "-=2000",
+            translateY: rec_final_y
+        }).add({
+           targets: '.anime_rec_pop',
+           translateX: -LEFT-200,
+           translateY: rec_final_y,
+           duration: 600,
+           easing:'linear',
+           begin: function(){
+               $(".rope").css("opacity",0);
+           }
+        }).add({
+            targets: '#pic',
+            duration: 600,
+            easing: 'linear',
+            offset: "-=600",
+            translateX: -2000,
+        }).add({
+            targets: '#pic',
+            duration: 1,
+            translateX: 0,
+            complete: function(){
+                $(".anime_rec_pop").remove()
+            }
+        });
         stack_top--;
     }
 }
