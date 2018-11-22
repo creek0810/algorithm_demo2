@@ -17,13 +17,20 @@ tab4{
 body{
     background: #3D424E;
 }
-.bound{
+.bound_stack{
     border-radius: 5px;
     background: #3D424E;
     width: 7px;
     height: 350px;
     position: relative;
-    top: px; 
+}
+.bound_queue{
+    border-radius: 5px;
+    background: #3D424E;
+    width: 7px;
+    height: 300px;
+    position: relative;
+    margin-bottom: 50px;
 }
 .data{
     width: 100px;
@@ -81,11 +88,17 @@ body{
     left: 1700px;
     top: 20px;
 }
-iframe{
+#pic_mouse{
+    width: 150px;
+    position: absolute;
+    left: 1700px;
+    top: 20px;
+    z-index: 5;
+}
+.heli{
     margin-left: 10px;
     -webkit-transform: rotateY(180deg);
 }
-
 .rope{
     position: absolute;
     opacity: 0;
@@ -94,8 +107,9 @@ iframe{
     background-color: #ffa600;
     z-index: 10;
 }
-
-
+.mouse{
+    height: 40px; 
+}
 .dashboard_anime{
     border: solid;
     border-width: 4px;

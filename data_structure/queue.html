@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Stack</title>
+  <title>Queue</title>
   <!-- jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- bootstrap -->
@@ -17,10 +17,11 @@
   <!-- css and js -->
   <link rel="stylesheet" href="general.css">
   <script src="../anime.min.js"></script>
-  <script src="stack.js"></script>
+  <script src="queue.js"></script>
 </head>
 <body>
   <div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>
+  <div id="pic_mouse"><iframe src="mouse.svg" frameborder="0" class="mouse"></iframe></div>
   <!-- navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
     <a class="navbar-brand" href="../index.html">Algorithm Demo</a>
@@ -55,9 +56,9 @@
       <div class="col-md-5 offset-md-1">
         <div class="dashboard_anime">
           <div class="graph">
-              <div class="left_bound bound_stack"></div>
+              <div class="left_bound bound_queue"></div>
               <div class="data"></div>
-              <div class="right_bound bound_stack"></div>
+              <div class="right_bound bound_queue"></div>
           </div>
         </div>
         <div class="anime_btn">
@@ -69,7 +70,7 @@
       </div>
       <div class="col-md-5 col-xs-12"> 
         <div>
-          <div class="dashboard_name"> <span class="name">Name: Stack</span></div>
+          <div class="dashboard_name"> <span class="name">Name: Queue</span></div>
           <div class="dashboard_info">
             <div class="content">
               <div class="info">
