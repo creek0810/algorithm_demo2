@@ -58,65 +58,58 @@ function stack_pop(){
         alert("the stack is empty!!");
         easter_egg_try++;
     }else{
+        // check mouse y position
+        var bound_pos = $('.left_bound')[0].getBoundingClientRect();
+        $("#pic_mouse").css("top", bound_pos.top + 310);
         // add anime_rec
         var anime_node = "<div class=\"anime_rec_pop\">" + $(".rec:last").text() + "</div>";
         $("body").prepend(anime_node);
         var rec_pos = $('.rec:last')[0].getBoundingClientRect();
         $(".anime_rec_pop").css("left",rec_pos.left);
         $(".anime_rec_pop").css("top",rec_pos.top);
+        $(".rec:last").css("opacity",0);
         var rec_final_y = 130 - $('.anime_rec_pop')[0].getBoundingClientRect().top;
         var mouse_des = rec_pos.left - 1755;
-        $(".rec:last").remove();
-
         var timeline = anime.timeline();
         timeline.add({
             targets: '#pic_mouse',
             duration: 2000,
             easing: 'linear',
-            translateX: mouse_des
+            translateX: mouse_des,
         }).add({
             delay: 500,
             targets: '#pic_mouse',
+            duration: 292,
+            translateX: function(){
+                return mouse_des - 117;
+            },
+            easing: 'linear',
+            complete: function(){
+                $(".rec:last").remove();
+            }
+        }).add({
+            targets: '.anime_rec_pop',
             duration: 2000,
+            offset: "-=292",
+            translateX: -800,
+            easing: 'linear',
+        }).add({
+            targets: '#pic_mouse',
+            easing: 'linear',
+            duration: 1708,
+            offset: "-=1708",
             translateX: function(){
                 return mouse_des - 800;
             },
-            easing: 'linear'
         }).add({
-            targets: '.anime_rec_pop',
-            duration: 2000,
-            offset: "-=2000",
-            translateX: -800,
-            easing: 'linear'
-        })/*.add({
-            targets: '.anime_rec_pop',
-            easing: 'linear',
-            duration: 2000,
-            offset: "-=2000",
-            translateY: rec_final_y
-        }).add({
-           targets: '.anime_rec_pop',
-           translateX: -LEFT-200,
-           translateY: rec_final_y,
-           duration: 600,
-           easing:'linear',
-           begin: function(){
-               $(".rope").css("opacity",0);
-           }
-        }).add({
-            targets: '#pic',
-            duration: 600,
-            easing: 'linear',
-            offset: "-=600",
-            translateX: -2000,
-        }).add({
-            targets: '#pic',
+            targets: "#pic_mouse",
+            easing: "linear",
             duration: 1,
             translateX: 0,
             complete: function(){
-                $(".anime_rec_pop").remove()
+                $(".anime_rec_pop").remove();
             }
-        });*/
+        });
         stack_top--;
     }
 }
@@ -137,9 +130,7 @@ function info_change(mode){
     // delete class and hide information
     $("#"+option[(mode+1)%2]).removeClass("button-enabled");
     $("."+option[(mode+1)%2]).css("display", "none");
-    console.log(mode);
 }
-
 function init(){
     $("#push").click(stack_push);
     $("#top").click(stack_top);
@@ -152,8 +143,5 @@ function init(){
     $("#trace").click(function(){
         info_change(1);
     });
-    // check mouse y position
-    var bound_pos = $('.left_bound')[0].getBoundingClientRect();
-    $("#pic_mouse").css("top",bound_pos.top + 310);
 }
 $(document).ready(init,false);

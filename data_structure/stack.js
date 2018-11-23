@@ -1,13 +1,47 @@
 var stack_top = 0;
 var easter_egg_try = 0
 var LEFT = 0;
+var heli_count = 0;
+function content_change(command){
+    // command 0 = push 
+    // command 1 = pop 
+    if(command == 1){
+        var code = "<h3>Code</h3>" +
+                   "int stack[11] = {0};<br>" +
+                   "int top = 0;<br>" + 
+                   "void pop(int stack[]){" +
+                   "<tab1>if(top == 0){</tab1>" +
+                   "<tab2>printf(\"the stack is empty\");</tab2>" + 
+                   "<tab1>}else{</tab1>" +
+                   "<tab2>top--;</tab2>" +
+                   "<tab1>}</tab1>" +
+                   "}";
+        $("#code").html(code);
+    }else{
+        var code = "<h3>Code</h3>" +
+                   "int stack[11] = {0};<br>" +
+                   "int top = 0;<br>" + 
+                   "void push(int stack[], int data){" +
+                   "<tab1>if(top == 11){</tab1>" + 
+                   "<tab2>printf(\"the stack is full\");</tab2>" +
+                   "<tab1>}else{</tab1>" +
+                   "<tab2>stack[top++] = data;</tab2>" +
+                   "<tab1>}</tab1>" +
+                   "}";
+        $("#code").html(code);
+    } 
+}
 function stack_push(){
+    // change the content of code trace
+    content_change(0);
+    // add anime_rec
     var myClient = $('.data')[0].getBoundingClientRect();
     LEFT = myClient.left + 15; 
     var fallen_time = 0;
     var data = $("#num").val();
     var anime_node = "<div class=\"anime_rec\">" + data.toString() + "</div>";
     $("body").prepend(anime_node);
+    // start anime
     var timeline = anime.timeline();
     timeline.add({
         targets: '#pic',
@@ -16,6 +50,10 @@ function stack_push(){
         translateX: function(){
             return LEFT - 1800 ;
         },
+        begin: function(){
+            $("#push").attr("disabled",true);
+            $("#pop").attr("disabled",true);
+        }
     }).add({
         targets: '.anime_rec',
         duration: 2000,
@@ -48,6 +86,10 @@ function stack_push(){
         targets: '#pic',
         duration: 1,
         translateX: 0,
+        complete: function(){
+            $("#push").attr("disabled",false);
+            $("#pop").attr("disabled",false);
+        }
     });
 }
 function stack_top(){
@@ -58,6 +100,8 @@ function stack_pop(){
         alert("the stack is empty!!");
         easter_egg_try++;
     }else{
+        // change content of code trace
+        content_change(1);
         // add anime_rec
         var anime_node = "<div class=\"anime_rec_pop\">" + $(".rec:first").text() + "</div>";
         $("body").prepend(anime_node);
@@ -71,6 +115,7 @@ function stack_pop(){
         $(".rope").css("left",LEFT + 30);
         $(".rope").css("top",125);
         var rec_final_y = 130 - $('.anime_rec_pop')[0].getBoundingClientRect().top;
+        // start anime
         var timeline = anime.timeline();
         timeline.add({
             targets: '#pic',
@@ -78,6 +123,10 @@ function stack_pop(){
             easing: 'linear',
             translateX: function(){
                 return LEFT - 1800 ;
+            },
+            begin: function(){
+                $("#push").attr("disabled", true);
+                $("#pop").attr("disabled", true);
             },
             complete: function(){
                 $(".rope").css("opacity",1);
@@ -88,7 +137,6 @@ function stack_pop(){
             duration: 2000,
             height: function(){
                var rope_top = $('.rope')[0].getBoundingClientRect().top;
-               console.log(myClient.top - rope_top);
                return myClient.top - rope_top;
             },
             easing: 'linear'
@@ -124,6 +172,8 @@ function stack_pop(){
             translateX: 0,
             complete: function(){
                 $(".anime_rec_pop").remove()
+                $("#push").attr("disabled",false);
+                $("#pop").attr("disabled",false);
             }
         });
         stack_top--;
@@ -146,37 +196,7 @@ function info_change(mode){
     // delete class and hide information
     $("#"+option[(mode+1)%2]).removeClass("button-enabled");
     $("."+option[(mode+1)%2]).css("display", "none");
-    console.log(mode);
 }
-function getPosition (element) {
-  console.log(element);
-  var x = 0;
-  var y = 0;
-  // 搭配上面的示意圖可比較輕鬆理解為何要這麼計算
-  while ( element ) {
-  console.log(element);
-    x += element.offsetLeft - element.scrollLeft + element.clientLeft;
-    y += element.offsetTop - element.scrollLeft + element.clientTop;
-    element = element.offsetParent;
-  }
-  console.log(x);
-  return { x: x, y: y };
-}
-function getElementLeft(element){
-　　　　var actualLeft = element.offsetLeft;
-　　　　var current = element.offsetParent;
-console.log(actualLeft);
-
-　　　　while (current !== null){
-    
-        console.log(current);
-　　　　　　actualLeft += current.offsetLeft;
-　　　　　　current = current.offsetParent;
-　　　　}
-
-        console.log(actualLeft);
-　　　　return actualLeft;
-　　}
 function init(){
     $("#push").click(stack_push);
     $("#top").click(stack_top);
