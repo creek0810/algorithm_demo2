@@ -16,7 +16,8 @@ function content_change(command){
                    "<tab2>top--;</tab2>" +
                    "<tab1>}</tab1>" +
                    "}";
-        $("#code").html(code);
+        var info = "Function: Pop<br>" +
+                   "Time complexity: O(1)<br>";
     }else{
         var code = "<h3>Code</h3>" +
                    "int stack[11] = {0};<br>" +
@@ -28,12 +29,20 @@ function content_change(command){
                    "<tab2>stack[top++] = data;</tab2>" +
                    "<tab1>}</tab1>" +
                    "}";
-        $("#code").html(code);
+        var info = "Function: Push<br>" +
+                   "Time complexity: O(1)<br>";
     } 
+    $("#code").html(code);
+    $(".info").html(info);
+
 }
 function stack_push(){
     // change the content of code trace
     content_change(0);
+    if(stack_top == 11){
+        window.alert("the stack is full");
+        return;
+    }
     // add anime_rec
     var myClient = $('.data')[0].getBoundingClientRect();
     LEFT = myClient.left + 15; 
@@ -64,7 +73,9 @@ function stack_push(){
         } 
     }).add({
         targets: '.anime_rec',
-        duration: 1500,
+        duration: function(){
+            return (379 - (32) * stack_top) * 5;
+        },
         offset: 2000,
         translateX: function(){
             return LEFT - 1800;
@@ -75,7 +86,6 @@ function stack_push(){
             $(".anime_rec").remove();
             var node = "<div class=\"rec\">" + data.toString() + "</div>";
             $(".data").prepend(node);
-            stack_top++;
         }
     }).add({
         targets: '#pic',
@@ -90,7 +100,14 @@ function stack_push(){
             $("#push").attr("disabled",false);
             $("#pop").attr("disabled",false);
         }
+    }).add({
+        targets: '#var_top',
+        value: stack_top + 1,
+        duration: 1,
+        round: 1,
+        
     });
+    stack_top++;
 }
 function stack_top(){
 
@@ -115,6 +132,10 @@ function stack_pop(){
         $(".rope").css("left",LEFT + 30);
         $(".rope").css("top",125);
         var rec_final_y = 130 - $('.anime_rec_pop')[0].getBoundingClientRect().top;
+        // offset
+        var rope_top = $('.rope')[0].getBoundingClientRect().top;
+        var len = (myClient.top - rope_top) * 5;
+        var dur = "-=" + len.toString();
         // start anime
         var timeline = anime.timeline();
         timeline.add({
@@ -134,7 +155,10 @@ function stack_pop(){
         }).add({
             delay: 500,
             targets: '.rope',
-            duration: 2000,
+            duration: function(){
+                var rope_top = $('.rope')[0].getBoundingClientRect().top;
+                return (myClient.top - rope_top) * 5;
+            },
             height: function(){
                var rope_top = $('.rope')[0].getBoundingClientRect().top;
                return myClient.top - rope_top;
@@ -142,14 +166,21 @@ function stack_pop(){
             easing: 'linear'
         }).add({
             targets: '.rope',
-            duration: 2000,
+            duration: function(){
+                var rope_top = $('.rope')[0].getBoundingClientRect().top;
+                return (myClient.top - rope_top) * 5;
+            },
             height: 1,
             easing: 'linear'
         }).add({
             targets: '.anime_rec_pop',
             easing: 'linear',
-            duration: 2000,
-            offset: "-=2000",
+            duration: function(){
+                console.log(dur);
+                var rope_top = $('.rope')[0].getBoundingClientRect().top;
+                return (myClient.top - rope_top) * 5;
+            },
+            offset: dur,
             translateY: rec_final_y
         }).add({
            targets: '.anime_rec_pop',
@@ -175,6 +206,11 @@ function stack_pop(){
                 $("#push").attr("disabled",false);
                 $("#pop").attr("disabled",false);
             }
+        }).add({
+            targets: '#var_top',
+            value: stack_top - 1,
+            duration: 1,
+            round: 1
         });
         stack_top--;
     }
