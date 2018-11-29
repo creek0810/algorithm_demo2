@@ -47,6 +47,7 @@ function stack_push(){
     var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
     $("body").prepend(heli_node);
     // add anime_rec
+    var myClient = $('.data')[0].getBoundingClientRect();
     LEFT = myClient.left + 15; 
     var data = $("#num").val();
     var anime_rec_node = '<div class="anime_rec">' + data.toString() + '</div>';
