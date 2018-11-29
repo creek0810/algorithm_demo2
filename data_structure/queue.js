@@ -2,12 +2,17 @@ var stack_top = 0;
 var easter_egg_try = 0
 var LEFT = 0;
 function stack_push(){
+    // add helicopter
+    var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
+    $("body").prepend(heli_node);
+    // add anime_rec
     var myClient = $('.data')[0].getBoundingClientRect();
     LEFT = myClient.left + 15; 
     var fallen_time = 0;
     var data = $("#num").val();
-    var anime_node = "<div class=\"anime_rec\">" + data.toString() + "</div>";
+    var anime_node = '<div class="anime_rec">' + data.toString() + '</div>';
     $("body").prepend(anime_node);
+    // start anime
     var timeline = anime.timeline();
     timeline.add({
         targets: '#pic',
@@ -16,6 +21,10 @@ function stack_push(){
         translateX: function(){
             return LEFT - 1800 ;
         },
+        begin: function(){
+            $("#push").attr("disabled",true);
+            $("#pop").attr("disabled",true);
+        }
     }).add({
         targets: '.anime_rec',
         duration: 2000,
@@ -44,10 +53,11 @@ function stack_push(){
         duration: 600,
         easing: 'linear',
         translateX: -2000,
-    }).add({
-        targets: '#pic',
-        duration: 1,
-        translateX: 0,
+        complete: function(){
+            $("#pic").remove();
+            $("#push").attr("disabled",false);
+            $("#pop").attr("disabled",false);
+        }
     });
 }
 function stack_top(){
@@ -58,6 +68,9 @@ function stack_pop(){
         alert("the stack is empty!!");
         easter_egg_try++;
     }else{
+        // add mouse
+        var heli_node = '<div id="pic_mouse"><iframe src="mouse.svg" frameborder="0" class="mouse"></iframe></div>';
+        $("body").prepend(heli_node);
         // check mouse y position
         var bound_pos = $('.left_bound')[0].getBoundingClientRect();
         $("#pic_mouse").css("top", bound_pos.top + 310);
@@ -76,6 +89,10 @@ function stack_pop(){
             duration: 2000,
             easing: 'linear',
             translateX: mouse_des,
+            bagin: function(){
+                $("#push").attr("disabled", true);
+                $("#pop").attr("disabled", true);
+            }
         }).add({
             delay: 500,
             targets: '#pic_mouse',
@@ -105,9 +122,11 @@ function stack_pop(){
             targets: "#pic_mouse",
             easing: "linear",
             duration: 1,
-            translateX: 0,
             complete: function(){
+                $("#pic_mouse").remove();
                 $(".anime_rec_pop").remove();
+                $("#push").attr("disabled", false);
+                $("#pop").attr("disabled", false);
             }
         });
         stack_top--;

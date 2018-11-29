@@ -43,13 +43,14 @@ function stack_push(){
         window.alert("the stack is full");
         return;
     }
+    // add helicopter
+    var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
+    $("body").prepend(heli_node);
     // add anime_rec
-    var myClient = $('.data')[0].getBoundingClientRect();
     LEFT = myClient.left + 15; 
-    var fallen_time = 0;
     var data = $("#num").val();
-    var anime_node = "<div class=\"anime_rec\">" + data.toString() + "</div>";
-    $("body").prepend(anime_node);
+    var anime_rec_node = '<div class="anime_rec">' + data.toString() + '</div>';
+    $("body").prepend(anime_rec_node);
     // start anime
     var timeline = anime.timeline();
     timeline.add({
@@ -84,7 +85,7 @@ function stack_push(){
         easing: 'linear',
         complete: function(){
             $(".anime_rec").remove();
-            var node = "<div class=\"rec\">" + data.toString() + "</div>";
+            var node = '<div class="rec">' + data.toString() + '</div>';
             $(".data").prepend(node);
         }
     }).add({
@@ -95,8 +96,8 @@ function stack_push(){
     }).add({
         targets: '#pic',
         duration: 1,
-        translateX: 0,
         complete: function(){
+            $("#pic").remove();
             $("#push").attr("disabled",false);
             $("#pop").attr("disabled",false);
         }
@@ -119,6 +120,9 @@ function stack_pop(){
     }else{
         // change content of code trace
         content_change(1);
+        // add helicopter
+        var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
+        $("body").prepend(heli_node);
         // add anime_rec
         var anime_node = "<div class=\"anime_rec_pop\">" + $(".rec:first").text() + "</div>";
         $("body").prepend(anime_node);
@@ -200,9 +204,9 @@ function stack_pop(){
         }).add({
             targets: '#pic',
             duration: 1,
-            translateX: 0,
             complete: function(){
                 $(".anime_rec_pop").remove()
+                $("#pic").remove();
                 $("#push").attr("disabled",false);
                 $("#pop").attr("disabled",false);
             }
@@ -235,7 +239,6 @@ function info_change(mode){
 }
 function init(){
     $("#push").click(stack_push);
-    $("#top").click(stack_top);
     $("#pop").click(stack_pop);
     // mode 0 = info
     // mode 1 = trace

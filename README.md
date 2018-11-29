@@ -26,6 +26,7 @@ We now have the demo of the following algorithm or data structures.
 |Gray      |#919191|
 |Green     |#7fd925|
 |Orange    |#ffa600|
+|Background|#3D424E|
 
 ## Authors
 

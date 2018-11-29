@@ -151,11 +151,29 @@ body{
     background-color: royalblue;
     bottom: 10px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+}
+.btn{
+    color: royalblue;
+    background-color: white;
+    font-weight: bold;
+    margin-left: 7px;
+}
+.cmd_another{
+    margin-left: 7px;
+    font-weight: bold;
+    color: white;
+    font-size: 20px;
+}
+#num{
+    background-color: rgba(0, 0, 0, 0.45);
+    border-style: none;
+    color: white;
 }
 #progress_bar{
     width: 55%;
 }
+
 .trace{
     display: none;
     justify-content: flex-start;
