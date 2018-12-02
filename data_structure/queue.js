@@ -1,7 +1,25 @@
 var stack_top = 0;
 var easter_egg_try = 0
 var LEFT = 0;
+function content_change(command){
+    // command 0 = push
+    // command 1 = pop
+    if(command == 1){
+        var code = '<h3>Code</h3>' +
+        'int queue[11] = {0};<br>int front = 0, rear = 0, capacity = 11;<br>void pop(int queue[]){<br><tab1>if(front == rear){</tab1><tab2>printf("Queue is empty");</tab2><tab1>}else{</tab1><tab2>front++;</tab2><tab1>}</tab1>}';
+        var info = "Function: Pop<br>" +
+                   "Time complexity: O(1)<br>";
+    }else{
+        var code = '<h3>Code</h3>int queue[11] = {0};<br>int front = 0, rear = 0, capacity = 11;<br>void push(int queue[], int data){<br><tab1>if((front+1)%capacity == rear){</tab1><tab2>printf("Queue is full");</tab2><tab1>}else{</tab1><tab2>rear = (rear + 1) % capacity;</tab2><tab2>queue[rear] = data;</tab2><tab1>}</tab1>}'
+        var info = "Function: Push<br>" +
+                   "Time complexity: O(1)<br>";
+    }
+    $("#code").html(code);
+    $(".info").html(info);
+}
 function stack_push(){
+    // change the content of code trace
+    content_change(0);
     // add helicopter
     var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
     $("body").prepend(heli_node);
@@ -64,6 +82,8 @@ function stack_top(){
 
 }
 function stack_pop(){
+    // change the content of code trace
+    content_change(1);
     if(stack_top == 0){
         alert("the stack is empty!!");
         easter_egg_try++;

@@ -16,6 +16,7 @@ tab4{
 }
 body{
     background: #3D424E;
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
 .bound_stack{
     border-radius: 5px;
