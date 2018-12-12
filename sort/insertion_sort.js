@@ -134,9 +134,15 @@ function init(){
         $(target).height(data[i]["value"]*17);
     }
     result = sort();
-    $("#start").click(result.play);
+    $("#start").click(function(){
+        info_change(1);
+        result.play();
+    });
     $("#pause").click(result.pause);
-    $("#restart").click(result.restart);
+    $("#restart").click(function(){
+        info_change(1);
+        result.restart();
+    });
     $("#progress_bar").on("input change", function(){
         result.seek(result.duration * ($("#progress_bar").val()/100));
     })
@@ -150,3 +156,5 @@ function init(){
     });
 }
 $(document).ready(init,false);
+// init highlight.js
+hljs.initHighlightingOnLoad();

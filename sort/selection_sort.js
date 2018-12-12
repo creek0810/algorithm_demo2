@@ -161,6 +161,8 @@ function info_change(mode){
     console.log(mode);
 }
 function init(){
+    // init highlight.js
+    hljs.initHighlightingOnLoad();
     // init graph
     for(var i=0;i<data.length;i++){
         var target = data[i]["id"];
@@ -169,9 +171,15 @@ function init(){
         $(target).height(data[i]["value"]*17);
     }
     result = sort();
-    $("#start").click(result.play);
+    $("#start").click(function(){
+        info_change(1);
+        result.play();
+    });
     $("#pause").click(result.pause);
-    $("#restart").click(result.restart);
+    $("#restart").click(function(){
+        info_change(1);
+        result.restart();
+    });
     $("#progress_bar").on("input change", function(){
         result.seek(result.duration * ($("#progress_bar").val()/100));
     })
@@ -185,3 +193,5 @@ function init(){
     });
 }
 $(document).ready(init,false);
+// init highlight.js
+hljs.initHighlightingOnLoad();

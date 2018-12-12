@@ -16,7 +16,6 @@ tab4{
 }
 body{
     background: #3D424E;
-    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
 .bound_stack{
     border-radius: 5px;
@@ -188,7 +187,7 @@ body{
     position: relative;
     height: 70px;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 .content{
     height: 392px;
@@ -202,6 +201,10 @@ body{
 #code, #var{
     font-size: 18px;
     color: white;
+    font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+}
+#code{
+    width: 450px;
 }
 #var{
     font-size: 18px;

@@ -14,6 +14,9 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/jquery.smartmenus.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.js"></script>
+  <!-- highlight -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
   <!-- css and js -->
   <link rel="stylesheet" href="general.css">
   <script src="../anime.min.js"></script>
@@ -73,26 +76,30 @@
       </div>
       <div class="col-md-5 col-xs-12"> 
         <div>
-          <div class="dashboard_name"> <span class="name">Name: Bubble sort</span></div>
+          <div class="dashboard_name"> <span class="name">Name: <span class="cur_name">Bubble sort</span></span></div>
           <div class="dashboard_info">
             <div class="content">
               <div class="info">
-                <p>Time complexity: O(x<sup>2</sup>)</p>
-                <p>Space complexity: &Theta;(1)</p>
-                <p>Data structure: Array</p>
-                <p>Detail: Stable sort</p>
+                <p>Time complexity: <span>O(x<sup>2</sup>)</span></p>
+                <p>Space complexity: <span>&Theta;(1)</span></p>
+                <p>Data structure: <span>Array</span></p>
+                <p>Detail: <span>Stable sort</p>
               </div>
               <div class="trace">
                 <div id="code">
                   <h3>Code</h3>
-                  void bubble_sort(vector<int>&array){
-                  <tab1>for(int i = 1; i &lt; array.size(); i++){</tab1>                          
-                  <tab2>for(int j = 0; j &lt; array.size() - i - 1; j++)</tab2>
-                  <tab3><span class="cmp">if(array[j] > array[j+1])</span></tab3>
-                  <tab4><span class="swap">swap(array[j], array[j+1])</span></tab4>
-                  <tab2>}</tab2>
-                  <tab1>}</tab1>
-                  }
+                  <pre><code>
+void bubble_sort(vector<int>&array){
+    int size =array.size();
+    for(int i = 1; i &lt; size; i++){
+        for(int j = 0; j &lt; size - i - 1; j++){
+            <span class="cmp">if(array[j] > array[j+1]){</span>
+                <span class="swap">swap(array[j], array[j+1]);</span>
+            }
+        }
+    }
+}
+                  </code></pre>
                 </div>
                 <div id="var">
                   <h3>Variable</h3>
@@ -103,8 +110,8 @@
             </div>
           </div>
           <div class="info_btn">
-            <input id="trace" type="button" value="trace" class="info_button">
-            <input id="info" type="button" value="info" class="info_button">
+            <button id="trace" class="btn">trace</button> 
+            <button id="info" class="btn">info</button> 
           </div>
         </div>
       </div>

@@ -13,6 +13,10 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/jquery.smartmenus.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.js"></script>
+  <!-- highlight -->
+  <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
   <!-- css and js -->
   <link rel="stylesheet" href="general.css">
   <script src="selection_sort.js"></script>
@@ -73,30 +77,33 @@
       <div class="col-md-5 col-xs-12">
         <div>
           <div class="dashboard_name">
-              <span class="name">Name: Selection sort</span>
+              <span class="name">Name: <spna class="cur_name">Selection sort</spna></span>
           </div>
           <div class="dashboard_info">
             <div class="content">
                 <div class="info">
-                  <p>Time complexity: O(x<sup>2</sup>)</p>   
-                  <p>Space complexity: O(1)</p>
-                  <p>Data structure: Array </p>
-                  <p>Detail: Stable sort</p>
+                  <p>Time complexity: <span>O(x<sup>2</sup>)</span></p>   
+                  <p>Space complexity: <span>O(1)</span></p>
+                  <p>Data structure: <span>Array</span></p>
+                  <p>Detail: <span>Stable sort</span></p>
                 </div>
                 <div class="trace">
                   <div id="code">
                     <h3>Code</h3>
-                    void selection_sort(vector&lt;int&gt;&amp;array){<br>
-                    <tab1>for(int i = 0; i &lt; array.size() - 1; i++){</tab1>     
-                    <tab2><span class="init">int min = i;</span></tab2>
-                    <tab2>for(int j = i + 1; j &lt; array.size(); j++){</tab2>
-                    <tab3><span class="cmp">if(array[j] &lt; array[min]){</span></tab3>
-                    <tab4><span class="change">min = j;</span></tab4>
-                    <tab3>}</tab3>
-                    <tab3><span class="swap">swap(array[i], array[min]);</span></tab3>  
-                    <tab2>}</tab2>
-                    <tab1>}</tab1>
-                    }<br>
+                    <pre><code class="c++">
+void selection_sort(vector&lt;int&gt;&amp;array){
+    int size = array.size();
+    for(int i = 0; i &lt; size - 1; i++){
+        <span class="init">int min = i;</span>
+        for(int j = i + 1; j &lt; size; j++){
+            <span class="cmp">if(array[j] &lt; array[min]){</span>
+                <span class="change">min = j;</span>
+            }
+        }
+        <span class="swap">swap(array[i], array[min]);</span>
+    }
+}
+                    </code></pre>
                   </div>
                   <div id="var">
                       <h3>Variable</h3>
@@ -108,8 +115,8 @@
             </div>
           </div>
           <div class="info_btn">
-              <input id="trace" type="button" value="trace" class="info_button">
-              <input id="info" type="button" value="info" class="info_button">
+            <button id="trace" class="btn">trace</button> 
+            <button id="info" class="btn">info</button> 
           </div>
           </div>
         </div>
