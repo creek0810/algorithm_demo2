@@ -86,25 +86,19 @@ body{
 }
 #code, #var{
     margin-top: 10px;
-    margin-left: 5px;
     font-size: 18px;
     color: #222831;
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
 }
-#code{
-    margin-left: 20px;
-    width: 450px;
-}
+
 
 #var{
     font-size: 18px;
-    margin-right: 50px;
 }
 .var{
     background-color: #eeeeee;
     color: #0092ca;
     border-style: none;
-    width: 20px;
 }
 .code_running{
     background: yellow;
@@ -167,6 +161,9 @@ span.name{
     color: #0092ca;
 }
 
-
+#var_i, #var_j, #var_current, #var_min {
+    width: 50%;
+    display: inline;
+}
 
 

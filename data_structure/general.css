@@ -1,21 +1,5 @@
-tab1{
-    display: block;
-    text-indent: 2em;
-}
-tab2{
-    display: block;
-    text-indent: 4em;
-}
-tab3{
-    display: block;
-    text-indent: 6em;
-}
-tab4{
-    display: block;
-    text-indent: 8em;
-}
 body{
-    background: #3D424E;
+    background: #393e46;
 }
 .bound_stack{
     border-radius: 5px;
@@ -51,7 +35,7 @@ body{
     align-items: flex-end;
     justify-content: space-between;
     font-size: 18px;
-    color: white;
+    color: #eeeeee;
 }
 .rec{
     border-radius: 5px;
@@ -113,32 +97,31 @@ body{
 .dashboard_anime{
     border: solid;
     border-width: 4px;
-    border-color: white;
-    border-top-color: royalblue;
+    border-color: #eeeeee;
     border-radius: 10px 10px 0px 0px;
-    background-color: white;
+    background-color: #eeeeee;
     height: 450px;
 }
 .dashboard_name{
     border-radius: 10px;
-    font-size: 18px;
-    line-height: 50px;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 40px;
     height: 50px;
     border: solid;
     border-width: 4px;
-    border-color: white;
-    border-top-color: royalblue;
-    background-color: white;
+    border-color: #eeeeee;
+    background-color: #eeeeee;
+    color: #222831;
 }
 .dashboard_info{
     border-radius: 10px 10px 0px 0px;
     position: relative;
     top: 10px;
     border: solid;
-    border-color: royalblue;
+    border-color: #eeeeee;
     border-width: 4px;
-    border-top-color: white;
-    background-color: royalblue;
+    background-color: #eeeeee;
     height: 390px;
 }
 .anime_btn{
@@ -147,28 +130,28 @@ body{
     height: 70px;
     border-radius: 10px;
     border-style: solid;
-    border-color: royalblue;
-    background-color: royalblue;
+    border-color: #0092ca;
+    background-color: #0092ca;
     bottom: 10px;
     align-items: center;
     justify-content: flex-start;
 }
 .btn{
-    color: royalblue;
-    background-color: white;
+    color: #0092ca;
+    background-color: #eeeeee;
     font-weight: bold;
     margin-left: 7px;
 }
 .cmd_another{
     margin-left: 7px;
     font-weight: bold;
-    color: white;
+    color: #eeeeee;
     font-size: 20px;
 }
 #num{
     background-color: rgba(0, 0, 0, 0.45);
     border-style: none;
-    color: white;
+    color: #eeeeee;
 }
 #progress_bar{
     width: 55%;
@@ -182,8 +165,8 @@ body{
     display: flex;
     border-style: solid;
     border-radius: 10px;
-    border-color: white;
-    background-color: white;
+    border-color: #0092ca;
+    background-color: #0092ca;
     position: relative;
     height: 70px;
     align-items: center;
@@ -193,66 +176,63 @@ body{
     height: 392px;
 }
 .info{
+    margin-top: 10px;
+    margin-left: 20px;
     height: 392px;
     display: none;
-    font-size: 18px;
-    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    color: #222831;
+}
+.info span{
+    color: #0092ca;
 }
 #code, #var{
+    margin-top: 10px;
     font-size: 18px;
-    color: white;
+    color: #222831;
     font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
-}
-#code{
-    width: 450px;
 }
 #var{
     font-size: 18px;
-    margin-left: 50px;
 }
 .var{
-    background-color: royalblue;
-    color: white;
+    background-color: #eeeeee;
+    color: #0092ca;
     border-style: none;
     width: 20px;
 }
 .code_running{
-    background: white;
-    color: royalblue;
+    background: yellow;
+    border-radius: 10px;
 }
-
-
-.info_button{
-
+.hljs{
+    margin-top: -28px;
 }
-
 
 div.information{
     height: 70%;
     width: 50%;
-    background: white;
+    background: #eeeeee;
     position: absolute;
     left: 45%;
 }
 
 input.information{
-    background: white;
+    background: #eeeeee;
     border-style: none;
 }
 input.information-enabled{
-    background: white;
-    border-color: white;
+    background: #eeeeee;
+    border-color: #eeeeee;
     border-bottom: 2px solid #42edf8;
 }
 
 
 
-
-
-
-
-
-
+.cur_name{
+    color: #0092ca;
+}
 span.name{
     position: relative;
     left: 20px;
