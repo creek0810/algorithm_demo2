@@ -14,6 +14,9 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/jquery.smartmenus.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.js"></script>
+  <!-- highlight -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
   <!-- css and js -->
   <link rel="stylesheet" href="general.css">
   <script src="../anime.min.js"></script>
@@ -61,15 +64,19 @@
           </div>
         </div>
         <div class="anime_btn">
-            <button id="top" class="btn">top</button> 
             <button id="pop" class="btn">pop</button> 
             <button id="push" class="btn">push</button> 
-            <input id="num" name="number"type="number" min="0" max="100" value="0">
+            <div class="cmd_another">Value:
+              <input id="num" name="number" type="number" min="0" max="100" value="0">
+            </div>
+            <div class="cmd_another">Speed:
+              <input id="speed" name="Progress bar" step="0.1" type="range" min="0.1" max="2" value="1">
+            </div>
         </div>
       </div>
       <div class="col-md-5 col-xs-12"> 
         <div>
-          <div class="dashboard_name"> <span class="name">Name: Queue</span></div>
+          <div class="dashboard_name"> <span class="name">Name: <span class="cur_name">Queue</span></span></div>
           <div class="dashboard_info">
             <div class="content">
               <div class="info">
@@ -78,22 +85,24 @@
                 <p>Data structure: Array</p>
                 <p>Detail: Stable sort</p>
               </div>
-              <div class="trace">
-                <div id="code">
+              <div class="trace row mx-0">
+                <div id="code" class="col-lg-8 col-12">
                   <h3>Code</h3>
-                  
+                  <pre class="code_push"><code class="push_inner"></code></pre>
+                  <pre class="code_pop"><code class="pop_inner"></code></pre>
                 </div>
-                <div id="var">
+                <div id="var" class="col-lg-4 col-12">
                   <h3>Variable</h3>
-                    i: <input type="text" id="var_i" value="0" class="var" disabled><br>
-                    j: <input type="text" id="var_j" value="0" class="var"disabled><br>
+                    front: <input type="text" id="var_front" value="0" class="var" disabled><br>
+                    rear: <input type="text" id="var_rear" value="0" class="var"disabled><br>
+                    capacity: <input type="text" id="var_capacity" value="11" class="var"disabled><br>
                 </div>
               </div>
             </div>
           </div>
           <div class="info_btn">
-            <input id="trace" type="button" value="trace" class="info_button">
-            <input id="info" type="button" value="info" class="info_button">
+            <button id="trace" class="btn">trace</button>
+            <button class="btn" id="info">info</button>
           </div>
         </div>
       </div>
