@@ -36,13 +36,13 @@ function content_change(command){
     if(command == 1){
         $(".code_pop").show();
         $(".code_push").hide();
-        var info = "Function: Pop<br>" +
-                   "Time complexity: O(1)<br>";
+        var info = "<p>Function: <span>Pop</span></p>" +
+                   "<p>Time complexity: <span>O(1)</span><p>";
     }else{
         $(".code_push").show();
         $(".code_pop").hide();
-        var info = "Function: Push<br>" +
-                   "Time complexity: O(1)<br>";
+        var info = "<p>Function: <span>Push</span></p>" +
+                   "<p>Time complexity: <span>O(1)</span></p>";
     }
     $(".info").html(info);
 }
