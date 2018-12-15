@@ -46,6 +46,7 @@ function content_change(command){
 function stack_push(){
     // change the content of code trace
     content_change(0);
+    info_change(1);
     if(stack_top == 11){
         window.alert("the stack is full");
         return;
@@ -128,6 +129,7 @@ function stack_pop(){
     let dur = $('#speed').val();
     // change content of code trace
     content_change(1);
+    info_change(1);
     // add helicopter
     var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
     $("body").prepend(heli_node);
