@@ -159,7 +159,7 @@ function queue_pop(){
             },
             easing: 'linear',
             translateX: mouse_des,
-            bagin: function(){
+            begin: function(){
                 $("#push").attr("disabled", true);
                 $("#pop").attr("disabled", true);
             }
@@ -190,8 +190,6 @@ function queue_pop(){
             complete: function(){
                 $("#pic_mouse").remove();
                 $(".anime_rec_pop").remove();
-                $("#push").attr("disabled", false);
-                $("#pop").attr("disabled", false);
             }
         }).add({
             targets: '.anime_rec_pop',
@@ -208,7 +206,11 @@ function queue_pop(){
                 return front;
             },
             duration: 1,
-            round: 1
+            round: 1,
+            complete: function(){
+                $("#push").attr("disabled", false);
+                $("#pop").attr("disabled", false);
+            }
         });
         stack_top--;
     }
