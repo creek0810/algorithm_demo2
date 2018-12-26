@@ -1,5 +1,5 @@
 var stack_top = 0;
-var easter_egg_try = 0
+var easter_egg_try = 0;
 var LEFT = 0;
 var heli_count = 0;
 function content_init(){
@@ -47,6 +47,7 @@ function stack_push(){
     // change the content of code trace
     content_change(0);
     info_change(1);
+    easter_egg_try = 0;
     if(stack_top == 11){
         window.alert("the stack is full");
         return;
@@ -119,9 +120,118 @@ function stack_push(){
     });
     stack_top++;
 }
+function corn_push(){
+    // store speed
+    let dur = $("#speed").val();
+    // add helicopter
+    var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
+    $("body").prepend(heli_node);
+    // add corn
+    var corn_node = '<div id="pic_corn"><iframe src="corn.svg" frameborder="0" class="corn"></iframe></div>';
+    $("body").prepend(corn_node);
+    var myClient = $('.data')[0].getBoundingClientRect();
+    LEFT = myClient.left + 15; 
+    // start anime
+    var timeline = anime.timeline();
+    timeline.add({
+        targets: ['#pic', '#pic_corn'],
+        duration: function(){
+            return Math.floor(2000 / dur);
+        },
+        easing: 'linear',
+        translateX: function(){
+            return LEFT - 1800 ;
+        },
+        begin: function(){
+            $("#push").attr("disabled",true);
+            $("#pop").attr("disabled",true);
+        }
+    }).add({
+        targets: '#pic_corn',
+        duration: function(){
+            return Math.floor(((379 - (32) * stack_top) * 5) / dur);
+        },
+        delay: function(){
+            return Math.floor(400 / dur);
+        },
+        translateX: function(){
+            return LEFT - 1800;
+        },
+        translateY: 370,
+        easing: 'linear'
+    }).add({
+        targets: '#pic',
+        duration: function(){
+            return Math.floor(600 / dur);
+        },
+        easing: 'linear',
+        translateX: -2000,
+    }).add({
+        targets: '#pic',
+        duration: 1,
+        complete: function(){
+            $("#pic").remove();
+            $("#push").attr("disabled",false);
+            $("#pop").attr("disabled",false);
+            alert("OK! You got corn!");
+        }
+    });
+}
+function pop_corn(){
+    var timeline = anime.timeline();
+    timeline.add({
+        targets: '#boom',
+        opacity: 1,
+        scale: [0.5, 1.8],
+        translateX: -30,
+        translateY: -25,
+        easing: 'linear',
+        duration: 400,
+        begin: function(){
+            $('.bomb').css("z-index",10);
+        },
+        complete: function(){
+            $('#pic_corn').remove();
+            var popcorn_node = '<div id="popcorn"><iframe src="popcorn.svg" frameborder="0" class="popcorn"></iframe></div>';
+            $('.data').prepend(popcorn_node);
+        }
+    }).add({
+        targets: '#cloud',
+        scale: [0.5, 3],
+        opacity: [0, 1],
+        translateX: -50,
+        translateY: -40,
+        duration: 400,
+        offset: '-=400'
+    }).add({
+        targets: '#cloud, #boom ',
+        opacity: 0,
+        easing: 'linear',
+        duration: 2000,
+        offset: '-=50',
+    }).add({
+        targets: '#rauch',
+        opacity: [0, 0.6],
+        easing: 'linear',
+        duration: 200,
+        offset: '-=150',
+        complete: function(){
+            alert("You pop POPCORN! Hahaha");
+            alert("Please refresh the website!");
+        }
+    });
+}
 function stack_pop(){
     if(stack_top == 0){
-        alert("the stack is empty!!");
+        let msg = ["已經沒有東西可以pop了!", "看來你真的很想pop?", "認真的?", , ];
+        console.log(easter_egg_try)
+        if (easter_egg_try < 3){
+            alert(msg[easter_egg_try]);
+        }else if(easter_egg_try == 3){
+            corn_push();
+        }else if(easter_egg_try == 4){
+            pop_corn();
+        }
         easter_egg_try++;
         return;
     }

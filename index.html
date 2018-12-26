@@ -14,7 +14,155 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/jquery.smartmenus.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.smartmenus/1.1.0/addons/bootstrap-4/jquery.smartmenus.bootstrap-4.js"></script>
   <!-- css -->
-  <link rel="stylesheet" href="main.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+*, *:after, *:before {box-sizing: border-box;}
+			body,html {margin:0;padding:0;background:#F5F5F5;overflow-x: hidden;}
+			
+			.container {position: absolute;top:50%;left:50%;transform: translate(-50%, -50%);width:400px;height:300px;background:#fff;border-radius:25px;overflow: hidden;}
+			
+			.background {
+				position: absolute;
+				background:#CFD8DC;
+				width:100%;
+				height:60px;
+				bottom:0;
+				left:0;
+			}
+			.platform {
+				position: absolute;
+				background:#E0E0E0;
+				width:300px;
+				height:100px;
+				top:150px;
+				left:100px;
+			}
+			
+			.box {
+				position: absolute;
+				width:20px;
+				height:20px;
+				background:#00ACC1;
+				border-radius: 2px;
+			}
+			
+			#box-one {
+				top:130px;
+				left:100px;
+			}
+			
+			#box-two {
+				top:130px;
+				left:140px;
+			}
+			
+			.elevator {
+				position: absolute;
+				left:300px;
+				top:245px;
+				background:#546E7A;
+				height:5px;
+				width:40px;
+			}
+			
+			.elevator-shaft {
+				position: absolute;
+				top:150px;
+				left:300px;
+				width:40px;
+				background:#bdbdbd;
+				height:100px;
+			}
+			
+			.robot {
+				position: absolute;
+				width:20px;
+				height:20px;
+				background:#607D8B;
+				border-radius: 5px 5px 0 0;
+				
+			}
+			
+			#robot-one {
+				top:225px;
+				left:32px;
+			}
+			
+			#robot-two {
+				top:124px;
+				left:168px;
+			}
+			
+			.robot:before {
+				content:"";
+				width:12px;
+				height:8px;
+				bottom:100%;
+				left:50%;
+				transform: translateX(-50%);
+				position: absolute;
+				background:#FFA000;
+				border-radius: 50% 50% 0 0;
+			}
+			
+			
+			.wheel {
+				position: absolute;
+				top:100%;
+				width:6px;
+				height:6px;
+				border-radius: 50%;
+				left:2px;
+				background:#FF6F00;
+			}
+			
+			.wheel:after {
+				content: "";
+				position: absolute;
+				width:6px;
+				height:6px;
+				border-radius: 50%;
+				background:#FF6F00;
+				top:0;
+				left:10px;
+			}
+			.arm {
+				position: absolute;
+				height:4px;
+				width:4px;
+				background:#FFA000;
+				top:8px;
+			}
+			
+			.arm:before {
+				content:"";
+				position: absolute;
+				top:50%;
+				width:4px;
+				height:8px;
+				transform: translateY(-50%);
+				background:#FF6F00;
+			}
+			
+			#robot-one .arm {
+				left:100%;
+			}
+			
+			#robot-one .arm:before {
+				left:100%;
+			}
+			
+			#robot-two .arm {
+				right:100%;
+			}
+			
+			#robot-two .arm:before {
+				right:100%;
+			}
+
+  </style>
+  
 </head>
 <body>
   <!-- navbar -->
@@ -40,12 +188,72 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="./data_structure/stack.html">Stack</a></li>
             <li><a class="dropdown-item" href="./data_structure/queue.html">Queue</a></li>
-
           </ul>
         </li>
         <li class="nav-item"><a class="nav-link" href="#">Document</a></li>
       </ul>
     </div>
   </nav>
+  <div class="container">
+	<div class="background"></div>
+	<div class="platform"></div>
+	<div class="elevator-shaft"></div>
+	<div class="elevator"></div>
+	<div class="box" id="box-one"></div>
+	<div class="box" id="box-two"></div>
+	<div class="robot" id="robot-one">
+		<div class="arm"></div>
+		<div class="wheel"></div>
+	</div>
+	<div class="robot" id="robot-two">
+		<div class="arm"></div>
+		<div class="wheel"></div>
+	</div>
+</div>
+ <script>
+var tlMaster = new TimelineMax({repeat:-1});
+
+	tlMaster	
+		.to("#box-two", 0.25, {x: -20, ease:Power0.easeOut}, "a_box_two_left+=0.0")
+		.to("#robot-two", 0.25, {x: -20, ease:Power0.easeOut}, "a_box_two_left+=0.0")
+		.to("#box-two", 0.25, {x: -40, ease:Power0.easeOut}, "a_box_one_left+=0.0")
+		.to("#robot-two", 0.25, {x: -40, ease:Power0.easeOut}, "a_box_one_left+=0.0")
+		.to("#box-one", 0.25, {x: -20, ease:Power0.easeOut}, "a_box_one_left+=0.0")
+		.to("#box-one", 0.5, {y: 95, x: -40, rotation: -180, ease:Power4.easeIn}, "a_box_one_down+=0.0")
+		.to("#box-one", 2.75, {x: 200, ease:Power0.easeOut}, "a_box_one_right+=0.5")
+		.to("#robot-one", 2.75, {x: 240, ease:Power0.easeOut}, "a_box_one_right+=0.5")
+		.to("#robot-two", 2.75, {x: 200, ease:Power0.easeOut}, "a_box_one_right+=0.5")
+		.to("#box-one", 1.25, {y: 0, ease:Power0.easeOut}, "a_elevator_up+=0.5")
+		.to("#robot-one", 2.75, {x: 0, ease:Power0.easeOut}, "a_elevator_up+=0.5")
+		.to(".elevator", 1.25, {y: -95, ease:Power0.easeOut}, "a_elevator_up+=0.5")
+		.to("#robot-two", .5, {x: 160, ease:Power0.easeOut}, "a_robot_ramp-=1")
+		.to("#box-one", 2, {x: 40, ease:Power0.easeOut}, "a_box_reset-=0.5")
+		.to("#robot-two", 2, {x: 0, ease:Power0.easeOut}, "a_box_reset-=0.5")
+		.to(".elevator", 1.25, {y: 0, ease:Power0.easeOut}, "a_box_reset-=0.0")
+		
+		
+		.to("#box-one", 0.25, {x: 20, ease:Power0.easeOut}, "b_box_one_left+=0.0")
+		.to("#robot-two", 0.25, {x: -20, ease:Power0.easeOut}, "b_box_one_left+=0.0")
+		.to("#box-one", 0.25, {x: 0, ease:Power0.easeOut}, "b_box_two_left+=0.0")
+		.to("#robot-two", 0.25, {x: -40, ease:Power0.easeOut}, "b_box_two_left+=0.0")
+		.to("#box-two", 0.25, {x: -60, ease:Power0.easeOut}, "b_box_two_left+=0.0")
+		.to("#box-two", 0.5, {y: 95, x: -80, rotation: -180, ease:Power4.easeIn}, "a_box_two_down+=0.0")
+		.to("#box-two", 2.75, {x: 160, ease:Power0.easeOut}, "b_box_two_right+=0.5")
+		.to("#robot-one", 2.75, {x: 240, ease:Power0.easeOut}, "b_box_two_right+=0.5")
+		.to("#robot-two", 2.75, {x: 200, ease:Power0.easeOut}, "b_box_two_right+=0.5")
+		.to("#box-two", 1.25, {y: 0, ease:Power0.easeOut}, "b_elevator_up+=0.5")
+		.to(".elevator", 1.25, {y: -95, ease:Power0.easeOut}, "b_elevator_up+=0.5")
+		.to("#robot-one", 2.75, {x: 0, ease:Power0.easeOut}, "b_elevator_up+=0.5")
+		.to("#robot-two", .5, {x: 160, ease:Power0.easeOut}, "b_robot_ramp-=1")
+		.to("#box-two", 2, {x: 0, ease:Power0.easeOut}, "b_box_reset-=0.5")
+		.to("#robot-two", 2, {x: 0, ease:Power0.easeOut}, "b_box_reset-=0.5")
+		.to(".elevator", 1.25, {y: 0, ease:Power0.easeOut}, "b_box_reset-=0.0")
+		
+	;		
+	
+
+
+  </script>
+
 </body>
 </html>

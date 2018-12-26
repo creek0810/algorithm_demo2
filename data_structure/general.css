@@ -79,6 +79,13 @@ body{
     top: 20px;
     z-index: 5;
 }
+#pic_corn{
+    width: 150px;
+    position: absolute;
+    left: 1700px;
+    top: 87px;
+    z-index: 5;
+}
 .heli{
     margin-left: 10px;
     -webkit-transform: rotateY(180deg);
@@ -93,6 +100,10 @@ body{
 }
 .mouse{
     height: 40px; 
+}
+.corn{
+    margin-left: 105px;
+    width: 60px;
 }
 .dashboard_anime{
     border: solid;
@@ -237,7 +248,14 @@ span.name{
     position: relative;
     left: 20px;
 }
-
-
-
-
+#boom, #cloud{
+    opacity: 0;
+}
+.bomb{
+    position: absolute;
+    z-index: 0;
+}
+.popcorn{
+    width: 70px;
+    height: 70px;
+}
