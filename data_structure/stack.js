@@ -173,7 +173,8 @@ function corn_push(){
             $("#pic").remove();
             $("#push").attr("disabled",false);
             $("#pop").attr("disabled",false);
-            alert("OK! You got corn!");
+            $('#modal-content').text("OK! You got corn.");
+            $('#myModal').modal('toggle');
         }
     });
 }
@@ -216,21 +217,23 @@ function pop_corn(){
         duration: 200,
         offset: '-=150',
         complete: function(){
-            alert("You pop POPCORN! Hahaha");
-            alert("Please refresh the website!");
+            $('#modal-content').html("<b>You <span style='color: red'>pop corn </span>and you got <span style='color: red'>POP-CORN! </span>HAHAHA!<br> <span style='color:#0092ca'>Please refresh the website!</span></b>");
+            $('#myModal').modal('toggle');
+//            alert("Please refresh the website!");
         }
     });
 }
 function stack_pop(){
     if(stack_top == 0){
-        let msg = ["已經沒有東西可以pop了!", "看來你真的很想pop?", "認真的?", , ];
-        console.log(easter_egg_try)
-        if (easter_egg_try < 3){
-            alert(msg[easter_egg_try]);
-        }else if(easter_egg_try == 3){
+        let msg = ["已經沒有東西可以pop了!", "看來你真的很想pop?", "認真的?"];
+        console.log(easter_egg_try);
+        $('#modal-content').text(msg[easter_egg_try]);
+        if(easter_egg_try == 3){
             corn_push();
         }else if(easter_egg_try == 4){
             pop_corn();
+        }else{
+            $('#myModal').modal('toggle');
         }
         easter_egg_try++;
         return;
