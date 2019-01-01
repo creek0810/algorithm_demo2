@@ -5,8 +5,10 @@ let data = [{"id": "#data0","value": 5,"loc": 0},
             {"id": "#data3","value": 3,"loc": 0},
             {"id": "#data4","value": 9,"loc": 0},
             {"id": "#data5","value": 1,"loc": 0},
-            {"id": "#data6","value": 4,"loc": 0}];
-let stack = 1;
+            {"id": "#data6","value": 4,"loc": 0},
+            {"id": "#data7","value": 15,"loc":0}];
+let stack = 0;
+let count = 1;
 let sort_timeline = anime.timeline({
     autoplay: false,
     update: function (anim) {
@@ -76,14 +78,37 @@ let sort_timeline = anime.timeline({
 }*/
 
 function merge(left,right){
-    console.log(stack);
     stack++;
+    let anime_id = '#table' + count.toString();
     if(left < right){
+        let tmp_html = '<table id="table' + count.toString() + '"><tr>';
+        for(let i=left;i<=right;i++){
+            tmp_html = tmp_html + '<th id="table' + count.toString() + '-' + (i - left).toString() + '">' + data[i]["value"] + '</th>';
+        }
+        tmp_html += '</table></tr>'
+        let id = "#layer" + stack.toString();
+        $(id).append(tmp_html);
+        sort_timeline.add({
+            targets: anime_id,
+            opacity: 1,
+        });
         let mid = (left + right) / 2;
         mid = Math.floor(mid);
+        count *= 2;
         merge(left,mid);
+        count = count * 2 + 1;
         merge(mid+1,right);
         combine(left,mid,right);
+        count = Math.floor(count / 2);
+    }else{
+        let tmp_html = '<table id="table' + count.toString() + '"><tr><th>' + data[left]["value"] + '</th></table></tr>';
+        let id = "#layer" + stack.toString();
+        $(id).append(tmp_html);
+        sort_timeline.add({
+            targets: anime_id,
+            opacity: 1,
+        });
+        count = Math.floor(count / 2);
     }
     stack--;
 }
@@ -92,6 +117,9 @@ function combine(left,mid,right){
     let data_right = JSON.parse(JSON.stringify(data.slice(mid+1,right+1)));
     let l=0,r=0;
     let tablecnt=0;
+    console.log(left.toString() + " " + right.toString());
+    console.log(stack);
+    console.log(count);
     while(l<data_left.length && r<data_right.length){
         if(data_left[l]["value"] <= data_right[r]["value"]){
             data[left+tablecnt] = data_left[l];
@@ -113,6 +141,12 @@ function combine(left,mid,right){
         r++;
         tablecnt++;
     }
+    let left_child = "#table" + (count * 2).toString();
+    let right_child = "#table" + (count * 2 + 1).toString();
+    sort_timeline.add({
+        targets: [left_child, right_child],
+        opacity: 0,
+    });
 }
 
 function info_change(mode){ // mode 0 = info
@@ -144,7 +178,7 @@ function init(){
         $(target).css("line-height",(data[i]["value"]*34-15)+"px");
         $(target).height(data[i]["value"]*17);
     }
-    merge(0,data.length);
+    merge(0,data.length-1);
     $("#start").click(function(){
         info_change(1);
         sort_timeline.play();

@@ -173,4 +173,13 @@ span.name{
 .layer{
     height: 19%;
     width: 100%;
+    display: inline-flex;
+    justify-content: space-around;
+}
+table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+table{
+    opacity: 0;
 }
