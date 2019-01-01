@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Bubble Sort</title>
+  <title>Merge Sort</title>
   <!-- jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- bootstrap -->
@@ -20,7 +20,7 @@
   <!-- css and js -->
   <link rel="stylesheet" href="general.css">
   <script src="../anime.min.js"></script>
-  <script src="bubble_sort.js"></script>
+  <script src="merge_sort.js"></script>
 </head>
 <body>
   <!-- navbar -->
@@ -58,15 +58,20 @@
     <div class="row">   
       <div class="col-md-5 offset-md-1">
         <div class="dashboard_anime">
-          <div class="graph">
-            <div class="rec" id="data0"></div>
+            <div class="layer" id="layer1"></div>
+            <div class="line"></div>
+            <div class="layer" id="layer2"></div>
+            <div class="line"></div>
+            <div class="layer" id="layer3"></div>
+            <div class="line"></div>
+            <div class="layer" id="layer4"></div>
+            <!--div class="rec" id="data0"></div>
             <div class="rec" id="data1"></div>
             <div class="rec" id="data2"></div>
             <div class="rec" id="data3"></div>
             <div class="rec" id="data4"></div>
             <div class="rec" id="data5"></div>
-            <div class="rec" id="data6"></div>
-          </div>
+            <div class="rec" id="data6"></div-->
         </div>
         <div class="anime_btn">
             <button id="start" class="btn">Start</button> 
@@ -77,7 +82,7 @@
       </div>
       <div class="col-md-5 col-xs-12"> 
         <div>
-          <div class="dashboard_name"> <span class="name">Name: <span class="cur_name">Bubble sort</span></span></div>
+          <div class="dashboard_name"> <span class="name">Name: <span class="cur_name">Merge sort</span></span></div>
           <div class="dashboard_info">
             <div class="content">
               <div class="info">

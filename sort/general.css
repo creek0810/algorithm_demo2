@@ -166,4 +166,11 @@ span.name{
     display: inline;
 }
 
-
+.line{
+    height: 8%;
+    width: 100%;
+}
+.layer{
+    height: 19%;
+    width: 100%;
+}

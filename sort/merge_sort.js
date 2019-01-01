@@ -1,18 +1,19 @@
 // the data of current state
-var data = [{"id": "#data0","value": 5,"loc": 0},
+let data = [{"id": "#data0","value": 5,"loc": 0},
             {"id": "#data1","value": 2,"loc": 0},
             {"id": "#data2","value": 7,"loc": 0},
             {"id": "#data3","value": 3,"loc": 0},
             {"id": "#data4","value": 9,"loc": 0},
             {"id": "#data5","value": 1,"loc": 0},
             {"id": "#data6","value": 4,"loc": 0}];
-function sort(){
-    var sort_timeline = anime.timeline({
-        autoplay: false,
-        update: function(anim){
-            $("#progress_bar").val(anim.progress);
-        }
-    });
+let stack = 1;
+let sort_timeline = anime.timeline({
+    autoplay: false,
+    update: function (anim) {
+        $("#progress_bar").val(anim.progress);
+    }
+});
+/*function sort(){
     // build anime timeline
     for (var i = 0; i < data.length; i++){
         for(var j = 0; j < data.length - i - 1; j++){
@@ -72,6 +73,46 @@ function sort(){
         })
     }
     return sort_timeline;
+}*/
+
+function merge(left,right){
+    console.log(stack);
+    stack++;
+    if(left < right){
+        let mid = (left + right) / 2;
+        mid = Math.floor(mid);
+        merge(left,mid);
+        merge(mid+1,right);
+        combine(left,mid,right);
+    }
+    stack--;
+}
+function combine(left,mid,right){
+    let data_left =  JSON.parse(JSON.stringify(data.slice(left,mid+1)));
+    let data_right = JSON.parse(JSON.stringify(data.slice(mid+1,right+1)));
+    let l=0,r=0;
+    let tablecnt=0;
+    while(l<data_left.length && r<data_right.length){
+        if(data_left[l]["value"] <= data_right[r]["value"]){
+            data[left+tablecnt] = data_left[l];
+            tablecnt++;
+            l++;
+        }else{
+            data[left+tablecnt] = data_right[r];
+            tablecnt++;
+            r++;
+        }
+    }
+    while(l<data_left.length){
+        data[left+tablecnt] = data_left[l];
+        l++;
+        tablecnt++;
+    }
+    while(r<data_right.length){
+        data[left+tablecnt] = data_right[r];
+        r++;
+        tablecnt++;
+    }
 }
 
 function info_change(mode){ // mode 0 = info
@@ -103,18 +144,18 @@ function init(){
         $(target).css("line-height",(data[i]["value"]*34-15)+"px");
         $(target).height(data[i]["value"]*17);
     }
-    result = sort();
+    merge(0,data.length);
     $("#start").click(function(){
         info_change(1);
-        result.play();
+        sort_timeline.play();
     });
-    $("#pause").click(result.pause);
+    $("#pause").click(sort_timeline.pause);
     $("#restart").click(function(){
         info_change(1);
-        result.restart();
+        sort_timeline.restart();
     });
     $("#progress_bar").on("input change", function(){
-        result.seek(result.duration * ($("#progress_bar").val()/100));
+        sort_timeline.seek(sort_timeline.duration * ($("#progress_bar").val()/100));
     })
     // mode 0 = info
     // mode 1 = trace
