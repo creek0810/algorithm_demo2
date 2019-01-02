@@ -112,7 +112,7 @@ body{
 }
 
 .hljs{
-    margin-top: -28px;
+    margin-top: -10px;
 }
 
 
@@ -177,9 +177,17 @@ span.name{
     justify-content: space-around;
 }
 table, th, td{
-    border: 1px solid black;
-    border-collapse: collapse;
+    border: none;
+    height: 100%;
 }
 table{
     opacity: 0;
+}
+.data_input{
+    height: 50%;
+    border-style: none;
+    background-color: #4169e1;
+    text-align: center;
+    color: white;
+    border-radius: 5px;
 }

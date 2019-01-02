@@ -1,12 +1,5 @@
 // the data of current state
-let data = [{"id": "#data0","value": 5,"loc": 0},
-            {"id": "#data1","value": 2,"loc": 0},
-            {"id": "#data2","value": 7,"loc": 0},
-            {"id": "#data3","value": 3,"loc": 0},
-            {"id": "#data4","value": 9,"loc": 0},
-            {"id": "#data5","value": 1,"loc": 0},
-            {"id": "#data6","value": 4,"loc": 0},
-            {"id": "#data7","value": 15,"loc":0}];
+let data = [5, 2, 7, 3, 9, 1, 4, 15];
 let stack = 0;
 let count = 1;
 let sort_timeline = anime.timeline({
@@ -15,67 +8,52 @@ let sort_timeline = anime.timeline({
         $("#progress_bar").val(anim.progress);
     }
 });
-/*function sort(){
-    // build anime timeline
-    for (var i = 0; i < data.length; i++){
-        for(var j = 0; j < data.length - i - 1; j++){
-            sort_timeline.add({
-                targets: '#var_i',
-                value: i,
-                duration: 1,
-                round: 1
-            }).add({
-                targets: '#var_j',
-                value: j,
-                duration: 1,
-                round: 1
-            }).add({
-                targets: [data[j]["id"], data[j+1]["id"]],
-                backgroundColor: '#ffa600',
-                offset: "-=0",
-                begin: function(){
-                    $(".cmp").addClass("code_running");
-                    $(".swap").removeClass("code_running");
-                }
-            })
-            
-            if(data[j]["value"] > data[j+1]["value"]){
-                sort_timeline.add({
-                    targets: data[j]["id"],
-                    translateX: data[j]["loc"] + 51,
-                    duration: 300,
-                    offset: "-=0",
-                    easing: 'linear',
-                    begin: function(){
-                        $(".swap").addClass("code_running");
-                        $(".cmp").removeClass("code_running");
-                    }
-                }).add({
-                    targets: data[j+1]["id"],
-                    translateX: data[j+1]["loc"] - 51,
-                    duration: 300,
-                    offset: "-=300",
-                    easing: 'linear'
-                })
-                data[j+1]["loc"] -= 51;
-                data[j]["loc"] += 51;
-                var tmp = data[j];
-                data[j] = data[j+1];
-                data[j+1] = tmp;
-            }
-            sort_timeline.add({
-                targets: [data[j]["id"], data[j+1]["id"]],
-                backgroundColor: '#4169e1',
-                offset: "-=0",
-            })
-        }
-        sort_timeline.add({
-            targets: data[data.length-1-i]["id"],
-            backgroundColor: '#919191',
-        })
-    }
-    return sort_timeline;
-}*/
+
+
+
+function content_init(){
+    let sort_code = "void mergesort(vector&lt;int&gt;&table, int begin, int end){\n" + 
+                   "    if(begin < end){\n" +
+                   "        int mid = (begin + end) / 2;\n" +
+                   "        mergesort(table, begin, mid);\n" + 
+                   "        mergesort(table, mid+1, end);\n" +
+                   "        merge(table, begin, mid, end);\n" +
+                   "    }\n" +
+                   "}\n";
+    let merge_code = "void merge(vector&lt;int&gt; &table, int begin, int mid, int end){\n" +
+                     "    vector<int>left(table.begin()+begin, table.begin()+mid+1);\n" +
+                     "    vector<int>right(table.begin()+mid+1, table.begin()+end+1);\n" +
+                     "    int l = 0, r = 0;\n" +
+                     "    int tablecnt = 0;\n" +
+                     "    while(l < left.size() && r < right.size()){\n" +
+                     "        if(right[r] < left[l]){\n" +
+                     "            table[begin+tablecnt] = right[r];\n" +
+                     "            r++;\n" +
+                     "            tablecnt++;\n" +
+                     "        }else{\n" +
+                     "            table[begin+tablecnt] = left[l];\n" +
+                     "            l++;\n" +
+                     "            tablecnt++;\n" +
+                     "        }\n" +
+                     "    }\n" +
+                     "    while(l < left.size()){\n" +
+                     "        table[begin+tablecnt] = left[l];\n" +
+                     "        l++;\n" +
+                     "        tablecnt++;\n" +
+                     "    }\n" +
+                     "    while(r < right.size()){\n" +
+                     "        table[begin+tablecnt] = right[r];\n" +
+                     "        r++;\n" +
+                     "        tablecnt++;\n" +
+                     "    }\n" +
+                     "}\n";
+    console.log(sort_code);
+    $(".sort_inner").html(sort_code);
+    $(".merge_inner").html(merge_code);
+    $(".code_sort").hide();
+    $(".code_merge").hide();
+    hljs.initHighlighting();
+}
 
 function merge(left,right){
     stack++;
@@ -83,7 +61,7 @@ function merge(left,right){
     if(left < right){
         let tmp_html = '<table id="table' + count.toString() + '"><tr>';
         for(let i=left;i<=right;i++){
-            tmp_html = tmp_html + '<th id="table' + count.toString() + '-' + (i - left).toString() + '">' + data[i]["value"] + '</th>';
+            tmp_html = tmp_html + '<th> <input class="data_input" type="text" id="table' + count.toString() + '-' + (i - left).toString() + '"value="' + data[i] + '"> </th>';
         }
         tmp_html += '</table></tr>'
         let id = "#layer" + stack.toString();
@@ -101,7 +79,7 @@ function merge(left,right){
         combine(left,mid,right);
         count = Math.floor(count / 2);
     }else{
-        let tmp_html = '<table id="table' + count.toString() + '"><tr><th>' + data[left]["value"] + '</th></table></tr>';
+        let tmp_html = '<table id="table' + count.toString() + '"><tr><th><input class="data_input" type="text" id="table' + count.toString() + '-0"value="' + data[left] + '"> </th></tr></table>';
         let id = "#layer" + stack.toString();
         $(id).append(tmp_html);
         sort_timeline.add({
@@ -117,27 +95,49 @@ function combine(left,mid,right){
     let data_right = JSON.parse(JSON.stringify(data.slice(mid+1,right+1)));
     let l=0,r=0;
     let tablecnt=0;
-    console.log(left.toString() + " " + right.toString());
-    console.log(stack);
-    console.log(count);
     while(l<data_left.length && r<data_right.length){
-        if(data_left[l]["value"] <= data_right[r]["value"]){
-            data[left+tablecnt] = data_left[l];
+        let id = '#table' + count.toString() + '-' + tablecnt.toString();
+        if(data_left[l] <= data_right[r]){
+            sort_timeline.add({
+                targets: id,
+                value: data_left[l],
+                duration: 1,
+            });
+            data[left + tablecnt] = data_left[l];
             tablecnt++;
             l++;
         }else{
-            data[left+tablecnt] = data_right[r];
+            sort_timeline.add({
+                targets: id,
+                value: data_right[r],
+                duration: 1,
+            })
+            data[left + tablecnt] = data_right[r];
             tablecnt++;
             r++;
         }
     }
     while(l<data_left.length){
-        data[left+tablecnt] = data_left[l];
+        let id = '#table' + count.toString() + '-' + tablecnt.toString();
+        sort_timeline.add({
+            targets: id,
+            value: data_left[l],
+            duration: 1,
+
+        });
+        data[left + tablecnt] = data_left[l];
         l++;
         tablecnt++;
     }
     while(r<data_right.length){
-        data[left+tablecnt] = data_right[r];
+        let id = '#table' + count.toString() + '-' + tablecnt.toString();
+        sort_timeline.add({
+            targets: id,
+            value: data_right[r],
+            duration: 1,
+
+        });
+        data[left + tablecnt] = data_right[r];
         r++;
         tablecnt++;
     }
@@ -148,8 +148,8 @@ function combine(left,mid,right){
         opacity: 0,
     });
 }
-
-function info_change(mode){ // mode 0 = info
+function info_change(mode){ 
+    // mode 0 = info
     // mode 1 = trace
     mode = parseInt(mode);
     var option = ["info", "trace"];
@@ -170,15 +170,13 @@ function info_change(mode){ // mode 0 = info
 
 function init(){
     // init highlight.js
-    hljs.initHighlightingOnLoad();
-    // init graph
-    for(var i=0;i<data.length;i++){
-        var target = data[i]["id"];
-        $(target).html(data[i]["value"].toString());
-        $(target).css("line-height",(data[i]["value"]*34-15)+"px");
-        $(target).height(data[i]["value"]*17);
-    }
+    content_init();
+    // build anime timeline
     merge(0,data.length-1);
+    // fix data square width
+	let square_loc = $('#table1-0')[0].getBoundingClientRect();
+    $('.data_input').width(square_loc.bottom - square_loc.top);
+    // build anime control panel
     $("#start").click(function(){
         info_change(1);
         sort_timeline.play();
@@ -195,12 +193,10 @@ function init(){
     // mode 1 = trace
     $("#info").click(function(){
         info_change(0);
-        console.log("start!");
     });
     $("#trace").click(function(){
         info_change(1);
     });
 }
 $(document).ready(init,false);
-// init highlight.js
-hljs.initHighlightingOnLoad();
+
