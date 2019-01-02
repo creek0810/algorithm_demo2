@@ -95,23 +95,58 @@ function combine(left,mid,right){
     let data_right = JSON.parse(JSON.stringify(data.slice(mid+1,right+1)));
     let l=0,r=0;
     let tablecnt=0;
+    // anime 
+    let id = '#table' + count.toString() + '-' + tablecnt.toString();
+    let left_child_id = '#table' + (count*2).toString() + '-' + l.toString();
+    let right_child_id = '#table' + (count*2+1).toString() + '-' + r.toString();
+    let clean_table = [];
+    for(let i=0;i<data_left.length;i++){
+        let tmp = '#table' + (count*2).toString() + '-' + i.toString();
+        clean_table.push(tmp);
+    }
+    for(let i=0;i<data_right.length;i++){
+        let tmp = '#table' + (count*2+1).toString() + '-' + i.toString();
+        clean_table.push(tmp);
+    }
+    sort_timeline.add({
+        targets: clean_table,
+        backgroundColor: '#4169e1'
+    })
+    sort_timeline.add({
+        targets: [id, left_child_id, right_child_id],
+        backgroundColor: '#ffa600'
+    });
     while(l<data_left.length && r<data_right.length){
         let id = '#table' + count.toString() + '-' + tablecnt.toString();
+        let left_child_id = '#table' + (count*2).toString() + '-' + l.toString();
+        let right_child_id = '#table' + (count*2+1).toString() + '-' + r.toString();
         if(data_left[l] <= data_right[r]){
             sort_timeline.add({
+                targets: [id, left_child_id,right_child_id],
+                backgroundColor: '#ffa600'
+            }).add({
                 targets: id,
                 value: data_left[l],
                 duration: 1,
+            }).add({
+                targets: [id, left_child_id],
+                backgroundColor: '#919191'
             });
             data[left + tablecnt] = data_left[l];
             tablecnt++;
             l++;
         }else{
             sort_timeline.add({
+                targets: [id, left_child_id, right_child_id],
+                backgroundColor: '#ffa600'
+            }).add({
                 targets: id,
                 value: data_right[r],
                 duration: 1,
-            })
+            }).add({
+                targets: [id, right_child_id],
+                backgroundColor: '#919191'
+            });
             data[left + tablecnt] = data_right[r];
             tablecnt++;
             r++;
@@ -119,11 +154,17 @@ function combine(left,mid,right){
     }
     while(l<data_left.length){
         let id = '#table' + count.toString() + '-' + tablecnt.toString();
+        let child_id = '#table' + (count*2).toString() + '-' + l.toString();
         sort_timeline.add({
+            targets: [id, child_id],
+            backgroundColor: '#ffa600'
+        }).add({
             targets: id,
             value: data_left[l],
             duration: 1,
-
+        }).add({
+            targets: [id, child_id],
+            backgroundColor: '#919191'
         });
         data[left + tablecnt] = data_left[l];
         l++;
@@ -131,11 +172,17 @@ function combine(left,mid,right){
     }
     while(r<data_right.length){
         let id = '#table' + count.toString() + '-' + tablecnt.toString();
+        let child_id = '#table' + (count*2+1).toString() + '-' + r.toString();
         sort_timeline.add({
+            targets: [id, child_id],
+            backgroundColor: '#ffa600'
+        }).add({
             targets: id,
             value: data_right[r],
             duration: 1,
-
+        }).add({
+            targets: [id, child_id],
+            backgroundColor: '#919191'
         });
         data[left + tablecnt] = data_right[r];
         r++;
