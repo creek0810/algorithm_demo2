@@ -161,7 +161,7 @@ span.name{
     color: #0092ca;
 }
 
-#var_i, #var_j, #var_current, #var_min {
+.var {
     width: 50%;
     display: inline;
 }

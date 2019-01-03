@@ -14,6 +14,7 @@ We now have the demo of the following algorithm or data structures.
     - Bubble sort
     - Selection sort
     - Insertion sort
+    - Merge sort
 - Data Structure
   - Stack
   - Queue
@@ -22,11 +23,12 @@ We now have the demo of the following algorithm or data structures.
 
 |Color     |HEX    |
 |----------|-------|
-|Blue      |#4169e1|
-|Gray      |#919191|
-|Green     |#7fd925|
-|Orange    |#ffa600|
-|Background|#3D424E|
+|rec Blue  |#4169e1|
+|rec Gray  |#919191|
+|rec Green |#7fd925|
+|rec Orange|#ffa600|
+|Background|#393E46|
+|BG Blue   |#0092CA|
 
 ## Authors
 

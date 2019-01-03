@@ -8,46 +8,29 @@ let sort_timeline = anime.timeline({
         $("#progress_bar").val(anim.progress);
     }
 });
-
-
-
 function content_init(){
     let sort_code = "void mergesort(vector&lt;int&gt;&table, int begin, int end){\n" + 
                    "    if(begin < end){\n" +
-                   "        int mid = (begin + end) / 2;\n" +
-                   "        mergesort(table, begin, mid);\n" + 
-                   "        mergesort(table, mid+1, end);\n" +
+                   "        <span class='calc_mid'>int mid = (begin + end) / 2;</span>\n" +
+                   "        <span class='call_left'>mergesort(table, begin, mid);</span>\n" + 
+                   "        <span class='call_right'>mergesort(table, mid+1, end);</span>\n" +
                    "        merge(table, begin, mid, end);\n" +
                    "    }\n" +
                    "}\n";
     let merge_code = "void merge(vector&lt;int&gt; &table, int begin, int mid, int end){\n" +
-                     "    vector<int>left(table.begin()+begin, table.begin()+mid+1);\n" +
-                     "    vector<int>right(table.begin()+mid+1, table.begin()+end+1);\n" +
-                     "    int l = 0, r = 0;\n" +
-                     "    int tablecnt = 0;\n" +
-                     "    while(l < left.size() && r < right.size()){\n" +
-                     "        if(right[r] < left[l]){\n" +
-                     "            table[begin+tablecnt] = right[r];\n" +
-                     "            r++;\n" +
-                     "            tablecnt++;\n" +
+                     "    vector&lt;int&gt;left(table.begin()+begin, table.begin()+mid+1);\n" +
+                     "    vector&lt;int&gt;right(table.begin()+mid+1, table.begin()+end+1);\n" +
+                     "    int l = 0, r = 0, MAX = 1;\n" +
+                     "    left.push_back((MAX << 31) - 1);\n" +
+                     "    right.push_back((MAX << 31) - 1);\n" +
+                     "    for(int i=begin;i<=end;i++){\n" +
+                     "        if(left[l] <= right[r]){\n" +
+                     "            table[i] = left[l++];\n" +
                      "        }else{\n" +
-                     "            table[begin+tablecnt] = left[l];\n" +
-                     "            l++;\n" +
-                     "            tablecnt++;\n" +
+                     "            table[i] = right[r++];\n" +
                      "        }\n" +
                      "    }\n" +
-                     "    while(l < left.size()){\n" +
-                     "        table[begin+tablecnt] = left[l];\n" +
-                     "        l++;\n" +
-                     "        tablecnt++;\n" +
-                     "    }\n" +
-                     "    while(r < right.size()){\n" +
-                     "        table[begin+tablecnt] = right[r];\n" +
-                     "        r++;\n" +
-                     "        tablecnt++;\n" +
-                     "    }\n" +
                      "}\n";
-    console.log(sort_code);
     $(".sort_inner").html(sort_code);
     $(".merge_inner").html(merge_code);
     $(".code_sort").hide();
@@ -58,6 +41,22 @@ function content_init(){
 function merge(left,right){
     stack++;
     let anime_id = '#table' + count.toString();
+    sort_timeline.add({
+        targets: '#var_begin',
+        value: left,
+        duration: 1,
+        round: 1,
+        begin: function () {
+            // show mergesort code and hide combine code
+            $('.code_sort').show();
+            $('.code_merge').hide();
+        }
+    }).add({
+        targets: '#var_end',
+        value: right,
+        duration: 1,
+        round: 1
+    })
     if(left < right){
         let tmp_html = '<table id="table' + count.toString() + '"><tr>';
         for(let i=left;i<=right;i++){
@@ -65,13 +64,21 @@ function merge(left,right){
         }
         tmp_html += '</table></tr>'
         let id = "#layer" + stack.toString();
+        let mid = Math.floor((left + right) / 2);
         $(id).append(tmp_html);
         sort_timeline.add({
+            targets: '#var_mid',
+            value: mid,
+            duration: 1,
+            round: 1,
+        }).add({
             targets: anime_id,
             opacity: 1,
+            duration: 1000,
+            begin: function(){
+                $('.call_left').addClass('code_running');
+            },
         });
-        let mid = (left + right) / 2;
-        mid = Math.floor(mid);
         count *= 2;
         merge(left,mid);
         count = count * 2 + 1;
@@ -84,7 +91,7 @@ function merge(left,right){
         $(id).append(tmp_html);
         sort_timeline.add({
             targets: anime_id,
-            opacity: 1,
+            opacity: 1
         });
         count = Math.floor(count / 2);
     }
@@ -93,10 +100,11 @@ function merge(left,right){
 function combine(left,mid,right){
     let data_left =  JSON.parse(JSON.stringify(data.slice(left,mid+1)));
     let data_right = JSON.parse(JSON.stringify(data.slice(mid+1,right+1)));
+    data_left.push(2147483647);
+    data_right.push(2147483647);
     let l=0,r=0;
-    let tablecnt=0;
     // anime 
-    let id = '#table' + count.toString() + '-' + tablecnt.toString();
+    let id = '#table' + count.toString() + '-0';
     let left_child_id = '#table' + (count*2).toString() + '-' + l.toString();
     let right_child_id = '#table' + (count*2+1).toString() + '-' + r.toString();
     let clean_table = [];
@@ -109,21 +117,40 @@ function combine(left,mid,right){
         clean_table.push(tmp);
     }
     sort_timeline.add({
+        targets: '#var_begin',
+        value: left,
+        duration: 1,
+        round: 1
+
+    }).add({
+        targets: '#var_end',
+        value: right,
+        duration: 1,
+        round: 1
+    }).add({
         targets: clean_table,
-        backgroundColor: '#4169e1'
-    })
-    sort_timeline.add({
+        backgroundColor: '#4169e1',
+        begin: function(){
+            // show combine code and hide mergesort code
+            $('.code_sort').hide();
+            $('.code_merge').show();
+        }
+    }).add({
         targets: [id, left_child_id, right_child_id],
         backgroundColor: '#ffa600'
     });
-    while(l<data_left.length && r<data_right.length){
-        let id = '#table' + count.toString() + '-' + tablecnt.toString();
+    for(let i=left;i<=right;i++){
+        let id = '#table' + count.toString() + '-' + (i - left).toString();
         let left_child_id = '#table' + (count*2).toString() + '-' + l.toString();
         let right_child_id = '#table' + (count*2+1).toString() + '-' + r.toString();
+        sort_timeline.add({
+            targets: [id, right_child_id, left_child_id],
+            backgroundColor: '#ffa600'
+        });
         if(data_left[l] <= data_right[r]){
             sort_timeline.add({
-                targets: [id, left_child_id,right_child_id],
-                backgroundColor: '#ffa600'
+                targets: left_child_id,
+                backgroundColor: '#7fd925',
             }).add({
                 targets: id,
                 value: data_left[l],
@@ -132,13 +159,11 @@ function combine(left,mid,right){
                 targets: [id, left_child_id],
                 backgroundColor: '#919191'
             });
-            data[left + tablecnt] = data_left[l];
-            tablecnt++;
-            l++;
+            data[i] = data_left[l++];
         }else{
             sort_timeline.add({
-                targets: [id, left_child_id, right_child_id],
-                backgroundColor: '#ffa600'
+                targets: right_child_id,
+                backgroundColor: '#7fd925'
             }).add({
                 targets: id,
                 value: data_right[r],
@@ -147,46 +172,8 @@ function combine(left,mid,right){
                 targets: [id, right_child_id],
                 backgroundColor: '#919191'
             });
-            data[left + tablecnt] = data_right[r];
-            tablecnt++;
-            r++;
+            data[i] = data_right[r++];
         }
-    }
-    while(l<data_left.length){
-        let id = '#table' + count.toString() + '-' + tablecnt.toString();
-        let child_id = '#table' + (count*2).toString() + '-' + l.toString();
-        sort_timeline.add({
-            targets: [id, child_id],
-            backgroundColor: '#ffa600'
-        }).add({
-            targets: id,
-            value: data_left[l],
-            duration: 1,
-        }).add({
-            targets: [id, child_id],
-            backgroundColor: '#919191'
-        });
-        data[left + tablecnt] = data_left[l];
-        l++;
-        tablecnt++;
-    }
-    while(r<data_right.length){
-        let id = '#table' + count.toString() + '-' + tablecnt.toString();
-        let child_id = '#table' + (count*2+1).toString() + '-' + r.toString();
-        sort_timeline.add({
-            targets: [id, child_id],
-            backgroundColor: '#ffa600'
-        }).add({
-            targets: id,
-            value: data_right[r],
-            duration: 1,
-        }).add({
-            targets: [id, child_id],
-            backgroundColor: '#919191'
-        });
-        data[left + tablecnt] = data_right[r];
-        r++;
-        tablecnt++;
     }
     let left_child = "#table" + (count * 2).toString();
     let right_child = "#table" + (count * 2 + 1).toString();
