@@ -1,7 +1,6 @@
 // the data of current state
 let data = [5, 2, 7, 3, 9, 1, 4, 15];
-let stack = 0;
-let count = 1;
+let stack = 0, count = 1;
 let sort_timeline = anime.timeline({
     autoplay: false,
     update: function (anim) {
@@ -14,7 +13,7 @@ function content_init(){
                    "        <span class='calc_mid'>int mid = (begin + end) / 2;</span>\n" +
                    "        <span class='call_left'>mergesort(table, begin, mid);</span>\n" + 
                    "        <span class='call_right'>mergesort(table, mid+1, end);</span>\n" +
-                   "        merge(table, begin, mid, end);\n" +
+                   "        <span class='call_merge'>merge(table, begin, mid, end);</span>\n" +
                    "    }\n" +
                    "}\n";
     let merge_code = "void merge(vector&lt;int&gt; &table, int begin, int mid, int end){\n" +
@@ -24,10 +23,10 @@ function content_init(){
                      "    left.push_back((MAX << 31) - 1);\n" +
                      "    right.push_back((MAX << 31) - 1);\n" +
                      "    for(int i=begin;i<=end;i++){\n" +
-                     "        if(left[l] <= right[r]){\n" +
-                     "            table[i] = left[l++];\n" +
+                     "        <span class='vec_cmp'>if(left[l] <= right[r]){</span>\n" +
+                     "            <span class='left_win'>table[i] = left[l++];</span>\n" +
                      "        }else{\n" +
-                     "            table[i] = right[r++];\n" +
+                     "            <span class='right_win'>table[i] = right[r++];</span>\n" +
                      "        }\n" +
                      "    }\n" +
                      "}\n";
@@ -37,26 +36,14 @@ function content_init(){
     $(".code_merge").hide();
     hljs.initHighlighting();
 }
-
+function update_var(left, mid, right){
+    $('#var_mid').attr('value', mid);
+    $('#var_begin').attr('value', left);
+    $('#var_end').attr('value', right);
+}
 function merge(left,right){
     stack++;
     let anime_id = '#table' + count.toString();
-    sort_timeline.add({
-        targets: '#var_begin',
-        value: left,
-        duration: 1,
-        round: 1,
-        begin: function () {
-            // show mergesort code and hide combine code
-            $('.code_sort').show();
-            $('.code_merge').hide();
-        }
-    }).add({
-        targets: '#var_end',
-        value: right,
-        duration: 1,
-        round: 1
-    })
     if(left < right){
         let tmp_html = '<table id="table' + count.toString() + '"><tr>';
         for(let i=left;i<=right;i++){
@@ -66,23 +53,69 @@ function merge(left,right){
         let id = "#layer" + stack.toString();
         let mid = Math.floor((left + right) / 2);
         $(id).append(tmp_html);
-        sort_timeline.add({
-            targets: '#var_mid',
-            value: mid,
-            duration: 1,
-            round: 1,
-        }).add({
-            targets: anime_id,
-            opacity: 1,
-            duration: 1000,
-            begin: function(){
-                $('.call_left').addClass('code_running');
-            },
-        });
+        if(stack == 1){
+            sort_timeline.add({
+                targets: anime_id,
+                duration: 500,
+                opacity: 1,
+                begin: function () {
+                    // show mergesort code and hide combine code
+                    $('.code_sort').show();
+                    $('.code_merge, .var_combine').hide();
+                    $('.calc_mid').addClass('code_running');
+                    $('.call_left, .call_right, .call_merge').removeClass('code_running');
+                    $('#var_mid').show();
+                    update_var(left,mid,right);
+                },
+                complete: function(){
+                    $('.calc_mid').removeClass('code_running');
+                    $('.call_left').addClass('code_running');
+                }
+            })
+        }else{
+            sort_timeline.add({
+                targets: anime_id,
+                delay: 500,
+                opacity: 1,
+                begin: function () {
+                    // show mergesort code and hide combine code
+                    $('.code_sort, #var_mid').show();
+                    $('.code_merge, .var_combine').hide();
+                    $('.calc_mid').addClass('code_running');
+                    $('.call_left, .call_right, .call_merge').removeClass('code_running');
+                    update_var(left,mid,right);
+                },
+                complete: function(){
+                    $('.calc_mid').removeClass('code_running');
+                    $('.call_left').addClass('code_running');
+                }
+            });
+        }
         count *= 2;
         merge(left,mid);
         count = count * 2 + 1;
+        sort_timeline.add({
+            targets: anime_id,
+            duration: 1,
+            complete: function () {
+                $('.call_right').addClass('code_running');
+                $('.calc_mid, .call_left, .call_merge').removeClass('code_running');
+                $('#var_mid').show();
+                $('.var_combine').hide();
+                update_var(left,mid,right);
+            },
+        });
         merge(mid+1,right);
+        sort_timeline.add({
+            targets: anime_id,
+            begin: function () {
+                $('.call_merge').addClass('code_running');
+                $('.calc_mid, .call_left, .call_right').removeClass('code_running');
+                $('#var_mid').show();
+                $('.var_combine').hide();
+                update_var(left,mid,right);
+            },
+        });
         combine(left,mid,right);
         count = Math.floor(count / 2);
     }else{
@@ -91,7 +124,16 @@ function merge(left,right){
         $(id).append(tmp_html);
         sort_timeline.add({
             targets: anime_id,
-            opacity: 1
+            delay: 500,
+            opacity: 1,
+            begin: function(){
+                // show mergesort code and hide combine code
+                $('.code_sort').show();
+                $('.code_merge, #var_mid').hide();
+                $('.call_right, .call_left').removeClass('code_running');
+                $('#var_begin').attr('value', left);
+                $('#var_end').attr('value', right);
+            }
         });
         count = Math.floor(count / 2);
     }
@@ -117,40 +159,61 @@ function combine(left,mid,right){
         clean_table.push(tmp);
     }
     sort_timeline.add({
-        targets: '#var_begin',
-        value: left,
-        duration: 1,
-        round: 1
-
-    }).add({
-        targets: '#var_end',
-        value: right,
-        duration: 1,
-        round: 1
-    }).add({
         targets: clean_table,
         backgroundColor: '#4169e1',
         begin: function(){
             // show combine code and hide mergesort code
             $('.code_sort').hide();
             $('.code_merge').show();
+            // init
+            $('.vec_cmp, .left_win, .right_win').removeClass('code_running');
+            update_var(left,mid,right);
         }
     }).add({
         targets: [id, left_child_id, right_child_id],
-        backgroundColor: '#ffa600'
+        backgroundColor: '#ffa600',
+        begin: function(){
+            $('.var_i').attr('value',left);
+            $('.var_l').attr('value',l);
+            $('.var_r').attr('value',r);
+            $('.var_combine').show();
+        }
     });
     for(let i=left;i<=right;i++){
         let id = '#table' + count.toString() + '-' + (i - left).toString();
         let left_child_id = '#table' + (count*2).toString() + '-' + l.toString();
         let right_child_id = '#table' + (count*2+1).toString() + '-' + r.toString();
         sort_timeline.add({
+            targets: '#var_l',
+            duration: 1,
+            value: l,
+            round:1
+        }).add({
+            targets: '#var_i',
+            duration: 1,
+            value: i,
+            round:1
+        }).add({
+            targets: '#var_r',
+            duration: 1,
+            value: r,
+            round:1
+        }).add({
             targets: [id, right_child_id, left_child_id],
-            backgroundColor: '#ffa600'
+            backgroundColor: '#ffa600',
+            begin: function(){
+                $('.vec_cmp').addClass('code_running');
+                $('.left_win, .right_win').removeClass('code_running');
+            }
         });
         if(data_left[l] <= data_right[r]){
             sort_timeline.add({
                 targets: left_child_id,
                 backgroundColor: '#7fd925',
+                complete: function(){
+                    $('.vec_cmp').removeClass('code_running');
+                    $('.left_win').addClass('code_running');
+                }
             }).add({
                 targets: id,
                 value: data_left[l],
@@ -163,7 +226,11 @@ function combine(left,mid,right){
         }else{
             sort_timeline.add({
                 targets: right_child_id,
-                backgroundColor: '#7fd925'
+                backgroundColor: '#7fd925',
+                complete: function(){
+                    $('.vec_cmp').removeClass('code_running');
+                    $('.right_win').addClass('code_running');
+                }
             }).add({
                 targets: id,
                 value: data_right[r],
@@ -178,6 +245,27 @@ function combine(left,mid,right){
     let left_child = "#table" + (count * 2).toString();
     let right_child = "#table" + (count * 2 + 1).toString();
     sort_timeline.add({
+        targets: '#var_l',
+        duration: 1,
+        value: function(){
+            return data_left.length - 1;
+        },
+        round:1
+    }).add({
+        targets: '#var_i',
+        duration: 1,
+        value: function(){
+            return right + 1;
+        },
+        round:1
+    }).add({
+        targets: '#var_r',
+        duration: 1,
+        value: function(){
+            return data_right.length - 1;
+        },
+        round:1
+    }).add({
         targets: [left_child, right_child],
         opacity: 0,
     });

@@ -1,26 +1,23 @@
-var stack_top = 0;
-var easter_egg_try = 0;
-var LEFT = 0;
-var heli_count = 0;
+let stack_top = 0, easter_egg_try = 0, LEFT = 0, heli_count = 0;
 function content_init(){
-    var pop_code =  "int stack[11] = {0};\n" +
+    let pop_code = "int stack[11] = {0};\n" +
+                   "int top = 0;\n" + 
+                   "void pop(int stack[]){\n" +
+                   "    if(top == 0){\n" +
+                   "        printf(\"the stack is empty\");\n" + 
+                   "    }else{\n" +
+                   "        top--;\n" +
+                   "    }\n" +
+                   "}\n";
+    let push_code = "int stack[11] = {0};\n" +
                     "int top = 0;\n" + 
-                    "void pop(int stack[]){\n" +
-                    "    if(top == 0){\n" +
-                    "        printf(\"the stack is empty\");\n" + 
+                    "void push(int stack[], int data){\n" +
+                    "    if(top == 11){\n" + 
+                    "        printf(\"the stack is full\");\n" +
                     "    }else{\n" +
-                    "        top--;\n" +
+                    "        stack[top++] = data;\n" +
                     "    }\n" +
                     "}\n";
-    var push_code =  "int stack[11] = {0};\n" +
-                     "int top = 0;\n" + 
-                     "void push(int stack[], int data){\n" +
-                     "    if(top == 11){\n" + 
-                     "        printf(\"the stack is full\");\n" +
-                     "    }else{\n" +
-                     "        stack[top++] = data;\n" +
-                     "    }\n" +
-                     "}\n";
     $(".pop_inner").html(pop_code);
     $(".push_inner").html(push_code);
     $(".code_pop").hide();
@@ -33,12 +30,12 @@ function content_change(command){
    if(command == 1){
         $(".code_pop").show();
         $(".code_push").hide();
-        var info = "<p>Function: <span>Pop</span></p>" +
+        let info = "<p>Function: <span>Pop</span></p>" +
                    "<p>Time complexity: <span>O(1)<span></p>";
    }else{
         $(".code_push").show();
         $(".code_pop").hide();
-        var info = "<p>Function: <span>Push</span></p>" +
+        let info = "<p>Function: <span>Push</span></p>" +
                    "<p>Time complexity: <span>O(1)</span></p>";
    }
     $(".info").html(info);
@@ -55,16 +52,16 @@ function stack_push(){
     // store speed
     let dur = $("#speed").val();
     // add helicopter
-    var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
+    let heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
     $("body").prepend(heli_node);
     // add anime_rec
-    var myClient = $('.data')[0].getBoundingClientRect();
+    let myClient = $('.data')[0].getBoundingClientRect();
     LEFT = myClient.left + 15; 
-    var data = $("#num").val();
-    var anime_rec_node = '<div class="anime_rec">' + data.toString() + '</div>';
+    let data = $("#num").val();
+    let anime_rec_node = '<div class="anime_rec">' + data.toString() + '</div>';
     $("body").prepend(anime_rec_node);
     // start anime
-    var timeline = anime.timeline();
+    let timeline = anime.timeline();
     timeline.add({
         targets: ['#pic', '.anime_rec'],
         duration: function(){
@@ -93,7 +90,7 @@ function stack_push(){
         easing: 'linear',
         complete: function(){
             $(".anime_rec").remove();
-            var node = '<div class="rec">' + data.toString() + '</div>';
+            let node = '<div class="rec">' + data.toString() + '</div>';
             $(".data").prepend(node);
         }
     }).add({
@@ -124,15 +121,15 @@ function corn_push(){
     // store speed
     let dur = $("#speed").val();
     // add helicopter
-    var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
+    let heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
     $("body").prepend(heli_node);
     // add corn
-    var corn_node = '<div id="pic_corn"><iframe src="corn.svg" frameborder="0" class="corn"></iframe></div>';
+    let corn_node = '<div id="pic_corn"><iframe src="corn.svg" frameborder="0" class="corn"></iframe></div>';
     $("body").prepend(corn_node);
-    var myClient = $('.data')[0].getBoundingClientRect();
+    let myClient = $('.data')[0].getBoundingClientRect();
     LEFT = myClient.left + 15; 
     // start anime
-    var timeline = anime.timeline();
+    let timeline = anime.timeline();
     timeline.add({
         targets: ['#pic', '#pic_corn'],
         duration: function(){
@@ -181,7 +178,7 @@ function corn_push(){
     });
 }
 function pop_corn(){
-    var timeline = anime.timeline();
+    let timeline = anime.timeline();
     timeline.add({
         targets: '#boom',
         opacity: 1,
@@ -195,7 +192,7 @@ function pop_corn(){
         },
         complete: function(){
             $('#pic_corn').remove();
-            var popcorn_node = '<div id="popcorn"><iframe src="popcorn.svg" frameborder="0" class="popcorn"></iframe></div>';
+            let popcorn_node = '<div id="popcorn"><iframe src="popcorn.svg" frameborder="0" class="popcorn"></iframe></div>';
             $('.data').prepend(popcorn_node);
         }
     }).add({
@@ -244,27 +241,27 @@ function stack_pop(){
     content_change(1);
     info_change(1);
     // add helicopter
-    var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
+    let heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
     $("body").prepend(heli_node);
     // add anime_rec
-    var anime_node = "<div class=\"anime_rec_pop\">" + $(".rec:first").text() + "</div>";
+    let anime_node = "<div class=\"anime_rec_pop\">" + $(".rec:first").text() + "</div>";
     $("body").prepend(anime_node);
-    var myClient = $('.rec:first')[0].getBoundingClientRect();
+    let myClient = $('.rec:first')[0].getBoundingClientRect();
     $(".anime_rec_pop").css("left",myClient.left);
     $(".anime_rec_pop").css("top",myClient.top);
     $(".rec:first").remove();
     // add rope
-    var rope_node = "<div class=\"rope\">" + "</div>";
+    let rope_node = "<div class=\"rope\">" + "</div>";
     $("body").prepend(rope_node);
     $(".rope").css("left",LEFT + 30);
     $(".rope").css("top",125);
-    var rec_final_y = 130 - $('.anime_rec_pop')[0].getBoundingClientRect().top;
+    let rec_final_y = 130 - $('.anime_rec_pop')[0].getBoundingClientRect().top;
     // offset
-    var rope_top = $('.rope')[0].getBoundingClientRect().top;
-    var len = (myClient.top - rope_top) * 5 / dur;
-    var offset_dur = "-=" + len.toString();
+    let rope_top = $('.rope')[0].getBoundingClientRect().top;
+    let len = (myClient.top - rope_top) * 5 / dur;
+    let offset_dur = "-=" + len.toString();
     // start anime
-    var timeline = anime.timeline();
+    let timeline = anime.timeline();
     timeline.add({
         targets: '#pic',
         duration: function(){
@@ -287,18 +284,18 @@ function stack_pop(){
         },
         targets: '.rope',
         duration: function(){
-            var rope_top = $('.rope')[0].getBoundingClientRect().top;
+            let rope_top = $('.rope')[0].getBoundingClientRect().top;
             return Math.floor((myClient.top - rope_top) * 5 / dur);
         },
         height: function(){
-            var rope_top = $('.rope')[0].getBoundingClientRect().top;
+            let rope_top = $('.rope')[0].getBoundingClientRect().top;
             return myClient.top - rope_top;
         },
         easing: 'linear'
     }).add({
         targets: '.rope',
         duration: function(){
-            var rope_top = $('.rope')[0].getBoundingClientRect().top;
+            let rope_top = $('.rope')[0].getBoundingClientRect().top;
             return Math.floor((myClient.top - rope_top) * 5 / dur);
         },
         height: 1,
@@ -307,7 +304,7 @@ function stack_pop(){
         targets: '.anime_rec_pop',
         easing: 'linear',
         duration: function(){
-            var rope_top = $('.rope')[0].getBoundingClientRect().top;
+            let rope_top = $('.rope')[0].getBoundingClientRect().top;
             return Math.floor((myClient.top - rope_top) * 5 / dur);
         },
         offset: offset_dur,
@@ -348,7 +345,7 @@ function info_change(mode){
     // mode 0 = info
     // mode 1 = trace
     mode = parseInt(mode);
-    var option = ["info", "trace"];
+    let option = ["info", "trace"];
     // delete remain
     $(".remain").css("display", "none");
     // add class and show information
