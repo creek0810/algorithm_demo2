@@ -27,8 +27,12 @@ function content_init(){
     $(".pop_inner").html(pop_code);
     $(".push_inner").html(push_code);
     $(".code_pop").hide();
-    $(".code_push").hide();
     hljs.initHighlighting();
+    $('.trace').css('display','flex');
+    let code_loc = $('code > span')[0].getBoundingClientRect().bottom;
+    let var_loc = $('#var > span')[0].getBoundingClientRect().bottom;
+    $('pre').css('margin-top',var_loc - code_loc);
+    $('.trace').css('display','none');
 }
 function content_change(command){
     // command 0 = push
@@ -215,23 +219,19 @@ function queue_pop(){
         stack_top--;
     }
 }
-function info_change(mode){
+function info_change(mode){ 
     // mode 0 = info
     // mode 1 = trace
+    let option = ["info", "trace"];
     mode = parseInt(mode);
-    var option = ["info", "trace"];
-    // delete remain
-    $(".remain").css("display", "none");
-    // add class and show information
-    $("#"+option[mode]).addClass("button-enabled");
+    // hide information
+    $("."+option[(mode+1)%2]).css("display", "none");
+    // show information
     if(mode == 0){
         $("."+option[mode]).css("display", "block");
     }else{
         $("."+option[mode]).css("display", "flex");
     }
-    // delete class and hide information
-    $("#"+option[(mode+1)%2]).removeClass("button-enabled");
-    $("."+option[(mode+1)%2]).css("display", "none");
 }
 function init(){
     content_init();

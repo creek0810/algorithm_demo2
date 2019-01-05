@@ -141,25 +141,25 @@ function sort(){
     return sort_timeline;
 }
 
-function info_change(mode){
+function info_change(mode){ 
     // mode 0 = info
     // mode 1 = trace
+    let option = ["info", "trace"];
     mode = parseInt(mode);
-    var option = ["info", "trace"];
-    // delete remain
-    $(".remain").css("display", "none");
-    // add class and show information
-    $("#"+option[mode]).addClass("button-enabled");
+    // hide information
+    $("."+option[(mode+1)%2]).css("display", "none");
+    // show information
     if(mode == 0){
         $("."+option[mode]).css("display", "block");
     }else{
         $("."+option[mode]).css("display", "flex");
+        let code_loc = $('code > span')[0].getBoundingClientRect().bottom;
+        let var_loc = $('#var > span')[0].getBoundingClientRect().bottom;
+        $('.hljs').css('margin-top',var_loc - code_loc);
     }
-    // delete class and hide information
-    $("#"+option[(mode+1)%2]).removeClass("button-enabled");
-    $("."+option[(mode+1)%2]).css("display", "none");
-    console.log(mode);
 }
+
+
 function init(){
     // init highlight.js
     hljs.initHighlightingOnLoad();

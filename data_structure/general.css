@@ -223,10 +223,6 @@ body{
     background: yellow;
     border-radius: 10px;
 }
-.hljs{
-    margin-top: -10px;
-}
-
 div.information{
     height: 70%;
     width: 50%;

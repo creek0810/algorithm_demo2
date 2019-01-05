@@ -9,13 +9,13 @@ let sort_timeline = anime.timeline({
 });
 function content_init(){
     let sort_code = "void mergesort(vector&lt;int&gt;&table, int begin, int end){\n" + 
-                   "    if(begin < end){\n" +
-                   "        <span class='calc_mid'>int mid = (begin + end) / 2;</span>\n" +
-                   "        <span class='call_left'>mergesort(table, begin, mid);</span>\n" + 
-                   "        <span class='call_right'>mergesort(table, mid+1, end);</span>\n" +
-                   "        <span class='call_merge'>merge(table, begin, mid, end);</span>\n" +
-                   "    }\n" +
-                   "}\n";
+                    "    if(begin < end){\n" +
+                    "        <span class='calc_mid'>int mid = (begin + end) / 2;</span>\n" +
+                    "        <span class='call_left'>mergesort(table, begin, mid);</span>\n" + 
+                    "        <span class='call_right'>mergesort(table, mid+1, end);</span>\n" +
+                    "        <span class='call_merge'>merge(table, begin, mid, end);</span>\n" +
+                    "    }\n" +
+                    "}\n";
     let merge_code = "void merge(vector&lt;int&gt; &table, int begin, int mid, int end){\n" +
                      "    vector&lt;int&gt;left(table.begin()+begin, table.begin()+mid+1);\n" +
                      "    vector&lt;int&gt;right(table.begin()+mid+1, table.begin()+end+1);\n" +
@@ -32,9 +32,13 @@ function content_init(){
                      "}\n";
     $(".sort_inner").html(sort_code);
     $(".merge_inner").html(merge_code);
-    $(".code_sort").hide();
     $(".code_merge").hide();
-    hljs.initHighlighting();
+    hljs.initHighlighting(); 
+    $('.trace').css('display','flex');
+    let code_loc = $('code > span')[0].getBoundingClientRect().bottom;
+    let var_loc = $('#var > span')[0].getBoundingClientRect().bottom;
+    $('pre').css('margin-top',var_loc - code_loc);
+    $('.trace').css('display','none');
 }
 function update_var(left, mid, right){
     $('#var_mid').attr('value', mid);
@@ -273,21 +277,16 @@ function combine(left,mid,right){
 function info_change(mode){ 
     // mode 0 = info
     // mode 1 = trace
+    let option = ["info", "trace"];
     mode = parseInt(mode);
-    var option = ["info", "trace"];
-    // delete remain
-    $(".remain").css("display", "none");
-    // add class and show information
-    $("#"+option[mode]).addClass("button-enabled");
+    // hide information
+    $("."+option[(mode+1)%2]).css("display", "none");
+    // show information
     if(mode == 0){
         $("."+option[mode]).css("display", "block");
     }else{
         $("."+option[mode]).css("display", "flex");
     }
-    // delete class and hide information
-    $("#"+option[(mode+1)%2]).removeClass("button-enabled");
-    $("."+option[(mode+1)%2]).css("display", "none");
-    console.log(mode);
 }
 
 function init(){

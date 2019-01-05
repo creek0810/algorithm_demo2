@@ -111,11 +111,6 @@ body{
     background: #eeeeee;
 }
 
-.hljs{
-    margin-top: -10px;
-}
-
-
 div.information{
     height: 70%;
     width: 50%;
@@ -149,6 +144,8 @@ input.information-enabled{
     font-size: 18px;
     color: #eeeeee;
 }
+
+
 
 
 
