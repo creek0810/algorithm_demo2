@@ -1,5 +1,6 @@
 // the data of current state
-let data = [5, 2, 7, 3, 9, 1, 4, 15];
+let DATA = [5, 2, 7, 3, 9, 1, 4, 15];
+let data = JSON.parse(JSON.stringify(DATA));
 let stack = 0, count = 1;
 let sort_timeline = anime.timeline({
     autoplay: false,
@@ -60,7 +61,9 @@ function merge(left,right){
         if(stack == 1){
             sort_timeline.add({
                 targets: anime_id,
-                duration: 500,
+                duration: function(){
+                    return Math.floor(500 / $('#speed').val());
+                },
                 opacity: 1,
                 begin: function () {
                     // show mergesort code and hide combine code
@@ -80,6 +83,9 @@ function merge(left,right){
             sort_timeline.add({
                 targets: anime_id,
                 delay: 500,
+                duration: function(){
+                    return Math.floor(1000 / $('#speed').val());
+                },
                 opacity: 1,
                 begin: function () {
                     // show mergesort code and hide combine code
@@ -112,6 +118,9 @@ function merge(left,right){
         merge(mid+1,right);
         sort_timeline.add({
             targets: anime_id,
+            duration: function(){
+                return Math.floor(1000 / $('#speed').val());
+            },
             begin: function () {
                 $('.call_merge').addClass('code_running');
                 $('.calc_mid, .call_left, .call_right').removeClass('code_running');
@@ -129,6 +138,9 @@ function merge(left,right){
         sort_timeline.add({
             targets: anime_id,
             delay: 500,
+            duration: function(){
+                return Math.floor(1000 / $('#speed').val());
+            },
             opacity: 1,
             begin: function(){
                 // show mergesort code and hide combine code
@@ -165,6 +177,9 @@ function combine(left,mid,right){
     sort_timeline.add({
         targets: clean_table,
         backgroundColor: '#4169e1',
+        duration: function(){
+            return Math.floor(1000 / $('#speed').val());
+        },
         begin: function(){
             // show combine code and hide mergesort code
             $('.code_sort').hide();
@@ -176,6 +191,9 @@ function combine(left,mid,right){
     }).add({
         targets: [id, left_child_id, right_child_id],
         backgroundColor: '#ffa600',
+        duration: function(){
+            return Math.floor(1000 / $('#speed').val());
+        },
         begin: function(){
             $('.var_i').attr('value',left);
             $('.var_l').attr('value',l);
@@ -205,6 +223,9 @@ function combine(left,mid,right){
         }).add({
             targets: [id, right_child_id, left_child_id],
             backgroundColor: '#ffa600',
+            duration: function(){
+                return Math.floor(1000 / $('#speed').val());
+            },
             begin: function(){
                 $('.vec_cmp').addClass('code_running');
                 $('.left_win, .right_win').removeClass('code_running');
@@ -214,6 +235,9 @@ function combine(left,mid,right){
             sort_timeline.add({
                 targets: left_child_id,
                 backgroundColor: '#7fd925',
+                duration: function(){
+                    return Math.floor(1000 / $('#speed').val());
+                },
                 complete: function(){
                     $('.vec_cmp').removeClass('code_running');
                     $('.left_win').addClass('code_running');
@@ -224,13 +248,19 @@ function combine(left,mid,right){
                 duration: 1,
             }).add({
                 targets: [id, left_child_id],
-                backgroundColor: '#919191'
+                backgroundColor: '#919191',
+                duration: function(){
+                    return Math.floor(1000 / $('#speed').val());
+                },
             });
             data[i] = data_left[l++];
         }else{
             sort_timeline.add({
                 targets: right_child_id,
                 backgroundColor: '#7fd925',
+                duration: function(){
+                    return Math.floor(1000 / $('#speed').val());
+                },
                 complete: function(){
                     $('.vec_cmp').removeClass('code_running');
                     $('.right_win').addClass('code_running');
@@ -241,7 +271,10 @@ function combine(left,mid,right){
                 duration: 1,
             }).add({
                 targets: [id, right_child_id],
-                backgroundColor: '#919191'
+                backgroundColor: '#919191',
+                duration: function(){
+                    return Math.floor(1000 / $('#speed').val());
+                },
             });
             data[i] = data_right[r++];
         }
@@ -288,10 +321,18 @@ function info_change(mode){
         $("."+option[mode]).css("display", "flex");
     }
 }
+function init_graph(){
+    for(let i=1;i<=4;i++){
+        let id = "#layer" + i.toString();
+        $(id).html("");
+        $(id).show();
+    }
+}
 
 function init(){
     // init highlight.js
     content_init();
+    info_change(1);
     // build anime timeline
     merge(0,data.length-1);
     // fix data square width
@@ -309,7 +350,25 @@ function init(){
     });
     $("#progress_bar").on("input change", function(){
         sort_timeline.seek(sort_timeline.duration * ($("#progress_bar").val()/100));
-    })
+    });
+    $("#speed").on("change",function(){
+        sort_timeline.pause();
+        init_graph();
+        stack = 0;
+        count = 1;
+        data = JSON.parse(JSON.stringify(DATA));
+        // build new timeline
+        sort_timeline = anime.timeline({
+            autoplay: false,
+            update: function (anim) {
+                $("#progress_bar").val(anim.progress);
+            }
+        });
+        merge(0,data.length-1);
+        // fix square
+        $('.data_input').width(square_loc.bottom - square_loc.top);
+        $("#pause").click(sort_timeline.pause);
+    });
     // mode 0 = info
     // mode 1 = trace
     $("#info").click(function(){

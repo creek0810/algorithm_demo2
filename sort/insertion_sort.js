@@ -170,6 +170,7 @@ function init(){
         result.seek(result.duration * ($("#progress_bar").val()/100));
     });
     $("#speed").on("change",function(){
+        result.pause();
         init_graph();
         result = sort();
         $("#pause").click(result.pause);

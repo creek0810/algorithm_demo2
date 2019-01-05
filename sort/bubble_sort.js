@@ -96,9 +96,6 @@ function info_change(mode){
         $("."+option[mode]).css("display", "block");
     }else{
         $("."+option[mode]).css("display", "flex");
-        let code_loc = $('code > span')[0].getBoundingClientRect().bottom;
-        let var_loc = $('#var > span')[0].getBoundingClientRect().bottom;
-        $('.hljs').css('margin-top',var_loc - code_loc);
     }
 }
 function init_graph(){
@@ -111,9 +108,17 @@ function init_graph(){
         $(target).css("transform","translateX(0)")
     }
 }
+function fix_code(){
+    $(".trace").css("display", "flex");
+    let code_loc = $('code > span')[0].getBoundingClientRect().bottom;
+    let var_loc = $('#var > span')[0].getBoundingClientRect().bottom;
+    $('.hljs').css('margin-top',var_loc - code_loc);
+}
 function init(){
     // init graph
     init_graph();
+    // fix code
+    fix_code();
     let result = sort();
     $("#start").click(function(){
         info_change(1);
@@ -128,6 +133,7 @@ function init(){
         result.seek(result.duration * ($("#progress_bar").val()/100));
     });
     $("#speed").on("change",function(){
+        result.pause();
         init_graph();
         result = sort();
         $("#pause").click(result.pause);
