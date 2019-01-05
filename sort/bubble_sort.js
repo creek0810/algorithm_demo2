@@ -7,8 +7,8 @@ var DATA = [{"id": "#data0","value": 5,"loc": 0},
             {"id": "#data5","value": 1,"loc": 0},
             {"id": "#data6","value": 4,"loc": 0}];
 function sort(){
-    data = JSON.parse(JSON.stringify(DATA));
-    var sort_timeline = anime.timeline({
+    let data = JSON.parse(JSON.stringify(DATA));
+    let sort_timeline = anime.timeline({
         autoplay: false,
         update: function(anim){
             $("#progress_bar").val(anim.progress);
@@ -112,14 +112,11 @@ function init_graph(){
     }
 }
 function init(){
-    // init highlight.js
-    hljs.initHighlightingOnLoad();
     // init graph
     init_graph();
     let result = sort();
     $("#start").click(function(){
         info_change(1);
-        //result = sort();
         result.play();
     });
     $("#pause").click(result.pause);

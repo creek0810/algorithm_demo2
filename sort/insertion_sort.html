@@ -72,7 +72,12 @@
             <button id="start" class="btn">Start</button> 
             <button id="pause" class="btn">Pause</button> 
             <button id="restart" class="btn">Restart</button> 
-            <input id="progress_bar" name="Progress bar"type="range" min="0" max="100" value="0">
+            <div class="cmd_another" style="margin-left: 5px">Progress:
+              <input id="progress_bar" name="Progress bar"type="range" min="0" max="100" value="0">
+            </div>
+            <div class="cmd_another">Speed:
+              <input id="speed" name="Progress bar" step="0.1" type="range" min="0.1" max="2" value="1">
+            </div>
         </div>
       </div>
       <div class="col-md-5 col-xs-12">
@@ -92,14 +97,14 @@
                   <pre><code class="c++">
 void insertion_sort(vector&lt;int&gt;&array){
     int size = array.size();
-    for(int i = 1; i < size; i++){
+    for(int i = 0; i < size; i++){
         <span class="init_cur">int current = array[i];</span>
         <span class="init_j">int j = i - 1;</span>
         <span class="cmp">while(j >= 0 && array[j] > current){</span>
             <span class="swap">array[j+1] = array[j];</span>
             <span class="swap">j--;</span>
         }
-        <span class="end">array[j+2] = current;</span>
+        <span class="end">array[j+1] = current;</span>
     }
 }
                   </code></pre>
