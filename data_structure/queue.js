@@ -55,6 +55,9 @@ function queue_push(){
     if((rear+1)%capacity == front){
         alert("The queue is full");
         return;
+    }else if($('#num').val() > 100){
+        alert("Value should be between 0 to 100!");
+        return;
     }
     // store speed
     var dur = $("#speed").val();

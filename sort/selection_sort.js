@@ -20,12 +20,9 @@ function sort(){
         sort_timeline.add({
             targets: data[min]["id"],
             backgroundColor: '#7fd925',
-            offset: "-=0",
             begin: function(){
-                $(".change").removeClass("code_running");
-                $(".swap").removeClass("code_running");
-                $(".cmp").removeClass("code_running");
                 $(".init").addClass("code_running");
+                $(".change, .swap, .cmp").removeClass("code_running");
             }
         }).add({
             targets: '#var_i',
@@ -59,10 +56,8 @@ function sort(){
                 backgroundColor: '#ffa500',
                 offset: "-=0",
                 begin: function(){
-                    $(".change").removeClass("code_running");
-                    $(".swap").removeClass("code_running");
-                    $(".init").removeClass("code_running");
                     $(".cmp").addClass("code_running");
+                    $(".change, .swap, .init").removeClass("code_running");
                 }
             }).add({
                 targets: '#var_j',
@@ -76,9 +71,8 @@ function sort(){
                     backgroundColor: '#4169e1',
                     offset: "-=0",
                     begin: function(){
-                        $(".cmp").removeClass("code_running");
-                        $(".swap").removeClass("code_running");
                         $(".change").addClass("code_running");
+                        $(".cmp, .swap").removeClass("code_running");
                     }
                 }).add({
                     targets: data[j]["id"],
@@ -109,9 +103,8 @@ function sort(){
             offset: "-=0",
             easing: 'linear',
             begin: function(){
-                $(".cmp").removeClass("code_running");
-                $(".change").removeClass("code_running");
                 $(".swap").addClass("code_running");
+                $(".cmp, .change").removeClass("code_running");
             }
         }).add({
             targets: data[i]["id"],

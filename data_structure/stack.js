@@ -50,7 +50,10 @@ function stack_push(){
     info_change(1);
     easter_egg_try = 0;
     if(stack_top == 11){
-        window.alert("the stack is full");
+        alert("The stack is full");
+        return;
+    }else if($('#num').val() > 100){
+        alert("Value should be between 0 and 100!");
         return;
     }
     // store speed
