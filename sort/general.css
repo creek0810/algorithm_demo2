@@ -51,8 +51,7 @@ body{
     justify-content: flex-start;
 }
 #progress_bar{
-    width: 55%;
-    margin-left: 7px;
+    width: 90%;
 }
 .trace{
     display: none;

@@ -1,5 +1,5 @@
 // the data of current state
-var data = [{"id": "#data0","value": 5,"loc": 0},
+var DATA = [{"id": "#data0","value": 5,"loc": 0},
             {"id": "#data1","value": 2,"loc": 0},
             {"id": "#data2","value": 7,"loc": 0},
             {"id": "#data3","value": 3,"loc": 0},
@@ -7,6 +7,7 @@ var data = [{"id": "#data0","value": 5,"loc": 0},
             {"id": "#data5","value": 1,"loc": 0},
             {"id": "#data6","value": 4,"loc": 0}];
 function sort(){
+    data = JSON.parse(JSON.stringify(DATA));
     var sort_timeline = anime.timeline({
         autoplay: false,
         update: function(anim){
@@ -29,7 +30,10 @@ function sort(){
             }).add({
                 targets: [data[j]["id"], data[j+1]["id"]],
                 backgroundColor: '#ffa600',
-                offset: "-=0",
+                duration: function(){
+                    console.log($('#speed').val());
+                    return Math.floor(1002 / $("#speed").val());
+                },
                 begin: function(){
                     $(".cmp").addClass("code_running");
                     $(".swap").removeClass("code_running");
@@ -38,36 +42,42 @@ function sort(){
             
             if(data[j]["value"] > data[j+1]["value"]){
                 sort_timeline.add({
-                    targets: data[j]["id"],
-                    translateX: data[j]["loc"] + 51,
-                    duration: 300,
-                    offset: "-=0",
+                    targets: [data[j]["id"], data[j+1]["id"]],
+                    translateX: function(target,i){
+                        if(i == 0){
+                            return data[j]["loc"] + 51;
+                        }else{
+                            return data[j+1]["loc"] - 51;
+                        }
+                    },
+                    duration: function(){
+                        return Math.floor(300 / $("#speed").val());
+                    },
                     easing: 'linear',
                     begin: function(){
                         $(".swap").addClass("code_running");
                         $(".cmp").removeClass("code_running");
                     }
-                }).add({
-                    targets: data[j+1]["id"],
-                    translateX: data[j+1]["loc"] - 51,
-                    duration: 300,
-                    offset: "-=300",
-                    easing: 'linear'
-                })
+                });
                 data[j+1]["loc"] -= 51;
                 data[j]["loc"] += 51;
-                var tmp = data[j];
+                let tmp = data[j];
                 data[j] = data[j+1];
                 data[j+1] = tmp;
             }
             sort_timeline.add({
                 targets: [data[j]["id"], data[j+1]["id"]],
+                duration: function(){
+                    return Math.floor(1002 / $("#speed").val());
+                },
                 backgroundColor: '#4169e1',
-                offset: "-=0",
             })
         }
         sort_timeline.add({
             targets: data[data.length-1-i]["id"],
+            duration: function(){
+                return Math.floor(1002 / $("#speed").val());
+            },
             backgroundColor: '#919191',
         })
     }
@@ -91,20 +101,25 @@ function info_change(mode){
         $('.hljs').css('margin-top',var_loc - code_loc);
     }
 }
-
+function init_graph(){
+    for(var i=0;i<DATA.length;i++){
+        var target = DATA[i]["id"];
+        $(target).html(DATA[i]["value"].toString());
+        $(target).css("line-height",(DATA[i]["value"]*34-15)+"px");
+        $(target).css("background-color","#4169e1");
+        $(target).height(DATA[i]["value"]*17);
+        $(target).css("transform","translateX(0)")
+    }
+}
 function init(){
     // init highlight.js
     hljs.initHighlightingOnLoad();
     // init graph
-    for(var i=0;i<data.length;i++){
-        var target = data[i]["id"];
-        $(target).html(data[i]["value"].toString());
-        $(target).css("line-height",(data[i]["value"]*34-15)+"px");
-        $(target).height(data[i]["value"]*17);
-    }
-    result = sort();
+    init_graph();
+    let result = sort();
     $("#start").click(function(){
         info_change(1);
+        //result = sort();
         result.play();
     });
     $("#pause").click(result.pause);
@@ -114,7 +129,12 @@ function init(){
     });
     $("#progress_bar").on("input change", function(){
         result.seek(result.duration * ($("#progress_bar").val()/100));
-    })
+    });
+    $("#speed").on("change",function(){
+        init_graph();
+        result = sort();
+        $("#pause").click(result.pause);
+    });
     // mode 0 = info
     // mode 1 = trace
     $("#info").click(function(){
