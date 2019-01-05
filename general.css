@@ -17,6 +17,12 @@ html, body{
     font-size: 5.5vw;
 }
 
+.category {
+    font-weight: bold;
+    color: 	#666666;
+    font-size: 3.5vw;
+}
+
 .tv-container {
   display: flex;
   height: 40%;
@@ -240,3 +246,157 @@ html, body{
     top: -163%;
     left: 110%;
 }
+
+.btn {
+    left: 10%;
+    padding: 1vw 1.5vw;
+    font-size: 2.5vw;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid 	#666666;
+    outline: none;
+    color: 	#666666;
+    background-color: transparent;
+    margin: 2.5vw;
+    white-space: nowrap;
+    border-radius:5%;
+    width: 30%;
+    float: left;
+  }
+  .btn--swap span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 1vw 1.5vw;
+    font-size: 2.5vw;
+    box-sizing: border-box;
+    opacity: 0;
+    color: white;
+    transition: 0.3s ease;
+  }
+  .btn--swap::before {
+    content: "";
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 0;
+    height: 100%;
+    background-color: 	#666666;
+    transition: 0.5s ease;
+    border-radius:5%;
+  }
+  .btn--swap:hover:before {
+    width: 100%;
+  }
+  .btn--swap:hover span {
+    opacity: 1;
+  }
+
+
+
+  .rebtn {
+    left: 75%;
+    padding: 0.5vw 1vw;
+    font-size: 1.5vw;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid 	#666666;
+    outline: none;
+    color: 	#666666;
+    background-color: transparent;
+    margin: 1vw;
+    white-space: nowrap;
+    border-radius:5%;
+    width: 15%;
+    float: left;
+  }
+
+.rebtn--border::after, .rebtn--border::before,
+.rebtn--border span::after,
+.rebtn--border span::before {
+  content: "";
+  position: absolute;
+  background-color: #666666;
+  transition: 0.5s ease;
+}
+.rebtn--border::after, .rebtn--border::before {
+  height: 100%;
+  width: 2px;
+  top: -2px;
+}
+.rebtn--border::after {
+  left: -2px;
+}
+.rebtn--border::before {
+  right: -2px;
+}
+.rebtn--border span::after,
+.rebtn--border span::before {
+  height: 2px;
+  width: 100%;
+  left: -2px;
+}
+.rebtn--border span::after {
+  top: -2px;
+}
+.rebtn--border span::before {
+  bottom: -2px;
+}
+.rebtn--border:hover:after {
+  transform: translatex(-12px);
+}
+.rebtn--border:hover:before {
+  transform: translatex(12px);
+}
+.rebtn--border:hover span::after {
+  transform: translatey(-12px);
+}
+.rebtn--border:hover span::before {
+  transform: translatey(12px);
+}
+
+
+.sortbtn {
+    left: 13%;
+    padding: 0.5vw 1vw;
+    font-size: 1.5vw;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid 	#666666;
+    outline: none;
+    color: 	#666666;
+    background-color: transparent;
+    margin: 1vw;
+    white-space: nowrap;
+    border-radius:5%;
+    width: 35%;
+    float: left;
+  }
+
+.sortbtn--future::after, .sortbtn--future::before {
+    content: "";
+    position: absolute;
+    border: 2px solid #666666;
+    width: calc(100% + 7px);
+    height: 30px;
+    transition: 0.5s ease;
+  }
+  .sortbtn--future::after {
+    top: -7px;
+    left: -7px;
+    border-right: none;
+    border-bottom: none;
+  }
+  .sortbtn--future::before {
+    bottom: -7px;
+    right: -7px;
+    border-left: none;
+    border-top: none;
+  }
+  .sortbtn--future:hover:after, .sortbtn--future:hover:before {
+    width: calc(100% - 10px);
+    height: 60px;
+  }
+  

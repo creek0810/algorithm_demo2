@@ -8,13 +8,15 @@ function fix_width(){
 	$('.elevator-shaft-two').width(width);
 }
 function show_DS(){
+	$("#box-two").unbind();
+	$("#box-one").unbind();
 	let timeline = anime.timeline();
 	let cur_loc = $('#push_arm')[0].getBoundingClientRect();
 	let tar_loc = $('.elevator-shaft-two')[0].getBoundingClientRect();
 	let box_loc = $('#box-two')[0].getBoundingClientRect();
 	let pusher_loc = $('#push_arm3')[0].getBoundingClientRect();
 	let loading_loc = $('#load')[0].getBoundingClientRect();
-
+	let border_loc = $('.platform')[0].getBoundingClientRect();
 	timeline.add({
 		targets: '#robot-one',
 		translateX: function(){
@@ -84,12 +86,30 @@ function show_DS(){
 		offset: '-=2000',
 		easing: 'linear',
 		duration: 2000,
-	});
+	}).add({
+		targets: '#robot-three',
+		translateY:function(){
+			return tar_loc.top - box_loc.bottom;
+		},
 
-	mouseoutMes = " ";
+		translateX: function(){
+			return border_loc.right - box_loc.left;
+		},
+		rotate: -720,
+		easing: 'linear',
+		duration: 2000,
+	});
+	setTimeout("DSchangemes()", 5000);
+}
+
+function DSchangemes(){
+	mouseoutMes = "<br><div class='category'>Data Structure</div><a href='data_structure/stack.html'><button class='btn btn--swap' >Stack<span>Stack</span></button></a><a href='data_structure/queue.html'><button class='btn btn--swap'>Queue<span>Queue</span></button></a>";
+	$(".screen").html(mouseoutMes);
 }
 
 function show_ALG(){
+	$("#box-two").unbind();
+	$("#box-one").unbind();
 	$('#arms').addClass("arm_one")
 	$('#arms').removeClass('arm')
 	$('#push_arm').addClass("arm-right_one")
@@ -100,6 +120,7 @@ function show_ALG(){
 	let box_loc = $('#box-one')[0].getBoundingClientRect();
 	let pusher_loc = $('#push_arm2')[0].getBoundingClientRect();
 	let loading_loc = $('#load')[0].getBoundingClientRect();
+	let border_loc = $('.platform')[0].getBoundingClientRect();
 	timeline.add({
 		targets: '#robot-one',
 		translateX: function(){
@@ -170,9 +191,39 @@ function show_ALG(){
 		offset: '-=2000',
 		easing: 'linear',
 		duration: 2000,
+	}).add({
+		targets: '#robot-two',
+		translateY:function(){
+			return tar_loc.top - box_loc.bottom;
+		},
+
+		translateX: function(){
+			return border_loc.left - box_loc.right;
+		},
+		rotate: 720,
+		easing: 'linear',
+		duration: 2000,
 	});
 
-	mouseoutMes = " ";
+	setTimeout("ALGchangemes()", 5000);
+}
+
+function ALGchangemes(){
+	mouseoutMes = "<br><div class='category'>Data Structure</div><button class='btn btn--swap' id='sort'>Sort<span>Sort</span></button><button class='btn btn--swap' id='graph'>Graph<span>Graph</span></button>";
+	$(".screen").html(mouseoutMes);
+	$('#sort').click(showsort);
+	$('#graph').click(showgraph);
+}
+
+function showsort(){
+	mouseoutMes = "<br><div class='category'>Sort</div><div><a href='sort/bubble_sort.html'><button class='sortbtn sortbtn--future' id='sort'>Bubble Sort<span></span></button></a><a href='sort/insertion_sort.html'><button class='sortbtn sortbtn--future' id='graph'>Insertion Sort<span></span></button></a></div><br><br><br><div><a href='sort/selection_sort.html'><button class='sortbtn sortbtn--future' id='graph'>Selection Sort<span></span></button></a><a href='sort/merge_sort.html'><button class='sortbtn sortbtn--future' id='graph'>Merge Sort<span></span></button></a></div>";
+	$(".screen").html(mouseoutMes);
+}
+
+function showgraph(){
+	mouseoutMes = "<br><div class='category' style='color:#FF3333;'>付費以解鎖更多</div><br><div>請撥打以下電話會有專人為您服務  <3<br><a href='tel:0987987987'>0987987987</a></div><button class='rebtn rebtn--border' id='re'>Back<span></span></button>";
+	$(".screen").html(mouseoutMes);
+	$('#re').click(ALGchangemes);
 }
 
 function init(){
