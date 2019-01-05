@@ -64,26 +64,29 @@ function queue_push(){
     // change the content of code trace
     content_change(0);
     info_change(1);
+    let body_loc = $('body')[0].getBoundingClientRect();
     // add helicopter
     var heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
     $("body").prepend(heli_node);
+    $('#pic').css("left",body_loc.right - 100);
     // add anime_rec
-    var myClient = $('.data')[0].getBoundingClientRect();
-    LEFT = myClient.left + 15; 
+    var dest = $('.data')[0].getBoundingClientRect();
+    LEFT = dest.left + 15; 
     var fallen_time = 0;
     var data = $("#num").val();
     var anime_node = '<div class="anime_rec">' + data.toString() + '</div>';
     $("body").prepend(anime_node);
+    $('.anime_rec').css("left",body_loc.right);
     // start anime
     var timeline = anime.timeline();
     timeline.add({
         targets: ['#pic', '.anime_rec'],
         duration: function(){
-            return Math.floor(2000 / dur);
+            return Math.floor((body_loc.right - LEFT) / dur);
         },
         easing: 'linear',
         translateX: function(){
-            return LEFT - 1800 ;
+            return LEFT - body_loc.right;
         },
         begin: function(){
             $("#push").attr("disabled",true);
@@ -98,7 +101,7 @@ function queue_push(){
             return Math.floor(400 / dur);
         },
         translateX: function(){
-            return LEFT - 1800;
+            return LEFT - body_loc.right;
         },
         translateY: 379 - (32)*stack_top,
         easing: 'linear',
@@ -130,11 +133,9 @@ function queue_push(){
         round: 1
     });
 }
-
-
 function queue_pop(){
     // store speed
-    var dur = $("#speed").val();
+    let dur = $("#speed").val();
     // change the content of code trace
     content_change(1);
     info_change(1);
@@ -142,9 +143,12 @@ function queue_pop(){
         alert("the queue is empty!!");
         easter_egg_try++;
     }else{
+        // get body loc
+        let body_loc = $('body')[0].getBoundingClientRect();
         // add mouse
-        var heli_node = '<div id="pic_mouse"><iframe src="mouse.svg" frameborder="0" class="mouse"></iframe></div>';
+        let heli_node = '<div id="pic_mouse"><iframe src="mouse.svg" frameborder="0" class="mouse"></iframe></div>';
         $("body").prepend(heli_node);
+        $('#pic_mouse').css("left",body_loc.right - 100);
         // check mouse y position
         var bound_pos = $('.left_bound')[0].getBoundingClientRect();
         $("#pic_mouse").css("top", bound_pos.top + 310);
@@ -156,13 +160,13 @@ function queue_pop(){
         $(".anime_rec_pop").css("top",rec_pos.top);
         $(".rec:last").css("opacity",0);
         var rec_final_y = 130 - $('.anime_rec_pop')[0].getBoundingClientRect().top;
-        var mouse_des = rec_pos.left - 1755;
+        var mouse_des = rec_pos.left - (body_loc.right - 100 + 55);
         var timeline = anime.timeline();
         var tmp_offset = "-=" + Math.floor(2000/dur).toString(); 
         timeline.add({
             targets: '#pic_mouse',
             duration: function(){
-                return Math.floor(2000 / dur);
+                return Math.floor((-mouse_des) / dur);
             },
             easing: 'linear',
             translateX: mouse_des,

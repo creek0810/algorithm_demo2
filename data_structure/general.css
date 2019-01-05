@@ -73,7 +73,6 @@ body{
 #pic_mouse{
     width: 150px;
     position: absolute;
-    left: 1700px;
     top: 20px;
     z-index: 5;
 }
