@@ -53,7 +53,6 @@ body{
     background: #7fd925;
     text-align: center;
     position: absolute;
-    left: 1800px;
     top: 130px;
     z-index: 5;
 }
@@ -69,7 +68,6 @@ body{
 #pic{
     width: 150px;
     position: absolute;
-    left: 1700px;
     top: 20px;
 }
 #pic_mouse{

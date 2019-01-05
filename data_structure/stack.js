@@ -58,25 +58,29 @@ function stack_push(){
     }
     // store speed
     let dur = $("#speed").val();
+    // get body loc
+    let body_loc = $('body')[0].getBoundingClientRect();
     // add helicopter
     let heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
     $("body").prepend(heli_node);
+    $('#pic').css('left',body_loc.right - 100);
     // add anime_rec
-    let myClient = $('.data')[0].getBoundingClientRect();
-    LEFT = myClient.left + 15; 
+    let dest = $('.data')[0].getBoundingClientRect();
+    LEFT = dest.left + 15; 
     let data = $("#num").val();
     let anime_rec_node = '<div class="anime_rec">' + data.toString() + '</div>';
     $("body").prepend(anime_rec_node);
+    $('.anime_rec').css('left',body_loc.right);
     // start anime
     let timeline = anime.timeline();
     timeline.add({
         targets: ['#pic', '.anime_rec'],
         duration: function(){
-            return Math.floor(2000 / dur);
+            return Math.floor((body_loc.right - LEFT) / dur);
         },
         easing: 'linear',
         translateX: function(){
-            return LEFT - 1800 ;
+            return LEFT - body_loc.right;
         },
         begin: function(){
             $("#push").attr("disabled",true);
@@ -91,7 +95,7 @@ function stack_push(){
             return Math.floor(400 / dur);
         },
         translateX: function(){
-            return LEFT - 1800;
+            return LEFT - body_loc.right;
         },
         translateY: 379 - (32) * stack_top,
         easing: 'linear',
@@ -127,24 +131,28 @@ function stack_push(){
 function corn_push(){
     // store speed
     let dur = $("#speed").val();
+    // get body loc
+    let body_loc = $('body')[0].getBoundingClientRect();
     // add helicopter
     let heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
     $("body").prepend(heli_node);
+    $('#pic').css('left',body_loc.right - 100);
     // add corn
     let corn_node = '<div id="pic_corn"><iframe src="corn.svg" frameborder="0" class="corn"></iframe></div>';
     $("body").prepend(corn_node);
-    let myClient = $('.data')[0].getBoundingClientRect();
-    LEFT = myClient.left + 15; 
+    let dest = $('.data')[0].getBoundingClientRect();
+    LEFT = dest.left + 15; 
+    $('#pic_corn').css('left',body_loc.right - 100);
     // start anime
     let timeline = anime.timeline();
     timeline.add({
         targets: ['#pic', '#pic_corn'],
         duration: function(){
-            return Math.floor(2000 / dur);
+            return Math.floor((body_loc.right - LEFT) / dur);
         },
         easing: 'linear',
         translateX: function(){
-            return LEFT - 1800 ;
+            return LEFT - body_loc.right;
         },
         begin: function(){
             $("#push").attr("disabled",true);
@@ -159,7 +167,7 @@ function corn_push(){
             return Math.floor(400 / dur);
         },
         translateX: function(){
-            return LEFT - 1800;
+            return LEFT - body_loc.right;
         },
         translateY: 370,
         easing: 'linear'
@@ -247,9 +255,12 @@ function stack_pop(){
     // change content of code trace
     content_change(1);
     info_change(1);
+    // get body loc
+    let body_loc = $('body')[0].getBoundingClientRect();
     // add helicopter
     let heli_node = '<div id="pic"><iframe src="helicopter.svg" frameborder="0" class="heli"></iframe></div>';
     $("body").prepend(heli_node);
+    $('#pic').css('left',body_loc.right - 100);
     // add anime_rec
     let anime_node = "<div class=\"anime_rec_pop\">" + $(".rec:first").text() + "</div>";
     $("body").prepend(anime_node);
@@ -257,6 +268,9 @@ function stack_pop(){
     $(".anime_rec_pop").css("left",myClient.left);
     $(".anime_rec_pop").css("top",myClient.top);
     $(".rec:first").remove();
+    //  get dest
+    let dest = $('.data')[0].getBoundingClientRect();
+    LEFT = dest.left + 15; 
     // add rope
     let rope_node = "<div class=\"rope\">" + "</div>";
     $("body").prepend(rope_node);
@@ -272,11 +286,11 @@ function stack_pop(){
     timeline.add({
         targets: '#pic',
         duration: function(){
-            return Math.floor(2000 / dur);
+            return Math.floor((body_loc.right - LEFT) / dur);
         },
         easing: 'linear',
         translateX: function(){
-            return LEFT - 1800 ;
+            return LEFT - body_loc.right;
         },
         begin: function(){
             $("#push").attr("disabled", true);
@@ -318,7 +332,9 @@ function stack_pop(){
         translateY: rec_final_y
     }).add({
         targets: '.anime_rec_pop',
-        translateX: -LEFT-200,
+        translateX: function(){
+            return -(LEFT - body_loc.right + 2000);
+        },
         translateY: rec_final_y,
         duration: 600,
         easing:'linear',
