@@ -33,7 +33,7 @@ We now have the demo of the following algorithm or data structures.
 ## Authors
 
 - **Wang Shin yu** [creek0810](https://github.com/creek0810)
-- **Huang**[hannn0919](https://github.com/hannn0919)
+- **Huang Tzu Han** [hannn0919](https://github.com/hannn0919)
 
 ## TODO
 - add licence of mouse and helicopter
