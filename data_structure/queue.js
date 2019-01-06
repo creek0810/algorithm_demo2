@@ -32,7 +32,6 @@ function content_init(){
     let code_loc = $('code > span')[0].getBoundingClientRect().bottom;
     let var_loc = $('#var > span')[0].getBoundingClientRect().bottom;
     $('pre').css('margin-top',var_loc - code_loc);
-    $('.trace').css('display','none');
 }
 function content_change(command){
     // command 0 = push
