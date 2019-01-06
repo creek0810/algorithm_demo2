@@ -201,15 +201,15 @@ html, body{
 
 #load {
     position: relative;
-    height: 65%;
-    top: 35%;
-    left: 47%;
     z-index: 5;
+    height: 100%;
 }
 
 #ahref {
     position: relative;
-    left: 44%;
+    left: 47%;
+    top: 35%;
+    height: 65%;
 }
 
 .loading {

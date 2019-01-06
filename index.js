@@ -234,6 +234,12 @@ function init(){
 	$("#box-two").mouseover(function(){
 		$(".messenger").html("<br><div style='font-size:3.5vw'>Data Structure</div>");
 	});
+	$("#load").mouseover(function(){
+		$(".messenger").html("<br><div style='font-size:3.5vw'>說明文件</div>");
+	});
+	$("#load").mouseout(function(){
+		$(".screen").html(mouseoutMes);
+	});
 	$(".box").mouseout(function(){
 		$(".screen").html(mouseoutMes);
 	});
