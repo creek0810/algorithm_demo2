@@ -207,7 +207,12 @@ html, body{
     z-index: 5;
 }
 
-.loading{
+#ahref {
+    position: relative;
+    left: 44%;
+}
+
+.loading {
     position: relative;
     display: flex;
     height: 60%;
