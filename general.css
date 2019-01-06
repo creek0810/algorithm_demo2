@@ -23,6 +23,10 @@ html, body{
     font-size: 3.5vw;
 }
 
+.messenger {
+    line-height: 1.9vw;
+}
+
 .tv-container {
   display: flex;
   height: 40%;
@@ -313,49 +317,37 @@ html, body{
     float: left;
   }
 
-.rebtn--border::after, .rebtn--border::before,
-.rebtn--border span::after,
-.rebtn--border span::before {
-  content: "";
-  position: absolute;
-  background-color: #666666;
-  transition: 0.5s ease;
-}
-.rebtn--border::after, .rebtn--border::before {
-  height: 100%;
-  width: 2px;
-  top: -2px;
-}
-.rebtn--border::after {
-  left: -2px;
-}
-.rebtn--border::before {
-  right: -2px;
-}
-.rebtn--border span::after,
-.rebtn--border span::before {
-  height: 2px;
-  width: 100%;
-  left: -2px;
-}
-.rebtn--border span::after {
-  top: -2px;
-}
-.rebtn--border span::before {
-  bottom: -2px;
-}
-.rebtn--border:hover:after {
-  transform: translatex(-12px);
-}
-.rebtn--border:hover:before {
-  transform: translatex(12px);
-}
-.rebtn--border:hover span::after {
-  transform: translatey(-12px);
-}
-.rebtn--border:hover span::before {
-  transform: translatey(12px);
-}
+
+  .rebtn--swap span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0.5vw 1vw;
+    font-size: 1.5vw;
+    box-sizing: border-box;
+    opacity: 0;
+    color: white;
+    transition: 0.3s ease;
+  }
+  .rebtn--swap::before {
+    content: "";
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 0;
+    height: 100%;
+    background-color: 	#666666;
+    transition: 0.5s ease;
+    border-radius:5%;
+  }
+  .rebtn--swap:hover:before {
+    width: 100%;
+  }
+  .rebtn--swap:hover span {
+    opacity: 1;
+  }
 
 
 .sortbtn {
@@ -375,28 +367,34 @@ html, body{
     float: left;
   }
 
-.sortbtn--future::after, .sortbtn--future::before {
-    content: "";
+  .sortbtn--swap span {
     position: absolute;
-    border: 2px solid #666666;
-    width: calc(100% + 7px);
-    height: 30px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0.5vw 1vw;
+    font-size: 1.5vw;
+    box-sizing: border-box;
+    opacity: 0;
+    color: white;
+    transition: 0.3s ease;
+  }
+  .sortbtn--swap::before {
+    content: "";
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 0;
+    height: 100%;
+    background-color: 	#666666;
     transition: 0.5s ease;
+    border-radius:5%;
   }
-  .sortbtn--future::after {
-    top: -7px;
-    left: -7px;
-    border-right: none;
-    border-bottom: none;
+  .sortbtn--swap:hover:before {
+    width: 100%;
   }
-  .sortbtn--future::before {
-    bottom: -7px;
-    right: -7px;
-    border-left: none;
-    border-top: none;
-  }
-  .sortbtn--future:hover:after, .sortbtn--future:hover:before {
-    width: calc(100% - 10px);
-    height: 60px;
+  .sortbtn--swap:hover span {
+    opacity: 1;
   }
   

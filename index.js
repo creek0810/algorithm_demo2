@@ -1,4 +1,4 @@
-var mouseoutMes = '<br><div class="title">救救演算法!!!</div><br><div class="messenger">點擊下方CD以了解更多<br>點擊下方CD Player以查看說明文件</div>';
+var mouseoutMes = '<br><div class="title">救救演算法!!!</div><br><div class="messenger">點擊下方CD以了解更多<br><div style="font-size:1.15vw;">(左邊CD:Algorithm  ,  右邊CD:Data Structure)</div>點擊下方CD Player以查看說明文件</div>';
 
 function fix_width(){
 	let width = $('.robot').height();
@@ -216,12 +216,12 @@ function ALGchangemes(){
 }
 
 function showsort(){
-	mouseoutMes = "<br><div class='category'>Sort</div><div><a href='sort/bubble_sort.html'><button class='sortbtn sortbtn--future' id='sort'>Bubble Sort<span></span></button></a><a href='sort/insertion_sort.html'><button class='sortbtn sortbtn--future' id='graph'>Insertion Sort<span></span></button></a></div><br><br><br><div><a href='sort/selection_sort.html'><button class='sortbtn sortbtn--future' id='graph'>Selection Sort<span></span></button></a><a href='sort/merge_sort.html'><button class='sortbtn sortbtn--future' id='graph'>Merge Sort<span></span></button></a></div>";
+	mouseoutMes = "<br><div class='category'>Sort</div><div><a href='sort/bubble_sort.html'><button class='sortbtn sortbtn--swap' id='sort'>Bubble Sort<span>Bubble Sort</span></button></a><a href='sort/insertion_sort.html'><button class='sortbtn sortbtn--swap' id='graph'>Insertion Sort<span>Insertion Sort</span></button></a></div><br><br><br><div><a href='sort/selection_sort.html'><button class='sortbtn sortbtn--swap' id='graph'>Selection Sort<span>Selection Sort</span></button></a><a href='sort/merge_sort.html'><button class='sortbtn sortbtn--swap' id='graph'>Merge Sort<span>Merge Sort</span></button></a></div>";
 	$(".screen").html(mouseoutMes);
 }
 
 function showgraph(){
-	mouseoutMes = "<br><div class='category' style='color:#FF3333;'>付費以解鎖更多</div><br><div>請撥打以下電話會有專人為您服務  <3<br><a href='tel:0987987987'>0987987987</a></div><button class='rebtn rebtn--border' id='re'>Back<span></span></button>";
+	mouseoutMes = "<br><div class='category' style='color:#FF3333;'>付費以解鎖更多</div><br><div style='line-height:1.9vw'>請撥打以下電話會有專人為您服務  <3<br><a href='tel:0987987987'>0987987987</a></div><button class='rebtn rebtn--swap' id='re'>Back<span>Back</span></button>";
 	$(".screen").html(mouseoutMes);
 	$('#re').click(ALGchangemes);
 }
@@ -229,10 +229,10 @@ function showgraph(){
 function init(){
 	fix_width();
 	$("#box-one").mouseover(function(){
-		$(".messenger").html("<div style='font-size:3.5vw'>Algorithm</div>");
+		$(".messenger").html("<br><div style='font-size:3.5vw'>Algorithm</div>");
 	});
 	$("#box-two").mouseover(function(){
-		$(".messenger").html("<div style='font-size:3.5vw'>Data Structure</div>");
+		$(".messenger").html("<br><div style='font-size:3.5vw'>Data Structure</div>");
 	});
 	$(".box").mouseout(function(){
 		$(".screen").html(mouseoutMes);
