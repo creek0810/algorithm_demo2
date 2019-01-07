@@ -21,6 +21,11 @@ function sort(){
         let current = data[i];
         let j = i - 1;
         sort_timeline.add({
+            targets: '#var_i',
+            value: i,
+            duration: 1,
+            round: 1
+        }).add({
             targets: '#var_current',
             value: current["value"],
             duration: 1,
