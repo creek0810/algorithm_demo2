@@ -55,6 +55,7 @@ function sort(){
                     },
                     easing: 'linear',
                     begin: function(){
+                        console.log("begin swap!");
                         $(".swap").addClass("code_running");
                         $(".cmp").removeClass("code_running");
                     }
