@@ -16,7 +16,7 @@ function sort(){
     });
     // build anime timeline
     for (var i = 0; i < data.length; i++){
-        for(var j = 0; j < data.length - i - 1; j++){
+        for(var j = 0; j < data.length - i -1; j++){
             sort_timeline.add({
                 targets: '#var_i',
                 value: i,
@@ -55,6 +55,7 @@ function sort(){
                     },
                     easing: 'linear',
                     begin: function(){
+                        console.log("begin swap!");
                         $(".swap").addClass("code_running");
                         $(".cmp").removeClass("code_running");
                     }

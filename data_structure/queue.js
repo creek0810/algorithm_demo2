@@ -32,20 +32,24 @@ function content_init(){
     let code_loc = $('code > span')[0].getBoundingClientRect().bottom;
     let var_loc = $('#var > span')[0].getBoundingClientRect().bottom;
     $('pre').css('margin-top',var_loc - code_loc);
+    $('.trace').css('display','none');
+    content_change(0);
+    info_change(1);
 }
 function content_change(command){
     // command 0 = push
     // command 1 = pop
+    let info = "";
     if(command == 1){
         $(".code_pop").show();
         $(".code_push").hide();
-        var info = "<p>Function: <span>Pop</span></p>" +
-                   "<p>Time complexity: <span>O(1)</span><p>";
+        info = "<p>Function: <span>Pop</span></p>" +
+               "<p>Time complexity: <span>O(1)</span><p>";
     }else{
         $(".code_push").show();
         $(".code_pop").hide();
-        var info = "<p>Function: <span>Push</span></p>" +
-                   "<p>Time complexity: <span>O(1)</span></p>";
+        info = "<p>Function: <span>Push</span></p>" +
+               "<p>Time complexity: <span>O(1)</span></p>";
     }
     $(".info").html(info);
 }
